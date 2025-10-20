@@ -27,53 +27,57 @@ class CartController extends Controller
 
         return view('cart', compact('cart', 'total'));
     }
-
-    // 📌 Add to Cart
-    public function add(Request $request, $id)
-    {
-        if (!$request->session()->has('customer_id')) {
-            if ($request->ajax()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Please login before adding to cart.'
-                ]);
-            }
-            return redirect()->route('customer.login')
-                ->with('error', 'Please login before adding to cart.');
-        }
-
-        $customerId = $request->session()->get('customer_id');
-        $plant = Plant::findOrFail($id);
-        $quantity = (int) $request->input('quantity', 1);
-
-        $cartItem = Cart::where('customer_id', $customerId)
-            ->where('plant_id', $plant->id)
-            ->first();
-
-        if ($cartItem) {
-            $cartItem->quantity += $quantity;
-            $cartItem->save();
-        } else {
-            Cart::create([
-                'customer_id' => $customerId,
-                'plant_id'    => $plant->id,
-                'quantity'    => $quantity,
-            ]);
-        }
-
-        $cartCount = Cart::where('customer_id', $customerId)->sum('quantity');
-        session(['cart_count' => $cartCount]);
-
+// 📌 Add to Cart
+public function add(Request $request, $id)
+{
+    // Check if customer is logged in
+    if (!$request->session()->has('customer_id')) {
         if ($request->ajax()) {
             return response()->json([
-                'success'   => true,
-                'cartCount' => $cartCount,
-                'message'   => 'Plant added to cart!'
+                'success' => false,
+                'message' => 'Please login before adding to cart.'
             ]);
         }
-
-        return redirect()->back()->with('success', 'Plant added to cart!');
+        return redirect()->route('customer.login')
+            ->with('error', 'Please login before adding to cart.');
     }
+
+    $customerId = $request->session()->get('customer_id');
+    $plant = Plant::findOrFail($id);
+    $quantity = (int) $request->input('quantity', 1);
+
+    // Check if item already exists in cart
+    $cartItem = Cart::where('customer_id', $customerId)
+        ->where('plant_id', $plant->id)
+        ->first();
+
+    if ($cartItem) {
+        $cartItem->quantity += $quantity;
+        $cartItem->save();
+    } else {
+        Cart::create([
+            'customer_id' => $customerId,
+            'plant_id'    => $plant->id,
+            'quantity'    => $quantity,
+        ]);
+    }
+
+    // Get updated total quantity of all items in cart
+    $cartCount = Cart::where('customer_id', $customerId)->sum('quantity');
+    session(['cart_count' => $cartCount]);
+
+    // Return JSON if AJAX, else redirect back
+    if ($request->ajax()) {
+        return response()->json([
+            'success'   => true,
+            'message'   => 'Plant added to cart!',
+            'cartCount' => $cartCount
+        ]);
+    }
+
+    return redirect()->back()->with('success', 'Plant added to cart!');
+}
+
 
     // 📌 Remove Item (by cart.id)
     public function remove(Request $request, $id)

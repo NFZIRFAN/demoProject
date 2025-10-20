@@ -148,7 +148,7 @@
             <td>{{ $customer->age }}</td>
             <td>{{ $customer->occupation }}</td>
             <td>
-              <a href="{{ route('admin.customers.edit', $customer->id) }}" class="btn-edit">Edit</a>
+                <a href="{{ route('admin.customers.edit', $customer->id) }}" class="btn-edit">Edit</a>
               <form action="{{ route('admin.customers.destroy', $customer->id) }}" method="POST" style="display:inline;">
                 @csrf
                 @method('DELETE')

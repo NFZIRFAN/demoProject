@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-@vite(['resources/css/app.css', 'resources/js/app.js'])
+@vite(entrypoints: ['resources/css/app.css', 'resources/js/app.js'])
 
 
 <style>
@@ -18,125 +18,6 @@
       overflow-x: hidden; /* ✅ stop left-right scrolling */
 
     }
-
-  /* ======= NAVBAR ======= */
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: linear-gradient(90deg, rgb(67, 50, 42), rgb(37, 65, 38));
-      padding: 12px 40px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      position: sticky;
-      top: 0;
-      width: 100%;
-      box-sizing: border-box;
-      z-index: 1000;
-    }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo-text {
-      font-size: 20px;
-      font-weight: 700;
-      color: #fff;
-      text-decoration: none;
-      letter-spacing: 0.5px;
-      transition: color 0.3s ease;
-    }
-
-    .logo-text:hover {
-      color: #c8e6c9;
-    }
-
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 25px;
-      margin: 0;
-      padding: 0;
-    }
-
-    .nav-links li a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 15px;
-      position: relative;
-      transition: all 0.3s ease;
-      padding: 5px 0;
-    }
-
-    .nav-links li a:hover {
-      color: #c8e6c9;
-    }
-
-    /* Highlight for active page */
-    .nav-links li a.active {
-      color: #c8e6c9;
-      font-weight: 600;
-    }
-    .nav-links li a.active::after {
-      content: "";
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: #c8e6c9;
-      border-radius: 2px;
-      animation: slideIn 0.4s ease;
-    }
-
-    @keyframes slideIn {
-      from { width: 0; }
-      to { width: 100%; }
-    }
-
-/* === HEADER BANNER === */
-header {
-  background: linear-gradient(135deg, rgb(34, 92, 34), rgb(60, 155, 60));
-  padding: 20px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: white;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-header h1 {
-  margin: 0;
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-header .logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-header .logo img {
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  background: white;
-  object-fit: cover;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-header nav a {
-  margin-left: 20px;
-  color: white;
-  font-weight: 500;
-  text-decoration: none;
-  transition: 0.3s;
-}
-header nav a:hover {
-  text-decoration: underline;
-}
-
 /* === MAIN WRAPPER === */
 .edit-wrapper {
   max-width: 1100px;
@@ -382,22 +263,6 @@ h2 {
   }
   .btn-crop-confirm { background:#2e7d32; color:#fff; }
   .btn-crop-cancel  { background:#999; color:#fff; }
-
-/* === FOOTER === */
-footer { 
-  background: #fff; 
-  color: #333; 
-  margin-top: auto; 
-  box-shadow: 0 -2px 6px rgba(0,0,0,0.05); 
-}
-footer .bottom-bar { 
-  background: linear-gradient(90deg,rgb(67, 50, 42),rgb(37, 65, 38)); /* Green gradient */
-  color: white; 
-  text-align: center; 
-  padding: 8px; 
-  font-size: 14px; 
-  width: 100%; 
-}
 .crop-actions {
     display: flex;
     gap: 15px;
@@ -500,34 +365,7 @@ footer .bottom-bar {
   </div>
 </div>
 
-
-<footer class="bg-white rounded-lg shadow-sm m-4 dark:bg-gray-800">
-    <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
-      <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="https://flowbite.com/" class="hover:underline">Flowbite™</a>. All Rights Reserved.
-    </span>
-    <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
-        <li>
-            <a href="#" class="hover:underline me-4 md:me-6">About</a>
-        </li>
-        <li>
-            <a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a>
-        </li>
-        <li>
-            <a href="#" class="hover:underline me-4 md:me-6">Licensing</a>
-        </li>
-        <li>
-            <a href="#" class="hover:underline">Contact</a>
-        </li>
-    </ul>
-    </div>
-</footer>
-
-<!-- FOOTER -->
-<footer>
-  <div class="bottom-bar">
-    © 2025 Yah Nursery & Landscape. All Rights Reserved.
-  </div>
-</footer>
+<x-footer />
 
 <!-- ===== Crop Modal ===== -->
 <div id="cropModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="cropTitle">
@@ -722,5 +560,9 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 <script src="../node_modules/flowbite/dist/flowbite.min.js"></script>
 
+  <!-- Lucide Icons Init -->
+  <script>
+    lucide.createIcons();
+  </script>
 </body>
 </html>

@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <title>Yah Nursery & Landscape</title>
+  @vite(entrypoints: ['resources/css/app.css', 'resources/js/app.js'])
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -142,7 +144,7 @@
     }
 
     /* Customer Says Section styling kept similar */
-    #customer-says {  background: linear-gradient(135deg,#ffffff,rgb(198, 198, 198)); color:#333; text-align:center; padding:60px 40px; scroll-margin-top:70px; }
+    #customer-says {  background: linear-gradient(135deg,#ffffff,rgba(255, 255, 255, 1)); color:#fff; text-align:center; padding:60px 40px; scroll-margin-top:70px; }
     #customer-says h2 { font-size:26px; color:#000; margin-bottom:30px; }
     .testimonials { display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:25px; max-width:1000px; margin:auto; }
     .testimonial { background:white; padding:22px; border-radius:15px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); text-align:center; transition: transform .3s ease; }
@@ -193,11 +195,14 @@
             color: #2e8b57; /* A nice shade of green for the subtitle */
         }
         #blog h2 {
-            font-size: 38px;
-            color: #333;
-            margin-bottom: 50px;
-            font-weight: bold;
-        }
+    font-size: 25px;
+    color: #264226ff;
+    margin-bottom: 50px;
+    font-family: 'Playfair Display', serif; /* Set the unique font */
+    font-style: italic; /* Make it italic */
+    font-weight: 400; /* Optional: normal weight; use 700 for bold */
+}
+
 
         /* Container for the service items and central image */
         .services-container {
@@ -513,7 +518,7 @@
     }
   }
 .visit-nursery {
-  background-color: #f9fafb;
+  background-color: #ffffffff;
   padding: 80px 40px;
   display: flex;
   justify-content: center;
@@ -609,6 +614,50 @@
     height: 300px;
   }
 }
+
+    /* Custom styles for professional headings */
+    h2 {
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #d1fae5;
+    }
+
+    /* Scrollbar for modal content */
+    .modal-content-scroll {
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+
+    /* Custom gradient background for the new hero section */
+    .hero-bg-gradient {
+      background: linear-gradient(135deg, #e0f2f1 0%, #b2f5ea 50%, #f7f9fa 100%);
+    }
+
+    /* Custom styles for 3D card/image display */
+    .plant-display-container {
+        position: relative;
+        perspective: 1000px;
+    }
+
+    /* Applied directly to the image container for the 3D effect */
+    .plant-3d-card {
+        transition: transform 0.5s ease-out, box-shadow 0.5s ease-out;
+        /* Slight 3D tilt and elevation */
+        transform: rotateY(10deg) rotateX(5deg) scale(1.05); 
+        box-shadow: 0 40px 60px rgba(0, 0, 0, 0.3); 
+        border: 4px solid #ffffff; /* White border for emphasis */
+    }
+
+    /* Custom button style to match the aesthetic */
+    .cta-button {
+        background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+        box-shadow: 0 10px 20px rgba(16, 185, 129, 0.4);
+        transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+        background: linear-gradient(90deg, #059669 0%, #047857 100%);
+        transform: translateY(-2px);
+    }
   </style>
 </head>
 <body>
@@ -618,11 +667,10 @@
     <nav>
       <ul>
         <li><a href="#home">HOME</a></li>
-        <li><a href="#about">ABOUT</a></li>
-        <li><a href="#flash-sale">SALES</a></li>
-        <li><a href="#blog">BLOG</a></li>
-        <li><a href="#visit">VISIT</a></li>
         <li><a href="#team">PLANT</a></li>
+        <li><a href="#blog">BLOG</a></li>
+        <li><a href="#flash-sale">SALES</a></li>
+        <li><a href="#visit">VISIT</a></li>
         <li><a href="#customer-says">CONTACT</a></li>
       </ul>
     </nav>
@@ -640,152 +688,7 @@
       <a href="#" class="btn" onclick="openPopup(event)">SHOP NOW</a>
     </div>
   </div>
-
-  <!-- About Section -->
-  <section id="about" style="background: linear-gradient(135deg,rgb(233, 230, 230),rgb(255, 255, 255));">
-    <div class="section-flex">
-      <div class="image">
-        <img src="https://reklr.com/wp-content/uploads/2024/07/y2.jpg" alt="Yah Nursery">
-      </div>
-      <div class="divider"></div>
-      <div class="text">
-        <h2>About Yah Nursery</h2>
-        <p>
-          Yah Nursery and Landscape Sdn Bhd has been providing a wide variety of indoor and outdoor plants for over 20 years.
-          Our mission is to educate customers, especially beginners, on proper plant care while offering high-quality products for homes and gardens.
-          We specialize in unique offerings such as sunflowers from Cameron Highlands and special three-month flowering plants that require dedicated care.
-        </p>
-      </div>
-    </div>
-  </section>
-<!-- 🌿 FLASH SALE SECTION -->
-<section id="flash-sale">
-  <div class="flash-overlay">
-    <h2>Flash Sale: Up to 50% Off On Select Items!</h2>
-    <p>Don’t miss out on our flash sale event! For a limited time, enjoy up to 50% off on a selection of our best-selling products.</p>
-    <a href="#sales" class="flash-btn">Go get yours !</a>
-  </div>
-</section>
-  
-<!-- The section with the ID "blog" remains the same for navigation -->
-<section id="blog">
-    <p class="subtitle">ADVANTAGES</p>
-    <h2>Why Choose Us</h2>
-    
-    <div class="services-container">
-        <!-- Left Column -->
-        <div class="service-column">
-            <div class="service-item">
-                <div class="service-icon">
-                    <img src="https://img.icons8.com/ios-filled/50/ffffff/leaf.png" alt="Leaf icon">
-                </div>
-                <div class="service-content">
-                    <h3>Expert Planting</h3>
-                    <p>"We professionally handle every step of the planting process, so your new greenery can immediately begin to thrive in its new home."</p>
-                </div>
-            </div>
-            <div class="service-item">
-                <div class="service-icon">
-                    <img src="https://img.icons8.com/ios-filled/50/ffffff/full-moon.png" alt="Growth icon">
-                </div>
-                <div class="service-content">
-                    <h3>Full Growth Support</h3>
-                    <p>"From the first leaf to full bloom, we provide continuous monitoring and care to ensure your plants stay vibrant and healthy season after season."</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Central Circular Image -->
-        <div class="central-image">
-            <img src="https://reklr.com/wp-content/uploads/2024/07/y1.jpg" alt="A beautiful plant in a vase">
-        </div>
-
-        <!-- Right Column -->
-        <div class="service-column">
-            <div class="service-item">
-                <div class="service-icon">
-                    <img src="https://img.icons8.com/ios-filled/50/ffffff/water.png" alt="Watering can icon">
-                </div>
-                <div class="service-content">
-                    <h3>Watering Guidance</h3>
-                    <p>"Learn to provide the perfect amount of moisture for your plants with our expert guidance, ensuring they get exactly what they need to flourish."</p>
-                </div>
-            </div>
-            <div class="service-item">
-                <div class="service-icon">
-                    <img src="https://img.icons8.com/ios-filled/50/ffffff/sprout.png" alt="Care icon">
-                </div>
-                <div class="service-content">
-                    <h3>Personalized Care</h3>
-                    <p>"Because every plant is unique, we create a specialized care plan tailored to your botanical collection's individual needs and environment."</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- ===== Visit Our Nursery Section ===== -->
-<section id="visit" class="visit-nursery">
-  <div class="visit-container">
-    <!-- Left: Contact Info -->
-    <div class="contact-card">
-      <h2>Visit Our Nursery</h2>
-      <p class="subtitle">Come see our plants in person and get expert advice</p>
-
-      <div class="info-card">
-        <h3>Contact Information</h3>
-        <hr>
-        <div class="info-item">
-          <i class="fas fa-map-marker-alt icon"></i>
-          <div>
-            <strong>Address</strong><br>
-            Kebun Bunga, Jalan Pangsun Tiga 27/12c, Sek 27, <br>
-            Taman Bunga Negara, 40000 Shah Alam, Selangor
-          </div>
-        </div>
-
-        <div class="info-item">
-          <i class="fas fa-phone icon"></i>
-          <div>
-            <strong>Phone</strong><br>
-            (555) 123-4567
-          </div>
-        </div>
-
-        <div class="info-item">
-          <i class="fas fa-envelope icon"></i>
-          <div>
-            <strong>Email</strong><br>
-            info@yahnursery.com
-          </div>
-        </div>
-
-        <div class="info-item">
-          <i class="fas fa-clock icon"></i>
-          <div>
-            <strong>Hours</strong><br>
-            Mon–Sat: 8AM–6PM, Sun: 9AM–5PM
-          </div>
-        </div>
-
-        <a href="https://www.google.com/maps/dir/?api=1&destination=Kebun+Bunga,+Jalan+Pangsun+Tiga+27%2F12c,+Sek+27,+Taman+Bunga+Negara,+40000+Shah+Alam,+Selangor"
-           target="_blank" class="direction-btn">
-          <i class="fas fa-directions"></i> Get Directions
-        </a>
-      </div>
-    </div>
-
-    <!-- Right: Map -->
-    <div class="map-container">
-      <iframe 
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3982.088266243254!2d101.55348797480365!3d3.012718896933176!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc530681ef8f0b%3A0xd1c263f8f7fbc94e!2sKebun%20Bunga%2C%20Jalan%20Pangsun%20Tiga%2027%2F12c%2C%20Sek%2027%2C%20Taman%20Bunga%20Negara%2C%2040000%20Shah%20Alam%2C%20Selangor!5e0!3m2!1sen!2smy!4v1698650000000!5m2!1sen!2smy"
-        allowfullscreen=""
-        loading="lazy">
-      </iframe>
-    </div>
-  </div>
-</section>
-
-  <!-- Team Section (new, matches your requested visual) -->
+   <!-- Team Section (new, matches your requested visual) -->
   <section id="team">
     <h2>TOP DEALS</h2>
     <div class="heading-dots" aria-hidden="true">
@@ -850,12 +753,188 @@
       <button class="team-nav next" id="teamNext" aria-label="Next team" onclick="teamNext()">›</button>
     </div>
   </section>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+
+<section id="blog" class="relative bg-white py-16 px-8 flex flex-col md:flex-row items-center justify-between rounded-3xl shadow-lg mt-12">
+  <!-- Text Content -->
+  <div class="md:w-1/2 text-center md:text-left space-y-6">
+  <!-- Title -->
+  <h1 class="text-5xl md:text-6xl font-extrabold text-green-900 leading-snug" style="font-family: 'Playfair Display', serif;">
+    Yah Nursery & Landscape
+  </h1>
+ <br>
+  <!-- Subtitle -->
+  <h2 class="text-xl md:text-2xl text-green-700 leading-relaxed" style="font-family: 'Poppins', sans-serif;">
+    Bringing nature closer to your home for over 20 years. Explore our range of indoor and outdoor plants,
+    including our exclusive sunflower and three-month flower collection from Cameron Highlands.
+  </h2>
+  <!-- Description -->
+  <h3 class="text-md text-black-600">
+    Beautify your space with Yah Nursery where every plant tells a story of growth and care.
+  </h3>
+  <br>
+
+  <!-- Button -->
+  <a href="#sales" class="flash-btn">YOU GET MORE TO SEE </a>
+</div>
+
+
+  <!-- 3D Image (Bigger + Floating) -->
+  <div class="md:w-1/2 flex justify-center mt-10 md:mt-0 relative">
+    <div class="absolute w-[250px] h-[250px] bg-green-200/30 blur-3xl rounded-full top-10 right-10 animate-pulse"></div>
+    <img 
+      src="{{ asset('storage/image/PLANT3D.png') }}" 
+      alt="Yah Nursery 3D Plant"
+      class="w-[460px] md:w-[550px] drop-shadow-2xl transform hover:scale-110 transition-transform duration-700 animate-float"
+    />
+  </div>
+</section>
+
+<!-- ✨ Floating Animation -->
+<style>
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-14px); }
+}
+.animate-float {
+  animation: float 4.5s ease-in-out infinite;
+}
+</style>
+
+<!-- 🌿 FLASH SALE SECTION -->
+<section id="flash-sale">
+  <div class="flash-overlay">
+    <h2>Flash Sale: Up to 50% Off On Select Items!</h2>
+    <p>Don’t miss out on our flash sale event! For a limited time, enjoy up to 50% off on a selection of our best-selling products.</p>
+    <a href="#sales" class="flash-btn">Go get yours !</a>
+  </div>
+</section>
+<!-- ===== Visit Our Nursery Section ===== -->
+<section id="visit" class="visit-nursery">
+  <div class="visit-container">
+    <!-- Left: Contact Info -->
+    <div class="contact-card">
+      <h2>Visit Our Nursery</h2>
+      <p class="subtitle">Come and see our plants in person and get expert advice</p>
+
+      <div class="info-card">
+        <h3>Contact Information</h3>
+        <hr>
+        <div class="info-item">
+          <i class="fas fa-map-marker-alt icon"></i>
+          <div>
+            <strong>Address</strong><br>
+            Kebun Bunga, Jalan Pangsun Tiga 27/12c, Sek 27, <br>
+            Taman Bunga Negara, 40000 Shah Alam, Selangor
+          </div>
+        </div>
+
+        <div class="info-item">
+          <i class="fas fa-phone icon"></i>
+          <div>
+            <strong>Phone</strong><br>
+            (555) 123-4567
+          </div>
+        </div>
+
+        <div class="info-item">
+          <i class="fas fa-envelope icon"></i>
+          <div>
+            <strong>Email</strong><br>
+            info@yahnursery.com
+          </div>
+        </div>
+
+        <div class="info-item">
+          <i class="fas fa-clock icon"></i>
+          <div>
+            <strong>Hours</strong><br>
+            Mon–Sat: 8AM–6PM, Sun: 9AM–5PM
+          </div>
+        </div>
+
+        <a href="https://www.google.com/maps/dir/?api=1&destination=Kebun+Bunga,+Jalan+Pangsun+Tiga+27%2F12c,+Sek+27,+Taman+Bunga+Negara,+40000+Shah+Alam,+Selangor"
+           target="_blank" class="direction-btn">
+          <i class="fas fa-directions"></i> Get Directions
+        </a>
+      </div>
+    </div>
+    <!-- Right: Map -->
+    <div class="map-container">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3982.088266243254!2d101.55348797480365!3d3.012718896933176!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc530681ef8f0b%3A0xd1c263f8f7fbc94e!2sKebun%20Bunga%2C%20Jalan%20Pangsun%20Tiga%2027%2F12c%2C%20Sek%2027%2C%20Taman%20Bunga%20Negara%2C%2040000%20Shah%20Alam%2C%20Selangor!5e0!3m2!1sen!2smy!4v1698650000000!5m2!1sen!2smy"
+        allowfullscreen=""
+        loading="lazy">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+ 
+<section aria-labelledby="service-guarantees" class="bg-white py-16">
+    <div class="w-full px-6 sm:px-8 lg:px-12">
+
+        <!-- Features Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+
+            <!-- Feature 1: Secure Payment -->
+            <div class="flex flex-col items-center p-6 rounded-xl hover:shadow-lg transition duration-300 bg-white">
+                <div class="flex items-center justify-center w-16 h-16 rounded-full bg-lime-100 mb-4 transition-transform duration-300 hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-green-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <rect width="20" height="14" x="2" y="5" rx="2"/>
+                        <line x1="2" x2="22" y1="10" y2="10"/>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-green-900 mb-2">Secure Payment</h3>
+                <p class="text-sm text-green-700 max-w-xs">Elementum feugiat diam</p>
+            </div>
+
+            <!-- Feature 2: Free Shipping -->
+            <div class="flex flex-col items-center p-6 rounded-xl hover:shadow-lg transition duration-300 bg-white">
+                <div class="flex items-center justify-center w-16 h-16 rounded-full bg-lime-100 mb-4 transition-transform duration-300 hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-green-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M5 18H3c-1.1 0-2-.9-2-2V9c0-.6.4-1 1-1h15c.6 0 1 .4 1 1v7c0 1.1-.9 2-2 2h-2c0 1.1-.9 2-2 2s-2-.9-2-2h-4c0 1.1-.9 2-2 2s-2-.9-2-2z"/>
+                        <path d="M17 8V5c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v3"/>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-green-900 mb-2">Free Shipping</h3>
+                <p class="text-sm text-green-700 max-w-xs">For $50 order</p>
+            </div>
+
+            <!-- Feature 3: Delivered with Care -->
+            <div class="flex flex-col items-center p-6 rounded-xl hover:shadow-lg transition duration-300 bg-white">
+                <div class="flex items-center justify-center w-16 h-16 rounded-full bg-lime-100 mb-4 transition-transform duration-300 hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-green-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M21 8a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2z"/>
+                        <path d="M7 6h10"/>
+                        <path d="m12 6-5 6h10l-5-6z"/>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-green-900 mb-2">Delivered with Care</h3>
+                <p class="text-sm text-green-700 max-w-xs">Lacinia pellentesque leo</p>
+            </div>
+
+            <!-- Feature 4: Excellent Service -->
+            <div class="flex flex-col items-center p-6 rounded-xl hover:shadow-lg transition duration-300 bg-white">
+                <div class="flex items-center justify-center w-16 h-16 rounded-full bg-lime-100 mb-4 transition-transform duration-300 hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-green-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M19 14c1.49-1.46 3-3.23 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.27 1.51 4.04 3 5.5l7 7Z"/>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-green-900 mb-2">Excellent Service</h3>
+                <p class="text-sm text-green-700 max-w-xs">Blandit gravida viverra</p>
+            </div>
+
+        </div>
+
+       
+    </div>
+</section>
 
   <!-- What Customer Says Section -->
   <section id="customer-says">
-    <h2>💬 What customer says ?</h2>
+    <h2>💬 WHAT CUSTOMER SAYS ?</h2>
     <div style="width:250px;height:3px;background:#27ae60;margin:0 auto 30px;border-radius:2px;"></div>
-
     <div class="testimonials">
       <div class="testimonial">
         <p>"Beautiful plants and very helpful staff! My garden has never looked better."</p>

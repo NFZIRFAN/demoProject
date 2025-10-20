@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class AdminCustomerController extends Controller
 {
-    // Show all customers for admin
+     // Show all customers
     public function index()
     {
         if (!session('admin_id')) {
@@ -19,20 +19,40 @@ class AdminCustomerController extends Controller
     }
 
     // Show edit form
-    public function edit($id)
+   public function edit($id)
     {
         if (!session('admin_id')) {
             return redirect()->route('admin.login')->with('error', 'Please login as admin first.');
         }
 
-        $customer = Customer::findOrFail($id);
-        return view('admin.editCustomer', compact('customer'));
+        // Find the customer
+        $customer = Customer::find($id);
+        // dd($customer->id);
+        // If customer not found, redirect with error
+        if (!$customer) {
+            return redirect()->route('admin.customers.index')
+                ->with('error', 'Customer not found.');
+        }
+        // Pass valid customer to view
+        return view('admin.editCustomer', [
+            'asd' => $customer
+        ]);
     }
+
 
     // Update customer
     public function update(Request $request, $id)
     {
-        $customer = Customer::findOrFail($id);
+        if (!session('admin_id')) {
+            return redirect()->route('admin.login')->with('error', 'Please login as admin first.');
+        }
+
+        $customer = Customer::find($id);
+
+        if (!$customer) {
+            return redirect()->route('admin.customers.index')
+                ->with('error', 'Customer not found.');
+        }
 
         $request->validate([
             'firstname'    => 'required|string|max:255',
@@ -55,7 +75,17 @@ class AdminCustomerController extends Controller
     // Delete customer
     public function destroy($id)
     {
-        $customer = Customer::findOrFail($id);
+        if (!session('admin_id')) {
+            return redirect()->route('admin.login')->with('error', 'Please login as admin first.');
+        }
+
+        $customer = Customer::find($id);
+
+        if (!$customer) {
+            return redirect()->route('admin.customers.index')
+                ->with('error', 'Customer not found.');
+        }
+
         $customer->delete();
 
         return redirect()->route('admin.customers.index')->with('success', 'Customer deleted successfully.');

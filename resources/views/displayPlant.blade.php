@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <title>{{ $plant->name }}</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet">
+
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
@@ -29,36 +31,6 @@
       flex-direction: column;
       min-height: 100vh;
     }
-
-    /* Fixed Header/Navbar */
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: linear-gradient(90deg,rgb(67, 50, 42),rgb(37, 65, 38)); /* Green gradient */
-      padding: 12px 40px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      position: fixed; /* STICKY HEADER */
-      top: 0;
-      left: 0;
-      width: 100%;
-      max-width: none;
-      box-sizing: border-box;
-      z-index: 1000;
-    }
-
-    /* Fixed Footer */
-    footer { 
-      background: #fff; 
-      color: #333; 
-      box-shadow: 0 -2px 8px rgba(0,0,0,0.2); 
-      position: fixed; /* STICKY FOOTER */
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      z-index: 999;
-    }
-    
     /* Wrapper to contain all content and provide clearance for fixed elements */
     .content-main-wrapper {
       flex-grow: 1; /* Allows content to take up vertical space between header/footer */
@@ -233,130 +205,17 @@
       font-weight:bold;
       cursor:pointer;
     }
-    .hero-header {
-      width: 100%;
-      height: 260px;
-      background: url("https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=80") no-repeat center center/cover;
-      position: relative;
-      border-radius: 0 0 18px 18px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-      margin-bottom: 28px;
-    }
-    .hero-overlay {
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.45);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-      text-align: center;
-      border-radius: 0 0 18px 18px;
-    }
-    .hero-overlay h1 {
-      font-size: 34px;
-      margin: 0;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
-    .hero-overlay p {
-      font-size: 16px;
-      margin-top: 10px;
-      font-weight: 400;
-    }
     
-    footer .bottom-bar { 
-      background: linear-gradient(90deg,rgb(67, 50, 42),rgb(37, 65, 38)); /* Green gradient */
-      color: white; 
-      text-align: center; 
-      padding: 8px; 
-      font-size: 14px; 
-      width: 100%; 
-    }
-    
-   /* ======= NAVBAR ======= */
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: linear-gradient(90deg, rgb(67, 50, 42), rgb(37, 65, 38));
-      padding: 12px 40px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      position: sticky;
-      top: 0;
-      width: 100%;
-      box-sizing: border-box;
-      z-index: 1000;
-    }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo-text {
-      font-size: 20px;
-      font-weight: 700;
-      color: #fff;
-      text-decoration: none;
-      letter-spacing: 0.5px;
-      transition: color 0.3s ease;
-    }
-
-    .logo-text:hover {
-      color: #c8e6c9;
-    }
-
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 25px;
-      margin: 0;
-      padding: 0;
-    }
-
-    .nav-links li a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 15px;
-      position: relative;
-      transition: all 0.3s ease;
-      padding: 5px 0;
-    }
-
-    .nav-links li a:hover {
-      color: #c8e6c9;
-    }
-
-    /* Highlight for active page */
-    .nav-links li a.active {
-      color: #c8e6c9;
-      font-weight: 600;
-    }
-    .nav-links li a.active::after {
-      content: "";
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: #c8e6c9;
-      border-radius: 2px;
-      animation: slideIn 0.4s ease;
-    }
-
-    @keyframes slideIn {
-      from { width: 0; }
-      to { width: 100%; }
-    }
   </style>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 </head>
 <body>
   <!-- ===== Navbar ===== -->
-<x-navbar />
+   <x-navbar />
+
   <!-- CONTENT WRAPPER -->
   <div class="content-main-wrapper">
     <!-- top-right cart badge (Adjusted position to clear fixed navbar) -->
@@ -459,14 +318,32 @@
   closeBtn.onclick = () => { modal.style.display = "none"; }
   modal.onclick = (e) => { if(e.target === modal) modal.style.display = "none"; }
 
-  let scale = 1, posX = 0, posY = 0, isDragging=false, startX, startY;
-  modalImg.addEventListener("wheel", (e) => { e.preventDefault(); scale += e.deltaY < 0 ? 0.2 : -0.2; if(scale < 0.4) scale = 0.4; applyTransform(); });
-  modalImg.addEventListener("mousedown", (e) => { isDragging = true; startX = e.clientX - posX; startY = e.clientY - posY; modalImg.style.cursor = "grabbing"; });
-  window.addEventListener("mouseup", () => { isDragging = false; modalImg.style.cursor = "grab"; });
-  window.addEventListener("mousemove", (e) => { if(!isDragging) return; posX = e.clientX - startX; posY = e.clientY - startY; applyTransform(); });
+  let scale = 1, posX = 0, posY = 0, isDragging = false, startX, startY;
+  modalImg.addEventListener("wheel", (e) => { 
+    e.preventDefault(); 
+    scale += e.deltaY < 0 ? 0.2 : -0.2; 
+    if(scale < 0.4) scale = 0.4; 
+    applyTransform(); 
+  });
+  modalImg.addEventListener("mousedown", (e) => { 
+    isDragging = true; 
+    startX = e.clientX - posX; 
+    startY = e.clientY - posY; 
+    modalImg.style.cursor = "grabbing"; 
+  });
+  window.addEventListener("mouseup", () => { 
+    isDragging = false; 
+    modalImg.style.cursor = "grab"; 
+  });
+  window.addEventListener("mousemove", (e) => { 
+    if(!isDragging) return; 
+    posX = e.clientX - startX; 
+    posY = e.clientY - startY; 
+    applyTransform(); 
+  });
   modalImg.addEventListener("dblclick", resetView);
   function applyTransform(){ modalImg.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`; }
-  function resetView(){ scale=1; posX=0; posY=0; applyTransform(); }
+  function resetView(){ scale = 1; posX = 0; posY = 0; applyTransform(); }
 
   // ========= CART BADGE PERSISTENCE ==========
   const badge = document.getElementById("cart-count");
@@ -476,16 +353,16 @@
   function loadCartCount() {
     const saved = localStorage.getItem("cart_count");
     if (saved) {
-      badge.innerText = saved;
-      pageBadge.innerText = saved;
+      if (badge) badge.innerText = saved;
+      if (pageBadge) pageBadge.innerText = saved;
     }
   }
 
   // Save cart count to localStorage
   function saveCartCount(count) {
     localStorage.setItem("cart_count", count);
-    badge.innerText = count;
-    pageBadge.innerText = count;
+    if (badge) badge.innerText = count;
+    if (pageBadge) pageBadge.innerText = count;
   }
 
   // ========= Add to Cart AJAX ==========
@@ -514,29 +391,45 @@
       addBtn.disabled = false;
       addBtn.innerHTML = '<i class="fa fa-cart-plus"></i> Add to cart';
 
-      if(data.success){
+      if (data.success) {
         const newCount = data.cartCount ?? parseInt(localStorage.getItem("cart_count") || 0) + qty;
         saveCartCount(newCount);
-        Swal.fire({ toast:true, position:'top-end', icon:'success', title: data.message || 'Added to cart!', showConfirmButton:false, timer:1600 });
+
+        // ✅ Update navbar cart count immediately
+        window.dispatchEvent(new CustomEvent("cartUpdated", { detail: { count: newCount } }));
+
+        Swal.fire({ 
+          toast: true, 
+          position: 'top-end', 
+          icon: 'success', 
+          title: data.message || 'Added to cart!', 
+          showConfirmButton: false, 
+          timer: 1600 
+        });
       } else {
-        Swal.fire({ icon:'error', title:'Oops', text:data.message || 'Failed to add item.' });
+        Swal.fire({ 
+          icon: 'error', 
+          title: 'Oops', 
+          text: data.message || 'Failed to add item.' 
+        });
       }
     })
     .catch(() => {
-      addBtn.disabled=false;
-      addBtn.innerHTML='<i class="fa fa-cart-plus"></i> Add to cart';
-      Swal.fire('Error','Unable to add item right now.','error');
+      addBtn.disabled = false;
+      addBtn.innerHTML = '<i class="fa fa-cart-plus"></i> Add to cart';
+      Swal.fire('Error', 'Unable to add item right now.', 'error');
     });
   });
 
   // ========= Keep badge synced ==========
-  function syncTopCart(){
-    const pageTop=document.getElementById('pageCartTop');
-    if(window.innerWidth <= 900){ 
-      pageTop.style.display='block'; 
-      pageBadge.innerText = badge.innerText; 
+  function syncTopCart() {
+    const pageTop = document.getElementById('pageCartTop');
+    if (window.innerWidth <= 900) { 
+      if (pageTop) pageTop.style.display = 'block'; 
+      if (pageBadge && badge) pageBadge.innerText = badge.innerText; 
+    } else if (pageTop) {
+      pageTop.style.display = 'none';
     }
-    else pageTop.style.display='none';
   }
 
   window.addEventListener('resize', syncTopCart);
@@ -544,13 +437,19 @@
     loadCartCount();
     syncTopCart();
   });
+
+  // ========= Global cart update listener ==========
+  document.addEventListener('DOMContentLoaded', function() {
+    window.addEventListener("cartUpdated", function(e) {
+      const count = e.detail.count;
+      if (badge) badge.innerText = count;
+      if (pageBadge) pageBadge.innerText = count;
+      localStorage.setItem("cart_count", count);
+    });
+  });
 </script>
 
-  <!-- Fixed Footer -->
-  <footer>
-    <div class="bottom-bar">
-      © 2025 Yah Nursery & Landscape. All Rights Reserved.
-    </div>
-  </footer>
+<script src="https://unpkg.com/lucide@latest"></script>
+<x-footer />
 </body>
 </html>

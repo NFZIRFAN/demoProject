@@ -10,7 +10,12 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <style>
 body { background: #f4f6f9; font-family: 'Inter', sans-serif; }
-.summary-box { height:fit-content; position:sticky; top:30px; z-index:50; }
+.summary-box {
+  height: fit-content;
+  position: sticky;
+  top: 120px; /* pushes it below the navbar dropdown */
+  z-index: 10; /* lower than navbar so dropdown overlaps */
+}
 .cart-box { position: relative; }
 .cart-icon { position: absolute; top:1.5rem; right:1.5rem; font-size:1.75rem; color:#10b981; transition: transform 0.3s ease, color 0.3s ease; z-index:10; }
 .cart-icon:hover { transform:scale(1.1); color:#059669; }
@@ -222,13 +227,15 @@ footer .bottom-bar {
     </div>
 
     <!-- ✅ Checkout Button -->
-    <form action="{{ route('cart.checkout') }}" method="POST" class="mt-6">
-        @csrf
-        <button type="submit" 
-            class="w-full bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold py-3 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105">
-            <i class="fa fa-credit-card mr-2"></i> Pay & Checkout
-        </button>
-    </form>
+<form action="{{ route('checkout.show') }}" method="POST" class="mt-6">
+    @csrf
+    <button type="submit"
+        class="w-full bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold py-3 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105">
+        <i class="fa fa-credit-card mr-2"></i> Pay & Checkout
+    </button>
+</form>
+
+
 
     <!-- ✅ Action Buttons -->
     <div class="flex flex-col sm:flex-row gap-3 mt-4">
@@ -258,7 +265,23 @@ footer .bottom-bar {
 
 <script>
 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+// === Sync cart count with localStorage before leaving page ===
+  document.querySelectorAll('a[href="{{ route('customer.dashboard') }}"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const count = document.getElementById('cart-count')?.innerText || '0';
+      localStorage.setItem('cart_count', count);
 
+      // Dispatch event so navbar updates instantly (before redirect)
+      window.dispatchEvent(new CustomEvent('cartUpdated', { detail: { count: count } }));
+    });
+  });
+
+  // === On page load, make sure navbar reflects the correct count ===
+  window.addEventListener('DOMContentLoaded', () => {
+    const navbarBadge = document.getElementById('navbar-cart-count');
+    const savedCount = localStorage.getItem('cart_count');
+    if (navbarBadge && savedCount) navbarBadge.innerText = savedCount;
+  });
 // Increment / Decrement Buttons
 document.querySelectorAll(".btn-increment").forEach(btn=>{
     btn.addEventListener("click", e=>{
@@ -287,15 +310,28 @@ document.querySelectorAll(".btn-remove").forEach(btn=>{
                     method:"POST",
                     headers:{"Content-Type":"application/json","X-CSRF-TOKEN":csrfToken}
                 }).then(res=>res.json()).then(data=>{
-                    if(data.success){
-                        row.remove();
-                        document.getElementById("cart-count").innerText = data.cartCount;
-                        document.getElementById("cart-total").innerText = "RM "+data.total.toFixed(2);
-                        Swal.fire("Removed!","Item has been removed.","success");
-                        if(document.querySelectorAll("#cart-table tbody tr").length===0){
-                            location.reload();
-                        }
-                    }
+                    if (data.success) {
+    row.remove();
+
+    // ✅ Update both the cart view count & navbar cart count
+    const cartBadge = document.getElementById("cart-count");
+    const navbarBadge = document.getElementById("navbar-cart-count");
+
+    if (cartBadge) cartBadge.innerText = data.cartCount;
+    if (navbarBadge) navbarBadge.innerText = data.cartCount;
+
+    // ✅ Update total dynamically
+    const totalEl = document.getElementById("cart-total");
+    if (totalEl) totalEl.innerText = "RM " + data.total.toFixed(2);
+
+    Swal.fire("Removed!", "Item has been removed.", "success");
+
+    // ✅ If no more items, reload to show empty cart state
+    if (document.querySelectorAll("#cart-table tbody tr").length === 0) {
+        location.reload();
+    }
+}
+
                 });
             }
         });
@@ -330,7 +366,9 @@ document.getElementById("btn-update-cart")?.addEventListener("click",()=>{
                 list.innerHTML+=`<div class="flex justify-between"><span>${name} (x${qty})</span><span>${subtotal}</span></div>`;
             });
             document.getElementById("cart-total").innerText="RM "+data.total.toFixed(2);
-            document.getElementById("cart-count").innerText=data.cartCount;
+document.getElementById("cart-count").innerText = data.cartCount;
+const navbarCount = document.getElementById("navbar-cart-count");
+if (navbarCount) navbarCount.innerText = data.cartCount;
             Swal.fire("Updated!","Cart updated successfully.","success");
         }
     });

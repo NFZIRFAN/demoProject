@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+ 
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,4 +23,13 @@ class Cart extends Model
     {
         return $this->belongsTo(Plant::class);
     }
+    public function count()
+{
+    if (!session()->has('customer_id')) {
+        return response()->json(['count' => 0]);
+    }
+
+    $count = Cart::where('customer_id', session('customer_id'))->sum('quantity');
+    return response()->json(['count' => $count]);
+}
 }
