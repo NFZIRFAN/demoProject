@@ -3,66 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
+    <title>Admin Login | Yah Nursery</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Updated Google Font Link: Cormorant Garamond for an elegant, fancy serif font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Keeping original font import */
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap');
-
-        /* New custom style for the clean, bottom-border input look from the picture */
-        .input-line-group .input-line {
-            /* Remove default borders and padding */
-            border: none;
-            padding: 0.5rem 0.5rem 0.5rem 2rem; /* Adjusted for icon */
-            /* Add only the bottom border */
-            border-bottom: 2px solid #E0E0E0;
-            transition: border-color 0.3s, box-shadow 0.3s;
+        /* Custom, slightly textured background for elegance */
+        body {
+            background-color: #f4f4f0;
+        }
+        .page-bg {
+            background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23e0e0e0' fill-opacity='0.2' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zm1 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
         }
 
-        /* Focus style for inputs to use the vibrant green accent */
-        .input-line-group input:focus {
-            border-bottom-color: #00D084 !important;
-            box-shadow: none !important;
+        /* Floating Label Input Logic */
+        .input-group {
+            position: relative;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 1rem 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.75rem;
+            transition: all 0.2s ease-in-out;
+            background-color: #ffffff;
+        }
+
+        .input-field:focus {
+            border-color: #2F8F2F; /* leaf color */
+            box-shadow: 0 0 0 3px rgba(47, 143, 47, 0.3);
             outline: none;
         }
 
-        /* Removing the body::before CSS as the new design uses a simpler background */
-        .page-bg {
-            background-color: #F0FFF6; /* Light green background */
-        }
-        
-        /* Custom style for the checkbox to enforce the color */
-        input[type="checkbox"]:checked {
-            background-color: #00D084; /* Use 'leaf' color */
-            border-color: #00D084;
-        }
-        input[type="checkbox"]:focus {
-            ring: 2px;
-            ring-color: rgba(0, 208, 132, 0.5); /* Semi-transparent leaf for focus ring */
+        .input-label {
+            position: absolute;
+            left: 0.75rem;
+            top: 1rem;
+            transition: all 0.2s ease-in-out;
+            pointer-events: none;
+            color: #6b7280;
+            font-size: 1rem;
         }
 
+        /* Move label up when input is focused or filled (using + selector) */
+        .input-field:focus + .input-label,
+        .input-field:not(:placeholder-shown) + .input-label {
+            top: -0.5rem;
+            left: 0.5rem;
+            font-size: 0.75rem;
+            padding: 0 0.25rem;
+            background-color: white;
+            color: #2F8F2F; /* leaf color */
+            font-weight: 500;
+        }
     </style>
     <script>
-        // Customizing Tailwind colors for the new design while preserving original class names
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
+                        // Cormorant Garamond for the "fancy" heading look
+                        serif: ['Cormorant Garamond', 'serif'],
                     },
                     colors: {
-                        /* * Original names mapped to new, vibrant greens to match the picture, 
-                         * ensuring the original button classes like 'bg-leaf' work correctly 
-                         */
-                        'primary-green': '#00D084',
-                        'dark-green': '#00A670',
-                        'light-bg': '#F0FFF6',
-                        'leaf': '#00D084', 
-                        'earth': '#00A670',
-                        'terracotta': '#D47551',
-                        'sun': '#F1C40F',
+                        // Reverting to the Yah Nursery specific palette
+                        leaf: '#2F8F2F', // Deep, rich green (Primary)
+                        earth: '#543310', // Dark brown (Text/Secondary Accent)
+                        terracotta: '#D47551', // Accent color
+                        sun: '#F1C40F', // Highlight
+                        lightgray: '#f9f9f9', // Very light background
                     },
                 }
             }
@@ -70,102 +82,75 @@
     </script>
 </head>
 
-<body class="page-bg text-gray-800 font-sans min-h-screen flex justify-center items-center p-4 overflow-hidden">
+<body class="page-bg text-gray-800 font-sans min-h-screen flex justify-center items-center p-4">
 
-    <!-- Main Container Card (Two-Column Layout for the modern look) -->
-    <div class="w-full max-w-5xl h-auto md:h-[600px] bg-white rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
+    <!-- Login Card (Single, large, premium card) -->
+    <div class="w-full max-w-lg bg-white rounded-3xl shadow-2xl p-8 md:p-12 border-t-8 border-leaf/70 transform hover:shadow-3xl transition duration-500">
 
-        <!-- Left Panel: Illustration & Vibrant Green Theme (Design Element) -->
-        <div class="relative p-10 flex flex-col justify-center items-center bg-leaf overflow-hidden min-h-[250px] md:min-h-full">
-            
-            <!-- Dynamic Green Background Shape (Mimicking the curve) -->
-            <div class="absolute inset-0 z-0 opacity-10">
-                <svg viewBox="0 0 100 100" class="w-full h-full" preserveAspectRatio="none">
-                    <path fill="#00A670" d="M0,0 L100,0 L100,70 C50,100 0,70 0,70 Z" />
-                </svg>
+     <!-- Header and Logo -->
+<div class="text-center mb-8">
+    <div class="inline-flex items-center justify-center mb-4">
+        <img src="{{ asset('storage/image/logoYah.png') }}" 
+             alt="Admin Logo" 
+             class="w-48 h-auto object-contain drop-shadow-md">
+    </div>
+
+    <p class="text-gray-500 text-sm font-sans tracking-wide">
+        Login to access the Content Management System
+    </p>
+</div>
+
+
+        <!-- Original Laravel Blade Error Display (Untouched) -->
+        @if ($errors->any())
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl mb-6" role="alert">
+                <ul class="list-disc list-inside mb-0 text-sm">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <!-- Original Form - Method, Action, and @csrf Preserved -->
+        <form method="POST" action="{{ route('admin.login.submit') }}" class="space-y-6">
+            @csrf
+
+            <!-- Email/Username Input Group (Floating Label) -->
+            <div class="input-group">
+                <input type="email" name="email" id="email" 
+                       class="input-field placeholder-transparent font-sans" 
+                       placeholder="you@example.com" 
+                       value="{{ old('email') }}" required>
+                <label for="email" class="input-label font-sans">Email Address</label>
             </div>
 
-            <!-- Simplified Vector Illustration (Mobile Phone & Person) -->
-            <div class="relative z-10 p-4 rounded-xl">
-                <!-- Simple Phone SVG -->
-                <svg class="w-32 h-32 md:w-48 md:h-48 text-white mx-auto shadow-2xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-                    <line x1="12" y1="18" x2="12" y2="18.1"></line>
-                </svg>
-                <!-- Character Placeholder -->
-                <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 p-2 rounded-full bg-white bg-opacity-30">
-                    <i class="fas fa-user-tie text-4xl text-white"></i>
-                </div>
+            <!-- Password Input Group (Floating Label) -->
+            <div class="input-group">
+                <input type="password" name="password" id="password" 
+                       class="input-field placeholder-transparent font-sans" 
+                       placeholder="********" required>
+                <label for="password" class="input-label font-sans">Password</label>
             </div>
 
-            <h3 class="text-3xl font-bold text-white mt-8 text-center drop-shadow-md">
-                Admin Portal
-            </h3>
-            <p class="text-sm text-white text-opacity-80 mt-2 text-center max-w-xs">
-                Access your system settings securely.
-            </p>
-        </div>
-
-        <!-- Right Panel: Login Form (Functional Element) -->
-        <div class="p-8 md:p-12 lg:p-16 flex flex-col justify-center">
-
-            <!-- Profile Icon (Mimicking the top center icon) -->
-            <div class="text-center mb-6">
-                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-light-bg border-4 border-leaf">
-                    <i class="fas fa-user text-4xl text-leaf"></i>
-                </div>
+            <!-- Buttons Area -->
+            <div class="space-y-4 pt-4">
+                <!-- Login Button: Gradient for professional depth -->
+                <button type="submit" class="w-full flex justify-center items-center px-6 py-3 text-lg font-bold rounded-full text-white 
+                                             bg-leaf hover:bg-earth transition-all duration-300 shadow-xl shadow-leaf/40 
+                                             focus:outline-none focus:ring-4 focus:ring-leaf focus:ring-opacity-50
+                                             transform hover:scale-[1.01] font-sans">
+                    <i class="fa-solid fa-right-to-bracket mr-2"></i> Secure Login
+                </button>
+                
+                <!-- Back to Homepage Button (Route Preserved) -->
+                <a href="{{ route('homepage') }}" class="w-full flex justify-center items-center px-6 py-3 text-sm font-semibold rounded-full 
+                                                        text-gray-600 border-2 border-gray-200 hover:border-leaf hover:text-leaf 
+                                                        transition-all duration-300 font-sans">
+                    <i class="fa-solid fa-house-chimney mr-2"></i> Back to Nursery Website
+                </a>
             </div>
-
-            <!-- Large WELCOME text as seen in the image -->
-            <h2 class="text-6xl font-extrabold text-gray-800 text-center mb-10 tracking-wider">
-                ADMIN
-            </h2>
-
-            <!-- Original Laravel Blade Error Display (Untouched) -->
-            @if ($errors->any())
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4" role="alert">
-                    <ul class="list-disc list-inside mb-0 text-sm">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
-            <!-- Original Form - Method, Action, and @csrf Preserved -->
-            <form method="POST" action="{{ route('admin.login.submit') }}" class="space-y-8">
-                @csrf
-
-                <!-- Email/Username Input Group (Redesigned) -->
-                <div class="input-line-group relative">
-                    <label for="email" class="sr-only">Email</label>
-                    <i class="fa-solid fa-user absolute left-0 top-3 text-gray-400"></i>
-                    <input type="email" name="email" id="email" 
-                           class="input-line w-full text-gray-800 placeholder-gray-500 text-lg transition-all duration-300" 
-                           placeholder="Username" required>
-                </div>
-
-                <!-- Password Input Group (Redesigned) -->
-                <div class="input-line-group relative">
-                    <label for="password" class="sr-only">Password</label>
-                    <i class="fa-solid fa-lock absolute left-0 top-3 text-gray-400"></i>
-                    <input type="password" name="password" id="password" 
-                           class="input-line w-full text-gray-800 placeholder-gray-500 text-lg transition-all duration-300" 
-                           placeholder="Password" required>
-                </div>
-                <!-- Buttons Area (Original classes kept, colors re-mapped) -->
-                <div class="space-y-3 pt-6">
-                    <!-- Login Button: bg-leaf and hover:bg-earth are now vibrant green shades -->
-                    <button type="submit" class="w-full flex justify-center items-center px-6 py-3 border border-transparent text-lg font-bold rounded-full shadow-lg text-white bg-leaf hover:bg-earth transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-leaf focus:ring-opacity-50">
-                        <i class="fa-solid fa-right-to-bracket mr-2"></i> LOGIN
-                    </button>
-                    <!-- Back to Homepage Button (Route Preserved) -->
-                    <a href="{{ route('homepage') }}" class="w-full flex justify-center items-center px-6 py-3 border border-gray-300 text-sm font-semibold rounded-full text-gray-600 hover:bg-gray-50 transition-all duration-300">
-                        <i class="fa-solid fa-house-chimney mr-2"></i> Back to Homepage
-                    </a>
-                </div>
-            </form>
-        </div>
+        </form>
     </div>
 
 </body>

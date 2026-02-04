@@ -12,7 +12,7 @@
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #f7f9fa; /* Lighter background for a cleaner look */
+      background-color: #ffffffff; /* Lighter background for a cleaner look */
       color: #1e293b;
     }
 
@@ -26,7 +26,6 @@
     /* Custom styles for professional headings */
     h2 {
       padding-bottom: 0.5rem;
-      border-bottom: 2px solid #d1fae5; /* Subtle border for distinction */
     }
 
     /* Scrollbar for modal content */
@@ -56,12 +55,10 @@
     <div class="relative z-10 max-w-6xl mx-auto px-6 text-center">
        <h1 class="text-6xl md:text-8xl lg:text-9xl font-bold text-white tracking-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]"
         style="font-family: 'Cormorant Garamond', serif; font-style: italic;">
-      Our Story & Mission
-    </h1>
-      <p class="mt-6 text-2xl md:text-3xl text-emerald-200"
+BLOG    </h1>
+      <p class="mt-6 text-2xl md:text-3xl text-[#D4DE95]"
        style="font-family: 'Playfair Display', serif; font-style: italic;">
-      Rooted in Malaysia, growing for the future.
-    </p>
+    Our Story & Mission    </p>
     </div>
   </section>
 
@@ -75,8 +72,10 @@
 
         <!-- Section 1: Founding Story -->
         <section>
-          <h2 class="text-3xl font-extrabold mb-6 text-gray-800">The Genesis of Green: Our Founding Story</h2>
-          <p class="text-lg text-gray-600 leading-relaxed mb-6">
+<h2 class="text-4xl mb-6" 
+    style="font-family: 'Playfair Display', serif; color:#3D4127; font-weight:700; letter-spacing:1px;">
+  The Genesis of Green: Our Founding Story
+</h2>          <p class="text-lg text-gray-600 leading-relaxed mb-6">
             YAH Nursery began with a simple, powerful conviction: that reconnecting people to nature should be accessible to everyone. 
             What started as a humble roadside plant stand has flourished into a <strong>full-service nursery and landscape design firm</strong>, trusted across Malaysia for over 20 years.
           </p>
@@ -86,14 +85,15 @@
         </section>
 
         <!-- Quote -->
-        <div class="pull-quote p-8 bg-emerald-50 rounded-2xl italic text-xl text-gray-700 shadow-lg border-l-8 border-emerald-500">
-          <i data-lucide="quote" class="w-8 h-8 text-emerald-600 mr-3 inline-block align-top"></i>
+        <div class="pull-quote p-8 bg-emerald-50 rounded-2xl italic text-xl text-gray-700 shadow-lg border-l-8 border-[#BAC095]">
+          <i data-lucide="quote" style="color: #3D4127;" class="w-8 h-8 text-emerald-600 mr-3 inline-block align-top"></i>
           "Our roots run deep where  we pair the finest plant stock with the practical knowledge to transform any space into a thriving, sustainable oasis."
         </div>
 
         <!-- Section 2: Integrated Services -->
         <section>
-          <h2 class="text-3xl font-extrabold mb-6 text-gray-800">Beyond the Basics: Integrated Services</h2>
+          <h2 class="text-4xl mb-6" 
+    style="font-family: 'Playfair Display', serif; color:#3D4127; font-weight:700; letter-spacing:1px;">Beyond the Basics: Integrated Services</h2>
           <p class="text-lg text-gray-600 leading-relaxed mb-6">
             From soil analysis and irrigation design to large-scale landscape projects, YAH Nursery provides <strong>end-to-end solutions</strong>. 
             Whether you're a weekend gardener or a property developer, our expertise ensures every project thrives.
@@ -118,7 +118,7 @@
       <aside class="space-y-10">
 
         <!-- Quick Take Card -->
-        <div class="bg-emerald-800 p-8 rounded-2xl shadow-2xl text-white">
+        <div class="bg-[#3D4127] p-8 rounded-2xl shadow-2xl text-white">
           <h3 class="text-2xl font-bold mb-5 border-b pb-3 border-emerald-500">Quick Take: Why Partner With YAH</h3>
           <ul class="space-y-5 text-emerald-100">
             <li class="flex items-start">
@@ -154,7 +154,7 @@
         </div>
 
         <!-- Section 3: Core Values (MOVED) -->
-        <div class="bg-white p-6 rounded-2xl shadow-xl border border-emerald-100">
+        <div class="bg-[#BAC095] p-6 rounded-2xl shadow-xl border border-emerald-100">
             <h3 class="text-2xl font-extrabold mb-6 text-emerald-800 border-b border-emerald-100 pb-3">Our Core Values</h3>
             <div class="grid grid-cols-1 gap-6">
                 
@@ -201,22 +201,30 @@
   <!-- 📰 NEW BLOG SECTION -->
   <section class="bg-white py-20">
     <div class="max-w-6xl mx-auto px-6">
-      <h2 class="text-4xl font-extrabold mb-12 text-center text-gray-800">OUR LATEST BLOG</h2>
-
+<h2 class="text-4xl mb-6 text-center" 
+    style="font-family: 'Playfair Display', serif; color:#3D4127; font-weight:700; letter-spacing:1px;">
+  OUR LATEST BLOG
+</h2>
       <!-- Featured Blog Post Area (Matches the top part of your reference image) -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 bg-emerald-50 p-8 rounded-3xl shadow-xl mb-16">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 bg-[#D4DE95] p-8 rounded-3xl shadow-xl mb-16">
         
         <!-- Text Content -->
-        <div>
-          <h3 class="text-4xl font-extrabold text-gray-900 mb-4">Discover Sustainable Reads</h3>
-          <p class="text-xl text-gray-600 leading-relaxed mb-6">
-            Dive into a curated collection of landscaping tips, plant care guides, and sustainability trends to inspire your next garden project. Our posts bring the joy of green living right to your screen.
-          </p>
-          <!-- This Read More button links to the featured post (ID 1) -->
-          <button onclick="openModal(1)" class="px-8 py-3 bg-blue-600 text-white font-semibold rounded-xl shadow-lg hover:bg-blue-700 transition duration-300">
-            Read Our Featured Article
-          </button>
-        </div>
+<div class="max-w-xl mx-auto text-center py-12 px-6">
+  <h3 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">
+    Discover Sustainable Reads
+  </h3>
+ <!-- Paragraph with fancy font -->
+<p class="text-lg md:text-xl text-gray-700 leading-relaxed mb-8" style="font-family: 'Playfair Display', serif;">
+  Explore curated landscaping tips, plant care guides, and sustainability trends to inspire your next garden project. Our posts bring the joy of green living directly to your screen.
+</p>
+  <!-- Read More button -->
+  <button 
+    onclick="openModal(1)" 
+    class="px-10 py-3 bg-[#636B2F] text-white font-semibold rounded-full shadow-lg hover:from-green-600 hover:to-green-700 transition duration-300">
+    Read Our Featured Article
+  </button>
+</div>
+
 
         <!-- Image -->
         <div class="rounded-2xl overflow-hidden shadow-2xl">
@@ -234,8 +242,6 @@
       </div>
     </div>
   </section>
-
- 
 
   <!-- 🪴 MODAL STRUCTURE (Hidden by default) -->
   <div id="blog-modal" class="fixed inset-0 bg-black bg-opacity-70 z-50 flex justify-center items-center hidden transition-opacity duration-300">

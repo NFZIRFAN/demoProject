@@ -1,92 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edit Customer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Poppins', sans-serif; margin:0; padding:0; background:#f4f6f9; }
-    .container { max-width:900px; margin:40px auto; padding:20px; background:#fff; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); display:flex; gap:30px; flex-wrap:wrap; }
-    .profile-section { flex:1; text-align:center; border-right:1px solid #ddd; padding-right:20px; }
-    .profile-section img { width:180px; height:180px; object-fit:cover; border-radius:50%; border:3px solid #1abc9c; margin-bottom:15px; }
-    .form-section { flex:2; }
-    h1 { margin-bottom:20px; font-size:24px; font-weight:600; color:#2c3e50; }
-    .form-group { margin-bottom:15px; }
-    label { display:block; margin-bottom:5px; font-weight:600; color:#2c3e50; }
-    input { width:100%; padding:10px; border-radius:6px; border:1px solid #ddd; font-size:14px; }
-    .btn-save { background:#1abc9c; color:#fff; padding:10px 16px; border:none; border-radius:6px; font-size:14px; cursor:pointer; transition:0.3s; display:block; margin:20px auto 0; width:80%; }
-    .btn-save:hover { background:#16a085; }
-    .back-btn { display:block; margin-top:10px; font-size:14px; color:#3498db; text-decoration:none; }
-    .back-btn:hover { text-decoration:underline; }
-  </style>
-</head>
-<body>
-  <div class="container">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edit Customer Profile</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Form Section -->
-    <div class="form-section">
-      <h1>Edit Customer</h1>
-      <form action="{{ route('admin.customers.update', $asd->id) }}" method="POST" enctype="multipart/form-data">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f6f9;
+}
+
+/* Focus ring for inputs */
+input:focus, select:focus, textarea:focus {
+    --tw-ring-color: #2F8F2F !important;
+    border-color: #2F8F2F !important;
+}
+
+#mainContent {
+    transition: margin 0.4s ease, max-width 0.4s ease;
+    max-width: calc(100% - 16rem);
+    margin-left: 16rem;
+}
+
+#mainContent.centered {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+}
+</style>
+
+<script>
+tailwind.config = {
+    theme: {
+        extend: {
+            fontFamily: {
+                sans: ['Inter', 'sans-serif'],
+                serif: ['Playfair Display', 'serif'],
+            },
+            colors: {
+                leaf: '#2F8F2F',
+                terracotta: '#D47551',
+                earth: '#543310',
+            },
+        }
+    }
+}
+</script>
+</head>
+<body class="min-h-screen flex flex-col">
+
+<!-- Sidebar -->
+<x-sidebarAdmin id="sidebar" />
+
+<!-- Main Content -->
+<main id="mainContent" class="flex-1 flex justify-center items-start pt-12 pb-12 px-4 md:px-8">
+
+  <!-- Form Container -->
+  <div class="bg-white rounded-xl shadow-2xl p-6 md:p-10 border-t-4 border-leaf w-full max-w-4xl">
+      
+    <!-- Header with Back Button -->
+    <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
+        <h1 class="text-3xl font-bold text-earth border-l-4 border-terracotta pl-4">
+            Edit Customer Profile
+        </h1>
+        <a href="{{ route('admin.customers.index') }}" class="flex items-center text-sm font-medium text-gray-600 hover:text-leaf transition">
+            <i class="fa-solid fa-arrow-left-long mr-2"></i> Back to List
+        </a>
+    </div>
+
+    <form action="{{ route('admin.customers.update', $asd->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
-        <div class="form-group">
-          <label>First Name</label>
-<input type="text" name="firstname" value="{{ old('firstname', $asd->firstname ?? '') }}" required>
+        <!-- Personal Info Section -->
+        <h2 class="text-xl font-semibold text-leaf mb-4 pt-4 border-t">Personal Information</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <div>
+                <label for="firstname" class="block mb-2 text-sm font-medium text-earth">First Name</label>
+                <input type="text" id="firstname" name="firstname" value="{{ old('firstname', $asd->firstname ?? '') }}" required
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-leaf focus:border-leaf transition duration-150">
+            </div>
+
+            <div>
+                <label for="lastname" class="block mb-2 text-sm font-medium text-earth">Last Name</label>
+                <input type="text" id="lastname" name="lastname" value="{{ old('lastname', $asd->lastname ?? '') }}" required
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-leaf focus:border-leaf transition duration-150">
+            </div>
+
+            <div>
+                <label for="email" class="block mb-2 text-sm font-medium text-earth">Email</label>
+                <input type="email" id="email" name="email" value="{{ old('email', $asd->email ?? '') }}" required
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-leaf focus:border-leaf transition duration-150">
+            </div>
+
+            <div>
+                <label for="phonenumber" class="block mb-2 text-sm font-medium text-earth">Phone Number</label>
+                <input type="text" id="phonenumber" name="phonenumber" value="{{ old('phonenumber', $asd->phonenumber ?? '') }}" required
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-leaf focus:border-leaf transition duration-150">
+            </div>
+
+            <div>
+                <label for="icnumber" class="block mb-2 text-sm font-medium text-earth">IC Number</label>
+                <input type="text" id="icnumber" name="icnumber" value="{{ old('icnumber', $asd->icnumber ?? '') }}" required
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-leaf focus:border-leaf transition duration-150">
+            </div>
+
+            <div>
+                <label for="age" class="block mb-2 text-sm font-medium text-earth">Age</label>
+                <input type="number" id="age" name="age" value="{{ old('age', $asd->age ?? '') }}"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-leaf focus:border-leaf transition duration-150">
+            </div>
         </div>
 
-        <div class="form-group">
-          <label>Last Name</label>
-          <input type="text" name="lastname" value="{{ old('lastname', $asd->lastname ?? '') }}" required>
+        <!-- Location & Employment -->
+        <h2 class="text-xl font-semibold text-leaf mb-4 pt-8 border-t mt-8">Location & Employment</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <div>
+                <label for="postcode" class="block mb-2 text-sm font-medium text-earth">Postcode</label>
+                <input type="text" id="postcode" name="postcode" value="{{ old('postcode', $asd->postcode ?? '') }}"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-leaf focus:border-leaf transition duration-150">
+            </div>
+
+            <div>
+                <label for="relationship" class="block mb-2 text-sm font-medium text-earth">Relationship Status</label>
+                <input type="text" id="relationship" name="relationship" value="{{ old('relationship', $asd->relationship ?? '') }}"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-leaf focus:border-leaf transition duration-150">
+            </div>
+
+            <div>
+                <label for="occupation" class="block mb-2 text-sm font-medium text-earth">Occupation</label>
+                <input type="text" id="occupation" name="occupation" value="{{ old('occupation', $asd->occupation ?? '') }}"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-leaf focus:border-leaf transition duration-150">
+            </div>
+
+            <div class="md:col-span-2">
+                <label for="address" class="block mb-2 text-sm font-medium text-earth">Full Address</label>
+                <input type="text" id="address" name="address" value="{{ old('address', $asd->address ?? '') }}"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-leaf focus:border-leaf transition duration-150">
+            </div>
         </div>
 
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" name="email" value="{{ old('email', $asd->email ?? '') }}" required>
-        </div>
-
-        <div class="form-group">
-          <label>Phone Number</label>
-          <input type="text" name="phonenumber" value="{{ old('phonenumber', $asd->phonenumber ?? '') }}" required>
-        </div>
-
-        <div class="form-group">
-          <label>IC Number</label>
-          <input type="text" name="icnumber" value="{{ old('icnumber', $asd->icnumber ?? '') }}" required>
-        </div>
-
-        <div class="form-group">
-          <label>Address</label>
-          <input type="text" name="address" value="{{ old('address', $asd->address ?? '') }}">
-        </div>
-
-        <div class="form-group">
-          <label>Postcode</label>
-          <input type="text" name="postcode" value="{{ old('postcode', $asd->postcode ?? '') }}">
-        </div>
-
-        <div class="form-group">
-          <label>Relationship</label>
-          <input type="text" name="relationship" value="{{ old('relationship', $asd->relationship ?? '') }}">
-        </div>
-
-        <div class="form-group">
-          <label>Age</label>
-          <input type="number" name="age" value="{{ old('age', $asd->age ?? '') }}">
-        </div>
-
-        <div class="form-group">
-          <label>Occupation</label>
-          <input type="text" name="occupation" value="{{ old('occupation', $asd->occupation) }}">
-        </div>
-
-        <button type="submit" class="btn-save">Save Changes</button>
-      </form>
-
-      <a href="{{ route('admin.customers.index') }}" class="back-btn">← Back to Customers</a>
-    </div>
+        <!-- Save Button -->
+        <button type="submit"
+                class="mt-10 w-full md:w-1/2 mx-auto flex items-center justify-center px-6 py-3 bg-leaf text-white font-semibold rounded-lg shadow-lg hover:bg-earth transition duration-300 transform hover:scale-[1.01]">
+            <i class="fa-solid fa-floppy-disk mr-2"></i> Save Changes
+        </button>
+    </form>
 
   </div>
+</main>
+
+<footer class="py-4 text-center text-xs text-gray-400 mt-10">
+    &copy; 2024 Customer Management System. All rights reserved.
+</footer>
+
+<script>
+  // Sidebar toggle function
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const main = document.getElementById('mainContent');
+    sidebar.classList.toggle('hidden');
+    main.classList.toggle('centered');
+  }
+</script>
 </body>
 </html>

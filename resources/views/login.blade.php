@@ -150,7 +150,7 @@ h2 {
 </head>
 <body>
 <div class="login-container">
-    <h2>Welcome</h2>
+    <h2>WELCOME</h2>
 
     @if(session('success'))
         <div class="success-message">{{ session('success') }}</div>

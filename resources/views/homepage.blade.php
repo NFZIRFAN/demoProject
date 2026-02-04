@@ -10,40 +10,231 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    html { scroll-behavior: smooth; }
-    body { color: white; min-height: 100vh; display: flex; flex-direction: column; margin: 0; }
+    html { 
+      scroll-behavior: smooth; }
+    body { 
+      color: white; min-height: 100vh; display: flex; flex-direction: column; margin: 0;  padding-top: 80px; /* match your header's height */
+ }
+   
+      html, body {
+  overflow-y: scroll; /* allow scrolling */
+  scrollbar-width: none; /* hide scrollbar for Firefox */
+}
 
-    /* Top Navbar */
-    header {
-      position: fixed; top: 0; width: 100%;
-      background: rgba(0,0,0,0.7);
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 12px 40px; z-index: 1000;
-    }
-    header .logo { font-size: 18px; font-weight: bold; color: #fff; }
-    nav ul { list-style: none; display:flex; gap:18px; align-items:center; }
-    nav ul li a { text-decoration:none; color:#fff; font-weight:500; font-size:14px; transition: color .3s; }
-    nav ul li a:hover { color:#f1c40f; }
-    header .contact a { color:#fff; margin-left:8px; text-decoration:none; font-size:14px; }
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* hide scrollbar for Chrome, Safari, Edge */
+}
 
-    /* Hero Section */
-    .hero {
-      height: 85vh;
-      background: url('https://jeffries.com.au/wp-content/uploads/2022/11/shutterstock_1924361366.jpg') no-repeat center center/cover;
-      display:flex; flex-direction:column; justify-content:center; align-items:center;
-      text-align:center; position:relative; padding-top:70px;
-    }
-    .hero::after { content:""; position:absolute; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.5); z-index:1; }
-    .hero-content { position:relative; z-index:2; padding:0 20px; }
-    .hero h1 { font-size:34px; margin-bottom:10px; }
-    .hero p { font-size:16px; margin-bottom:18px; }
-    .hero .btn {
-      padding:10px 22px; background:rgb(49,67,56); color:white; text-decoration:none; font-size:14px;
-      border-radius:30px; transition: background .3s, transform .2s; cursor:pointer;
-    }
-    .hero .btn:hover { background:rgb(210, 213, 211); transform: scale(1.05); }
+/* Header */
+header.header {
+  position: fixed;
+  top: 20px;
+  left: 0;
+  right: 0;
+  width: calc(100% - 40px);
+  height: 70px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
 
-    /* Sections */
+  background: rgba(255, 255, 255, 0.1); /* default transparent */
+  backdrop-filter: blur(12px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  border-radius: 20px;
+  overflow: visible; /* ✅ allow dropdown to show */
+  transition: all 0.3s ease; /* smooth transition */
+  z-index: 1000;
+}
+
+/* Shrinks and turns black when scrolling */
+header.scrolled {
+  top: 10px;
+  height: 60px;
+  padding: 0 30px;
+  background: rgba(0, 0, 0, 0.9); /* turns black on scroll */
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+
+header.scrolled .logo-img {
+  height: 50px;
+}
+
+
+/* ===================== */
+/*   LEFT: Logo          */
+/* ===================== */
+.header-left {
+  flex: 1; /* keeps it aligned left */
+}
+
+/* Adjust logo size */
+.logo-img {
+  height: 160px;
+  object-fit: contain;
+  transition: height 0.3s ease;
+}
+
+header.scrolled .logo-img {
+  height: 80px; /* slightly smaller on scroll but still visible */
+}
+
+/* ===================== */
+/*  CENTER: Navigation   */
+/* ===================== */
+.header-nav {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+}
+
+.header-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.header-nav ul li a.nav-link {
+  text-decoration: none;
+  color: #ffffffcc;
+  font-size: 18px;
+  font-weight: 500;
+  position: relative;
+  transition: 0.3s;
+}
+
+.header-nav ul li a.nav-link:hover,
+.header-nav ul li a.nav-link.active {
+  color: #fff;
+}
+
+.header-nav ul li a.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 2px;
+  width: 0%;
+  background: #fff;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.header-nav ul li a.nav-link:hover::after,
+.header-nav ul li a.nav-link.active::after {
+  width: 100%;
+}
+
+/*   RIGHT: Login Text + Icon   */
+.contact {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  position: relative; /* ✅ anchor dropdown */
+}
+.dropdown-menu.show {
+  display: flex;
+}
+
+.contact a {
+  text-decoration: none;
+  color: #ffffffcc; /* semi-transparent white */
+  font-weight: 600;
+  font-size: 17px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px; /* space between icon and text */
+  
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+
+  transition: color 0.3s ease;
+}
+
+/* Icon animation: subtle lift on hover */
+.contact a i {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.contact a:hover i {
+  transform: translateY(-3px) rotate(-10deg);
+}
+
+/* Optional: gentle floating animation even without hover */
+.contact a i {
+  animation: floatIcon 2s ease-in-out infinite;
+}
+
+@keyframes floatIcon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+.contact a:hover {
+  color: #fff; /* highlight text on hover */
+}
+
+header.scrolled .contact a {
+  color: #ffffff; /* visible on black scroll header */
+}
+
+ /* Hero Section 1*/
+.hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-top: 70px;
+  overflow: hidden;
+}
+
+.hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* ensures video fills the hero area */
+  z-index: 0;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5); /* overlay for readability */
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 20px;
+  color: white;
+}
+
+.hero h1 { font-size:34px; margin-bottom:10px; }
+.hero p { font-size:16px; margin-bottom:18px; }
+.hero .btn {
+padding:10px 22px; background:rgba(163, 171, 46, 1); color:white; text-decoration:none; font-size:14px;
+border-radius:30px; transition: background .3s, transform .2s; cursor:pointer;
+}
+.hero .btn:hover { background:rgba(69, 93, 24, 1); transform: scale(1.05); }
+
+
+    /* Sections 2*/
     section { padding: 60px 40px; scroll-margin-top: 70px; }
     #about { color: #333; background: #f5f6fa; }
     section h2 { margin-bottom: 15px; font-size: 26px; }
@@ -58,8 +249,103 @@
     }
     .section-flex .text h2 { color:#2f8f2f; font-size:28px; margin-bottom:15px; }
 
-    /* Blog Slider (kept as-is) */
-    #blog { background: linear-gradient(135deg,#ffffff,rgb(255, 255, 255)); color:#333; text-align:center; }
+    /* SECTION 3 */
+  .hero-background {
+    background-image: url('https://i.pinimg.com/1200x/51/50/04/515004dfc56fe9bf0a7c2201744bdda0.jpg');
+    background-size: cover;
+    background-position: center center;
+    height: 70vh; /* smaller height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 3rem; /* slightly reduced spacing below hero */
+}
+
+/* Transparent content box */
+.content-box {
+    position: relative;
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.8); /* slightly more opaque for clarity */
+    border-radius: 10px;
+    max-width: 600px;
+    width: 90%;
+    padding: 2rem 1.5rem; /* smaller padding */
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+}
+
+/* Headline */
+.hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem; /* reduced from 3rem */
+    color: #3D4127;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.8rem;
+}
+
+/* Subtitle */
+.hero-subtitle {
+    font-size: 1rem; /* reduced from 1.2rem */
+    color: #4b4b4b;
+    margin-bottom: 1.5rem;
+}
+
+/* CTA Button */
+.hero-btn {
+    padding: 0.8rem 2rem;
+    background-color: #3D4127;
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.hero-btn:hover {
+    background-color: #636B2F;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+}
+
+/* Responsive adjustments */
+@media (min-width: 640px) {
+    .hero-title { font-size: 3rem; }
+    .hero-subtitle { font-size: 1.1rem; }
+}
+
+@media (min-width: 1024px) {
+    .hero-title { font-size: 3.5rem; }
+    .hero-subtitle { font-size: 1.2rem; }
+}
+ .title-font {
+    font-family: 'Playfair Display', serif;
+  }
+
+  .content-bg {
+    background-color: #F7F6F4;
+  }
+
+  .h-section {
+    min-height: 80vh;
+  }
+
+  /* Add slight motion on hover */
+  img {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  img:hover {
+    transform: scale(1.03);
+  }
+
+    /* Blog Slider section 3 */
+    #blog { background: linear-gradient(135deg,#ffffff); color:#333; text-align:center; }
     #blog h2 { font-size:28px; margin-bottom:25px; color:#2f8f2f; }
     .blog-slider { position:relative; max-width:1000px; margin:auto; overflow:hidden; border-radius:15px; }
     .blog-slides { display:flex; transition: transform .5s ease-in-out; }
@@ -71,8 +357,8 @@
     .blog-scrollbar-thumb { height:100%; width:33.33%; background:#2f8f2f; border-radius:3px; transition: transform .5s ease; }
 
     /* Team Section - make it look like the sample image */
-    #team { background: #fff; color: #333; text-align:center; padding: 60px 40px; }
-    #team h2 { font-size: 34px; color: #0f6a3a; margin-bottom: 10px; }
+    #team { background: #ffffffff; color: #333; text-align:center; padding: 60px 40px; }
+    #team h2 { font-size: 34px; color: #636B2F; margin-bottom: 10px; }
     #team .heading-dots { display:flex; gap:10px; justify-content:center; margin-bottom:18px; }
     #team .heading-dots span {
       width:10px; height:10px; border-radius:50%; background:#2f8f2f; opacity:0.9;
@@ -110,7 +396,16 @@
       background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.75) 100%);
       color: #fff; padding: 22px 16px;
     }
-    .team-info h3 { font-size:20px; margin-bottom:6px; font-weight:700; }
+.team-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+    color: #ffffffff; /* Elegant garden green */
+    text-transform: uppercase;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
     .team-info p { font-size:14px; margin:0; opacity:0.95; }
 
     /* nav arrows outside (left/right) */
@@ -142,170 +437,133 @@
       .team-member { width: 230px; min-width:230px; }
       .team-nav.prev, .team-nav.next { display: none; } /* small screens will swipe */
     }
+#customer-says {
+  background: linear-gradient(135deg, #ffffffff, #ffffff);
+  padding: 100px 20px;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+}
 
-    /* Customer Says Section styling kept similar */
-    #customer-says {  background: linear-gradient(135deg,#ffffff,rgba(255, 255, 255, 1)); color:#fff; text-align:center; padding:60px 40px; scroll-margin-top:70px; }
-    #customer-says h2 { font-size:26px; color:#000; margin-bottom:30px; }
-    .testimonials { display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:25px; max-width:1000px; margin:auto; }
-    .testimonial { background:white; padding:22px; border-radius:15px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); text-align:center; transition: transform .3s ease; }
-    .testimonial:hover { transform: translateY(-5px); }
-    .testimonial p { font-size:14px; line-height:1.5; margin-bottom:12px; font-style: italic; color:#555; }
-    .testimonial h4 { font-size:15px; font-weight:700; color:#2f8f2f; }
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  font-weight: 800;
+  color: #3D4127;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
 
-    /* Footer kept same visual */
-    footer { width:100%; background: rgb(39,34,34); color:#ddd; }
-    footer .footer-container { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:30px; padding:35px 40px 15px; max-width:1100px; margin:auto; }
-    footer h3 { margin-bottom:12px; font-size:15px; font-weight:bold; color:#76c38f; display:flex; align-items:center; gap:6px; }
-    footer p, footer ul li { font-size:13px; margin-bottom:6px; line-height:1.5; }
-    footer ul { list-style:none; padding:0; }
-    footer ul li a { text-decoration:none; color:#ddd; transition:color .3s; font-size:13px; }
-    footer ul li a:hover { color:#76c38f; }
-    .social-links a { color:#ddd; margin-right:12px; font-size:18px; transition: .3s; }
-    .social-links a:hover { color:#76c38f; }
-    .bottom-bar { width:100%; background:#111; color:#bbb; text-align:center; padding:10px 0; font-size:12px; border-top:1px solid #333; }
+.divider {
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(to right, #3D4127, #7B9E46);
+  margin: 0 auto 30px;
+  border-radius: 2px;
+}
 
-    /* hide native scrollbar for team track on WebKit */
+.section-subtitle {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 60px;
+  max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.reviews-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 35px;
+  justify-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Review Card */
+.review-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 30px 25px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  text-align: left;
+  position: relative;
+}
+
+.review-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.review-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #BAC095;
+}
+
+.review-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: #3D4127;
+  margin: 0;
+}
+
+.review-stars {
+  color: #FACC15; /* golden star color */
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.review-text {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  font-style: italic;
+  position: relative;
+}
+
+.review-text::before {
+  content: "“";
+  font-size: 45px;
+  color: #BAC095;
+  position: absolute;
+  left: -10px;
+  top: -15px;
+  opacity: 0.3;
+}
+
+.review-date {
+  font-size: 13px;
+  color: #888;
+  display: block;
+  text-align: right;
+}
+
+        /* SECTION 4 */
     .team-slider::-webkit-scrollbar, .blog-slider::-webkit-scrollbar { display: none; }
 
-     /* General styling for the body */
+     /* SECTION 4 */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f8f8f8;
+            background-color: #ffffffff;
             line-height: 1.6;
         }
 
-        /* The main container for the entire section */
-        #blog {
-            padding: 60px 20px;
-            text-align: center;
-            background-color: #fff;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-
-        /* Title and subtitle styling */
-        .subtitle {
-            font-size: 16px;
-            color: #555;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 600;
-            color: #2e8b57; /* A nice shade of green for the subtitle */
-        }
-        #blog h2 {
-    font-size: 25px;
-    color: #264226ff;
-    margin-bottom: 50px;
-    font-family: 'Playfair Display', serif; /* Set the unique font */
-    font-style: italic; /* Make it italic */
-    font-weight: 400; /* Optional: normal weight; use 700 for bold */
-}
-
-
-        /* Container for the service items and central image */
-        .services-container {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start; /* Align items to the top for a cleaner look */
-            flex-wrap: wrap; /* Allows items to wrap on smaller screens */
-            gap: 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Container for the service columns on the left and right */
-        .service-column {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            flex: 1; /* Allow columns to grow and shrink */
-            max-width: 350px;
-        }
-
-        /* Style for each individual service item */
-        .service-item {
-            display: flex;
-            flex-direction: column; /* This is the key change to stack icon and text */
-            align-items: center;
-            text-align: center;
-        }
-
-        /* The green circular icon background */
-        .service-icon {
-            background-color: #2e8b57; /* Green color for icons */
-            border-radius: 50%;
-            width: 70px;
-            height: 70px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 15px; /* Added margin to separate icon and text */
-            flex-shrink: 0; /* Prevents the icon circle from shrinking */
-        }
-
-        /* Icon image styling */
-        .service-icon img {
-            width: 35px;
-            height: 35px;
-            filter: invert(100%); /* Makes icons white */
-        }
-
-        /* Text content for each service */
-        .service-content h3 {
-            margin: 0;
-            font-size: 22px;
-            color: #333;
-            font-weight: bold;
-        }
-        .service-content p {
-            font-size: 15px;
-            color: #777;
-            margin-top: 5px;
-        }
-
-        /* The central circular image */
-        .central-image {
-            flex-shrink: 0;
-            width: 350px; 
-            height: 350px; /* Fixed height for a perfect circle */
-            margin: 0 40px;
-        }
-        .central-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Ensures the image fills the circle */
-            border-radius: 50%; /* This is what makes the image a circle */
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15); /* Adds a subtle shadow for depth */
-            transition: transform 0.3s ease-in-out; /* Adds a smooth transition for the hover effect */
-        }
-        
-        /* Hover effect for the central image */
-        .central-image img:hover {
-            transform: scale(1.05); /* Scales the image up by 5% on hover */
-        }
-
-        /* Responsive adjustments for smaller screens */
-        @media (max-width: 900px) {
-            .services-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            .central-image {
-                margin: 40px 0;
-            }
-            .service-column {
-                width: 100%;
-                align-items: center;
-            }
-            .service-item {
-                width: 90%;
-            }
-        }
-       /* Flash Sale Background */
+      
+/* Flash Sale Background SECTION 5*/
 #flash-sale {
-  background: url('https://img.pikbest.com/wp/202343/dark-green-leaves-natural-create-a-captivating-background-texture_9969560.jpg!w700wp') no-repeat center center/cover;
   height: 70vh;
   display: flex;
   align-items: center;
@@ -335,7 +593,7 @@
   font-weight: 700;
   margin-bottom: 20px;
   font-family: 'Playfair Display', serif;  /* Elegant title */
-  color: #f4d03f; /* Gold-ish */
+  color: #D4DE95; /* Gold-ish */
 }
 
 .flash-overlay p {
@@ -349,10 +607,10 @@
 /* Flash Button with Cool Effect */
 .flash-btn {
   padding: 14px 32px;
-  background: linear-gradient(45deg,rgb(65, 111, 84),rgb(74, 109, 89));
+  background: linear-gradient(45deg, #636B2F, #BAC095);
   border: none;
   border-radius: 50px;
-  color: white;
+  color: #3D4127;
   font-size: 18px;
   text-decoration: none;
   cursor: pointer;
@@ -361,13 +619,15 @@
   overflow: hidden;
   transition: all 0.4s ease;
   box-shadow: 0 4px 15px rgba(25, 24, 24, 0.3);
+  font-weight: 600;
 }
 
 /* Button Hover Effects */
 .flash-btn:hover {
-  background: linear-gradient(45deg,rgb(189, 117, 62),rgb(144, 144, 23));
+  background: linear-gradient(45deg, #BAC095, #636B2F);
   transform: scale(1.08);
   box-shadow: 0 6px 25px rgba(206, 219, 211, 0.6);
+  color: #3D4127;
 }
 
 /* Glowing Border Animation */
@@ -376,7 +636,7 @@
   position: absolute;
   top: -2px; left: -2px; right: -2px; bottom: -2px;
   border-radius: 50px;
-  background: linear-gradient(90deg,rgb(200, 111, 33),rgb(63, 112, 84),rgb(66, 106, 83));
+  background: linear-gradient(90deg, #636B2F, #BAC095, #3D4127);
   z-index: -1;
   background-size: 200%;
   animation: glowing 3s linear infinite;
@@ -386,6 +646,13 @@
 
 .flash-btn:hover::before {
   opacity: 1;
+}
+
+/* Keyframes for glowing animation */
+@keyframes glowing {
+  0% { background-position: 0 0; }
+  50% { background-position: 200% 0; }
+  100% { background-position: 0 0; }
 }
 
 /* Glow Animation */
@@ -404,121 +671,134 @@
   align-items: center;
   z-index: 9999;
 }
+ /* Popup Box */
+.popup-box {
+  position: relative;
+  background: linear-gradient(145deg, #dfe5b8, #cdd59b);
+  color: #2c2c2c;
+  padding: 42px 34px 32px;
+  border-radius: 20px;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  font-family: 'Poppins', 'Inter', sans-serif;
+  animation: softFloat 0.5s ease;
+}
 
+/* Title */
+.popup-box h2 {
+  margin-bottom: 14px;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  color: #2f3320;
+}
 
-  /* Popup Box */
+/* Description */
+.popup-box p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #4b4b3f;
+  margin-bottom: 34px;
+}
+
+/* Buttons Container */
+.popup-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Luxury Base Button */
+.popup-buttons a {
+  padding: 13px 30px;
+  border-radius: 30px;
+  font-size: 14.5px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  text-decoration: none;
+  transition: all 0.35s ease;
+}
+
+/* Elegant Login Button */
+.login-btn {
+  background: rgba(255, 255, 255, 0.85);
+  color: #2f3320;
+  border: 1.5px solid rgba(47, 51, 32, 0.5);
+  backdrop-filter: blur(6px);
+}
+
+.login-btn:hover {
+  background: #3d4127;
+  color: #e6edb8;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(61, 65, 39, 0.4);
+}
+
+/* Premium Signup Button */
+.signup-btn {
+  background: linear-gradient(135deg, #3d4127, #2f3320);
+  color: #f6f8e6;
+  box-shadow: 0 10px 25px rgba(47, 51, 32, 0.5);
+}
+
+.signup-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(47, 51, 32, 0.6);
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  color: #444;
+  cursor: pointer;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.close-btn:hover {
+  background: #3d4127;
+  color: #e6edb8;
+  transform: rotate(90deg) scale(1.1);
+}
+
+/* Animation */
+@keyframes softFloat {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Mobile */
+@media (max-width: 500px) {
   .popup-box {
-    position: relative;
-    background: #ffffff;
-    color: #333333;
-    padding: 40px 30px 30px 30px;
-    border-radius: 16px;
-    max-width: 400px;
-    width: 90%;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    text-align: center;
-    font-family: 'Inter', 'Poppins', sans-serif; /* Clean modern font */
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    padding: 32px 22px 26px;
   }
+}
 
-  .popup-box h2 {
-    margin-bottom: 12px;
-    font-size: 24px;
-    font-weight: 600;
-    color: #2c3e50;
-  }
 
-  .popup-box p {
-    font-size: 15px;
-    line-height: 1.6;
-    color: #555;
-    margin-bottom: 28px;
-  }
-
-  /* Buttons Container */
-  .popup-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-    margin-bottom: 10px;
-  }
-
-  /* Clean Login Button */
-  .login-btn {
-    background: #ffffff;
-    border: 2px solid #2c3e50;
-    color: #2c3e50;
-    padding: 12px 28px;
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 15px;
-    text-decoration: none; /* remove underline */
-    transition: all 0.25s ease;
-  }
-  .login-btn:hover {
-    background: #2c3e50;
-    color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-  }
-
-  /* Clean Signup Button */
-  .signup-btn {
-    background: #2c3e50;
-    color: #ffffff;
-    border: none;
-    padding: 12px 28px;
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 15px;
-    text-decoration: none; /* remove underline */
-    transition: all 0.25s ease;
-  }
-  .signup-btn:hover {
-    background: #1a252f;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-  }
-
-  /* Clean Close Button */
-  .close-btn {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: #f0f0f0;
-    border: none;
-    font-size: 18px;
-    font-weight: bold;
-    color: #555;
-    cursor: pointer;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.25s ease;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  }
-  .close-btn:hover {
-    background: #2c3e50;
-    color: #fff;
-    transform: scale(1.1);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-  }
-
-  @media (max-width: 500px) {
-    .popup-box {
-      padding: 30px 20px 25px 20px;
-    }
-    .popup-buttons a {
-      padding: 10px 22px;
-      font-size: 14px;
-    }
-  }
+/* SECTION 7 */
 .visit-nursery {
-  background-color: #ffffffff;
+  background-color: #ffffff; /* keep white background */
   padding: 80px 40px;
   display: flex;
   justify-content: center;
@@ -535,34 +815,40 @@
 
 .contact-card h2 {
   font-size: 2rem;
-  color: #222;
+  color: #3D4127; /* dark combo color for headings */
   font-weight: 700;
   margin-bottom: 10px;
 }
 
 .subtitle {
-  color: #666;
+  color: #636B2F; /* green combo color for subtitles */
   font-size: 1rem;
   margin-bottom: 25px;
 }
 
 .info-card {
-  background: #fff;
+  background: #ffffffff; /* soft green card background */
   border-radius: 12px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.06);
   padding: 25px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
 .info-card h3 {
   font-size: 1.2rem;
   font-weight: 600;
-  color: #222;
+  color: #3D4127; /* dark color for subheadings */
   margin-bottom: 10px;
 }
 
 .info-card hr {
   border: none;
-  border-top: 1px solid #eee;
+  border-top: 1px solid #3D4127; /* divider in dark combo color */
   margin: 10px 0 20px;
 }
 
@@ -571,12 +857,12 @@
   align-items: flex-start;
   gap: 12px;
   margin-bottom: 18px;
-  color: #444;
+  color: #3D4127;
 }
 
 .icon {
   font-size: 1.2rem;
-  color: #2d6a4f;
+  color: #636B2F;
   margin-top: 4px;
 }
 
@@ -584,18 +870,20 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background-color: #2d6a4f;
-  color: #fff;
+  background: linear-gradient(45deg, #636B2F, #3D4127);
+  color: #BAC095;
   padding: 10px 18px;
   border-radius: 8px;
   text-decoration: none;
   font-weight: 500;
   margin-top: 10px;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
 }
 
 .direction-btn:hover {
-  background-color: #40916c;
+  background: linear-gradient(45deg, #3D4127, #636B2F);
+  transform: scale(1.05);
+  color: #BAC095;
 }
 
 .map-container iframe {
@@ -606,6 +894,7 @@
   box-shadow: 0 5px 15px rgba(0,0,0,0.08);
 }
 
+
 @media (max-width: 900px) {
   .visit-container {
     grid-template-columns: 1fr;
@@ -615,31 +904,29 @@
   }
 }
 
-    /* Custom styles for professional headings */
-    h2 {
+/* Custom styles for professional headings */
+h2 {
       padding-bottom: 0.5rem;
-      border-bottom: 2px solid #d1fae5;
     }
 
-    /* Scrollbar for modal content */
-    .modal-content-scroll {
+/* Scrollbar for modal content */
+.modal-content-scroll {
         max-height: 80vh;
         overflow-y: auto;
     }
-
-    /* Custom gradient background for the new hero section */
-    .hero-bg-gradient {
+ /* Custom gradient background for the new hero section */
+.hero-bg-gradient {
       background: linear-gradient(135deg, #e0f2f1 0%, #b2f5ea 50%, #f7f9fa 100%);
     }
 
-    /* Custom styles for 3D card/image display */
-    .plant-display-container {
+/* Custom styles for 3D card/image display */
+.plant-display-container {
         position: relative;
         perspective: 1000px;
     }
 
-    /* Applied directly to the image container for the 3D effect */
-    .plant-3d-card {
+/* Applied directly to the image container for the 3D effect */
+.plant-3d-card {
         transition: transform 0.5s ease-out, box-shadow 0.5s ease-out;
         /* Slight 3D tilt and elevation */
         transform: rotateY(10deg) rotateX(5deg) scale(1.05); 
@@ -647,8 +934,8 @@
         border: 4px solid #ffffff; /* White border for emphasis */
     }
 
-    /* Custom button style to match the aesthetic */
-    .cta-button {
+/* Custom button style to match the aesthetic */
+.cta-button {
         background: linear-gradient(90deg, #10b981 0%, #059669 100%);
         box-shadow: 0 10px 20px rgba(16, 185, 129, 0.4);
         transition: all 0.3s ease;
@@ -658,163 +945,676 @@
         background: linear-gradient(90deg, #059669 0%, #047857 100%);
         transform: translateY(-2px);
     }
-  </style>
-</head>
-<body>
-  <!-- Top Navbar -->
-  <header>
-    <div class="logo">NURSERY 🌿</div>
-    <nav>
-      <ul>
-        <li><a href="#home">HOME</a></li>
-        <li><a href="#team">PLANT</a></li>
-        <li><a href="#blog">BLOG</a></li>
-        <li><a href="#flash-sale">SALES</a></li>
-        <li><a href="#visit">VISIT</a></li>
-        <li><a href="#customer-says">CONTACT</a></li>
-      </ul>
-    </nav>
-    <div class="contact">
-      <a href="{{ route('customer.register') }}">Sign up</a> |
-      <a href="{{ route('customer.login') }}">Login</a>
-    </div>
-  </header>
-
-  <!-- Hero Section -->
-  <div class="hero" id="home">
-    <div class="hero-content">
-      <h1>YAH NURSERY AND LANDSCAPE SDN BHD</h1>
-      <p>SHAH ALAM</p>
-      <a href="#" class="btn" onclick="openPopup(event)">SHOP NOW</a>
-    </div>
-  </div>
-   <!-- Team Section (new, matches your requested visual) -->
-  <section id="team">
-    <h2>TOP DEALS</h2>
-    <div class="heading-dots" aria-hidden="true">
-      <span></span><span></span><span></span>
-    </div>
-    <p class="lead">We at Yah Nursery are proud to offer carefully designed landscapes crafted to suit our clients’ preferences while prioritizing sustainability.</p>
-
-    <div class="team-wrap">
-      <!-- left nav (outside) -->
-      <button class="team-nav prev" id="teamPrev" aria-label="Previous team" onclick="teamPrev()">‹</button>
-
-      <!-- slider viewport -->
-      <div class="team-slider" id="teamSliderViewport">
-        <div class="team-track" id="teamTrack">
-          <!-- Replace these images with real team photos if you have them -->
-          <div class="team-member">
-            <img src="https://img.freepik.com/free-photo/ai-generated-sunflowers_23-2150681826.jpg?semt=ais_incoming&w=740&q=80" alt="Sunflower">
-            <div class="team-info">
-              <h3>Sunflower</h3>
-            </div>
-          </div>
-
-          <div class="team-member">
-            <img src="https://w0.peakpx.com/wallpaper/597/64/HD-wallpaper-plant-in-glass-vase-brown-flower-nature-petaled-vertical-white.jpg" alt="Bill Clarkson">
-            <div class="team-info">
-              <h3>Spiral Aloe</h3>
-            </div>
-          </div>
-
-          <div class="team-member">
-            <img src="https://hevagifts.com.my/cdn/shop/files/Soledat-white-calla-lilies-in-vase-delviery-malaysia_1600x.jpg?v=1741918024" alt="John Dwyne">
-            <div class="team-info">
-              <h3>Lillies flower</h3>
-            </div>
-          </div>
-
-          <!-- extra members so sliding shows movement -->
-          <div class="team-member">
-            <img src="https://vintagerevivals.com/wp-content/uploads/2019/04/Everything-You-Need-to-Know-About-Snake-Plants-13.jpg" alt="Aisyah">
-            <div class="team-info">
-              <h3>Snake plants</h3>
-            </div>
-          </div>
-
-          <div class="team-member">
-            <img src="https://media.houseandgarden.co.uk/photos/64bff5f4d6a55acd0397054e/3:4/w_748%2Cc_limit/Screenshot%25202023-07-25%2520at%252017.17.10.png" alt="Mei Ling">
-            <div class="team-info">
-              <h3>Pothos</h3>
-            </div>
-          </div>
-
-          <div class="team-member">
-            <img src="https://glasswingshop.com/cdn/shop/products/8D2A2069.jpg?v=1595400475&width=533" alt="Mei Ling">
-            <div class="team-info">
-              <h3>Zamioculcas zamiifolia</h3>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- right nav (outside) -->
-      <button class="team-nav next" id="teamNext" aria-label="Next team" onclick="teamNext()">›</button>
-    </div>
-  </section>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
-
-<section id="blog" class="relative bg-white py-16 px-8 flex flex-col md:flex-row items-center justify-between rounded-3xl shadow-lg mt-12">
-  <!-- Text Content -->
-  <div class="md:w-1/2 text-center md:text-left space-y-6">
-  <!-- Title -->
-  <h1 class="text-5xl md:text-6xl font-extrabold text-green-900 leading-snug" style="font-family: 'Playfair Display', serif;">
-    Yah Nursery & Landscape
-  </h1>
- <br>
-  <!-- Subtitle -->
-  <h2 class="text-xl md:text-2xl text-green-700 leading-relaxed" style="font-family: 'Poppins', sans-serif;">
-    Bringing nature closer to your home for over 20 years. Explore our range of indoor and outdoor plants,
-    including our exclusive sunflower and three-month flower collection from Cameron Highlands.
-  </h2>
-  <!-- Description -->
-  <h3 class="text-md text-black-600">
-    Beautify your space with Yah Nursery where every plant tells a story of growth and care.
-  </h3>
-  <br>
-
-  <!-- Button -->
-  <a href="#sales" class="flash-btn">YOU GET MORE TO SEE </a>
-</div>
-
-
-  <!-- 3D Image (Bigger + Floating) -->
-  <div class="md:w-1/2 flex justify-center mt-10 md:mt-0 relative">
-    <div class="absolute w-[250px] h-[250px] bg-green-200/30 blur-3xl rounded-full top-10 right-10 animate-pulse"></div>
-    <img 
-      src="{{ asset('storage/image/PLANT3D.png') }}" 
-      alt="Yah Nursery 3D Plant"
-      class="w-[460px] md:w-[550px] drop-shadow-2xl transform hover:scale-110 transition-transform duration-700 animate-float"
-    />
-  </div>
-</section>
-
-<!-- ✨ Floating Animation -->
-<style>
-@keyframes float {
+    @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-14px); }
 }
 .animate-float {
   animation: float 4.5s ease-in-out infinite;
 }
+ button:hover {
+    transform: scale(1.07);
+    box-shadow: 0 10px 25px rgba(47, 82, 51, 0.35);
+  }
+
+  button:active {
+    transform: scale(0.95);
+    box-shadow: 0 6px 15px rgba(47, 82, 51, 0.25);
+  }
+
+  button:focus {
+    outline: none;
+  }
+ /* Dropdown wrapper */
+.dropdown {
+  position: relative;
+}
+
+/* Login trigger button */
+.login-trigger {
+  background: none;
+  border: none;
+  color: #ffffffcc;
+  font-weight: 600;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 130%;
+  background: #ffffff;
+  border-radius: 8px;
+  min-width: 190px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+/* Dropdown items */
+/* Dropdown items highlight */
+.dropdown-menu a {
+  padding: 12px 16px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease; /* smooth hover effect */
+  border-radius: 6px; /* rounded corners for hover highlight */
+}
+
+.dropdown-menu a:hover {
+  background: #b0a3a3ff; /* light gray highlight */
+  color: #000;          /* text becomes darker */
+}
+
+/* Keep dropdown text dark even when header is scrolled */
+header.scrolled .dropdown-menu a {
+  color: #333 !important;
+}
+header.scrolled .dropdown-menu a:hover {
+  background: #f5f5f5;
+  color: #000;
+}
+
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+<body>
+<header class="header">
+  
+  <!-- LEFT: Logo -->
+  <div class="header-left">
+    <img 
+      src="{{ asset('storage/image/YAH.png') }}" 
+      class="logo-img"
+      alt="Yah Nursery Logo"
+    >
+  </div>
+
+  <!-- CENTER: Navigation -->
+  <nav class="header-nav">
+    <ul>
+      <li><a href="#home" class="nav-link active">HOME</a></li>
+      <li><a href="#team" class="nav-link">PLANT</a></li>
+      <li><a href="#blog" class="nav-link">BLOG</a></li>
+      <li><a href="#customer-says" class="nav-link">FEEDBACK</a></li>
+      <li><a href="#visit" class="nav-link">LOCATION</a></li>
+    </ul>
+  </nav>
+
+<!-- RIGHT: Login Dropdown -->
+<div class="contact dropdown">
+  <button id="loginBtn" class="login-trigger" type="button">
+    <i class="fa-solid fa-user"></i> LOGIN
+    <i class="fa-solid fa-caret-down"></i>
+  </button>
+
+  <div id="loginMenu" class="dropdown-menu">
+    <a href="{{ route('customer.login') }}">
+      <i class="fa-solid fa-user"></i> Customer Login
+    </a>
+    <a href="{{ route('admin.login') }}">
+      <i class="fa-solid fa-right-to-bracket"></i> Admin Login
+    </a>
+  </div>
+</div>
+
+</header>
+<script>
+  const btn = document.getElementById('loginBtn');
+  const menu = document.getElementById('loginMenu');
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+  });
+
+  document.addEventListener('click', () => {
+    menu.style.display = 'none';
+  });
+</script>
+
+
+
+<script>
+  const header = document.querySelector('header.header');
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 50) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+});
+</script>
+
+<!-- Hero Section 1-->
+<div class="hero" id="home">
+  <!-- Background Video -->
+  <video autoplay muted loop playsinline class="hero-video">
+    <source src="{{ asset('storage/video/b6.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Overlay -->
+  <div class="hero-overlay"></div>
+
+<!-- Hero Content -->
+<div class="hero-content">
+  <h1 class="text-center leading-tight tracking-wide mb-6">
+
+    <!-- Welcome Text -->
+    <span class="hero-welcome">
+      Welcome to
+    </span>
+    <br>
+
+    <!-- Brand Name -->
+    <span class="brand-title">
+      YAH NURSERY & LANDSCAPE SDN BHD
+    </span>
+
+  </h1>
+
+  <h3 class="hero-location">
+    Shah Alam
+  </h3>
+
+  <h4 class="location-sub">
+  Seksyen 27
+</h4>
+
+
+  <br>
+<a href="#" 
+   class="btn font-bold tracking-widest"
+   style="font-family: 'Montserrat', sans-serif;"
+   onclick="openPopup(event)">
+  SHOP NOW
+</a>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+
+</div>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@400;500&display=swap');
+
+/* Welcome text */
+.hero-welcome {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  line-height: 1.1;         /* ⬅️ tighter vertical spacing */
+  margin-bottom: -25px;      /* ⬅️ pulls it closer to brand */
+  color: white;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.15);
+  letter-spacing: 1px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: smoothReveal 1.2s ease-out forwards;
+}
+
+/* Brand title */
+.brand-title {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  color: white;
+  text-shadow: 2px 2px 8px rgba(20, 21, 19, 0.9);
+  letter-spacing: 2px;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: smoothReveal 1.4s ease-out forwards;
+  animation-delay: 0.3s;
+}
+
+/* Location */
+.hero-location {
+  font-family: 'Poppins', sans-serif;
+  color: #f5f5f5;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: fadeIn 1.2s ease-out forwards;
+  animation-delay: 0.8s;
+}
+
+.location-sub {
+  font-family: 'Montserrat', sans-serif;   /* ⬅️ different from Playfair & Poppins */
+  font-size: 0.95rem;                       /* small & classy */
+  letter-spacing: 3px;
+  text-transform: lowercase;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 4px;                          /* close to Shah Alam */
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeUp 1s ease-out forwards;
+  animation-delay: 0.6s;                    /* appears after title */
+}
+/* Animations */
+@keyframes smoothReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 </style>
 
-<!-- 🌿 FLASH SALE SECTION -->
-<section id="flash-sale">
-  <div class="flash-overlay">
-    <h2>Flash Sale: Up to 50% Off On Select Items!</h2>
-    <p>Don’t miss out on our flash sale event! For a limited time, enjoy up to 50% off on a selection of our best-selling products.</p>
-    <a href="#sales" class="flash-btn">Go get yours !</a>
+</div>
+<!-- ===== SPLIT-SCREEN SHOWCASE SECTION ===== -->
+<section class="h-section flex flex-col lg:flex-row w-full overflow-hidden bg-white">
+
+  <!-- LEFT COLUMN -->
+  <div class="content-bg lg:w-3/5 w-full flex flex-col justify-center items-center p-10 sm:p-16">
+    <div class="max-w-md w-full text-center">
+
+      <!-- Pre-title -->
+      <p class="text-sm font-normal text-gray-500 tracking-widest mb-3 title-font">
+       PERFECT FOR OUTDOORS AND INDOORS 
+      </p>
+
+      <!-- Main Title -->
+      <h1 class="title-font text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#636B2F] tracking-wide mb-8">
+       Environment in Yah Nursery & Landscape
+      </h1>
+      <BR>
+
+      <!-- CTA Button -->
+<a href="{{ route('customer.login') }}" 
+       class="flash-btn px-6 py-3 rounded-full text-[#3D4127] bg-[#BAC095] hover:bg-[#636B2F] transition-all duration-300 font-bold">
+Shop our products    
+</a>    
+</div>
+    <BR>
+ <!-- Image Grid: A & B -->
+<div class="mt-12 flex justify-center gap-12 max-w-lg w-full">
+    <!-- Image A -->
+    <div
+      class="w-1/2 aspect-[4/3] rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+      <img
+        src="{{ asset('storage/image/HOMEPAGE_IMAGEA.jpeg') }}"
+        alt="Outdoor ceramic plant pot"
+        class="w-full h-full object-cover"
+        onerror="this.onerror=null;this.src='https://placehold.co/400x300/E8E6E3/6B805F?text=Image+A'">
+    </div>
+
+  <!-- Image B -->
+  <div
+    class="w-1/2 aspect-[4/3] rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+    <img
+      src="{{ asset('storage/image/HOMEPAGE_IMAGEB.jpeg') }}"
+      alt="Collection of small outdoor pots"
+      class="w-full h-full object-cover"
+      onerror="this.onerror=null;this.src='https://placehold.co/400x300/E8E6E3/6B805F?text=Image+B'">
+  </div>
+</div>
+
+
+  </div>
+<div class="lg:w-2/5 w-full relative overflow-hidden rounded-xl shadow-lg banner-slider-portrait" style="height: 80vh; max-height: 800px;">
+  <div class="banner-track-portrait">
+    <video class="banner-slide-portrait" autoplay muted loop playsinline preload="auto">
+      <source src="{{ asset('storage/video/v1.mov') }}" type="video/mp4">
+    </video>
+
+    <video class="banner-slide-portrait" autoplay muted loop playsinline preload="auto">
+      <source src="{{ asset('storage/video/v2.mov') }}" type="video/mp4">
+    </video>
+
+    <video class="banner-slide-portrait" autoplay muted loop playsinline preload="auto">
+      <source src="{{ asset('storage/video/v3.mov') }}" type="video/mp4">
+    </video>
+  </div>
+</div>
+
+<style>
+.banner-slider-portrait {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #000; /* Black background prevents white flashes */
+}
+
+.banner-track-portrait {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Changed to 100% for better scaling */
+  transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.banner-slide-portrait {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  /* This is the magic property for "fitting" */
+  object-fit: cover; 
+  /* Adjust 'center' to 'top' if faces are being cut off */
+  object-position: center; 
+  display: block;
+}
+</style>
+<script>
+const slidesPortrait = document.querySelectorAll('.banner-slide-portrait');
+const trackPortrait = document.querySelector('.banner-track-portrait');
+let currentIndexPortrait = 0;
+
+function nextSlidePortrait() {
+  currentIndexPortrait = (currentIndexPortrait + 1) % slidesPortrait.length;
+  trackPortrait.style.transform = `translateY(-${currentIndexPortrait * 100}%)`;
+}
+
+// Auto-slide every 5 seconds
+setInterval(nextSlidePortrait, 5000);
+</script>
+
+</section>
+
+   <!-- Team Section (new, matches your requested visual) -->
+  <section id="team">
+<h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-4 text-[#636B2F]" 
+    style="font-family: 'Playfair Display', serif; letter-spacing: 2px; text-transform: uppercase; text-shadow: 1px 1px 3px rgba(0,0,0,0.2);">
+    TOP PLANT COLLECTIONS
+</h2>
+
+    <div style="width: 120px; height: 4px; background-color: #000000ff; margin: 0 auto 30px; border-radius: 3px;"></div>
+
+<p class="lead text-lg md:text-xl lg:text-2xl text-[#4A4F2D] max-w-3xl mx-auto text-center" 
+   style="font-family: 'Merriweather', serif; line-height: 1.8; letter-spacing: 0.5px; text-shadow: 1px 1px 2px rgba(0,0,0,0.2);">
+    We at Yah Nursery are proud to offer carefully designed landscapes crafted to suit our clients’ preferences while prioritizing sustainability.
+</p>
+
+    <div class="team-wrap">
+      <!-- left nav (outside) -->
+
+      <!-- slider viewport -->
+      <div class="team-slider" id="teamSliderViewport">
+        <div class="team-track" id="teamTrack">
+          <!-- Replace these images with real team photos if you have them -->
+          <div class="team-member">
+            <img 
+            src="{{ asset('storage/image/bungakertas.png') }}">
+            <div class="team-info">
+              <h3>BUNGA KERTAS</h3>
+            </div>
+          </div>
+
+          <div class="team-member">
+            <img 
+            src="{{ asset('storage/image/bungakekwa.png') }}">
+            <div class="team-info">
+              <h3>BUNGA KEKWA</h3>
+            </div>
+          </div>
+
+          <div class="team-member">
+            <img 
+            src="{{ asset('storage/image/monstera.png') }}">
+            <div class="team-info">
+              <h3>MONSTERA</h3>
+            </div>
+          </div>
+
+          <!-- extra members so sliding shows movement -->
+          <div class="team-member">
+            <img 
+            src="{{ asset('storage/image/episcia.png') }}">
+            <div class="team-info">
+              <h3>EPISCIA</h3>
+            </div>
+          </div>
+
+          <div class="team-member">
+            <img 
+            src="{{ asset('storage/image/bonsai.png') }}">
+            <div class="team-info">
+              <h3>BONSAI GINSENG</h3>
+            </div>
+          </div>
+
+          <div class="team-member">
+            <img 
+            src="{{ asset('storage/image/keladi.png') }}">
+            <div class="team-info">
+              <h3>KELADI</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- right nav (outside) -->
+    </div>
+  </section>
+  
+<section class="hero-background">
+    <div class="content-box">
+        <h1 class="hero-title">BRING LIFE TO SPACE</h1>
+        <p class="hero-subtitle">Designer pots, timeless appeal</p>
+<a href="{{ route('customer.login') }}" 
+       class="flash-btn px-6 py-3 rounded-full text-[#3D4127] bg-[#BAC095] hover:bg-[#636B2F] transition-all duration-300 font-semibold">
+       Browse designer pots
+    </a>    </div>
+</section>
+<!-- Add Font Awesome for icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- 🌿 Yah Nursery & Landscape Section -->
+<section id="blog" class="relative bg-gradient-to-br from-[#f8fff8] via-[#ffffff] to-[#f1faf1] py-20 px-8 md:px-16 flex flex-col md:flex-row items-center justify-center gap-16 rounded-3xl shadow-lg overflow-hidden">
+
+  <!-- Decorative background glow -->
+  <div class="absolute top-0 left-0 w-80 h-80 bg-green-200/20 blur-3xl rounded-full -z-10"></div>
+  <div class="absolute bottom-0 right-0 w-96 h-96 bg-yellow-100/20 blur-3xl rounded-full -z-10"></div>
+
+  <!-- 🌿 Text Section -->
+  <div class="md:w-1/2 text-center flex flex-col items-center space-y-8 px-4">
+
+    <!-- Fancy Title -->
+<h1 class="text-6xl md:text-7xl font-extrabold leading-tight tracking-wide text-center md:text-left">
+  <span style="
+      font-family: 'Playfair Display', serif;
+      background: linear-gradient(90deg, #636B2F, #BAC095);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.15);
+      letter-spacing: 1px;
+    ">
+    NURSERY
+  </span>
+  <span style="
+      display:block;
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.3em;
+      color:#597341;
+      text-shadow: 1px 1px 5px rgba(106,168,79,0.4);
+      margin-top: -8px;
+    ">
+    In Malaysia
+  </span>
+</h1>
+
+<!-- Add in <head> -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Great+Vibes&display=swap" rel="stylesheet">
+
+
+    <!-- Subtitle -->
+    <h2 class="text-lg md:text-xl leading-relaxed max-w-2xl"
+        style="font-family: 'Quicksand', sans-serif; color:#4C4C4C;">
+      Bringing <span style="color:#6AA84F; font-weight:600;">nature</span> closer to your home for over 
+      <span style="color:#2F5233; font-weight:700;">20 years</span>. Discover our exclusive collection of 
+      indoor and outdoor plants from radiant 
+      <span style="font-style:italic; color:#B86B45;">sunflowers</span> to the rare 
+      <span style="font-style:italic; color:#B86B45;">three-month flower</span> of Cameron Highlands.
+    </h2>
+
+   <!-- 🌿 Large Elegant Description -->
+<p class="text-3xl md:text-5xl max-w-5xl mx-auto md:mx-0 leading-snug text-center md:text-left"
+   style="
+      font-family: 'Cormorant Garamond', serif;
+      color:#3A3A3A;
+      font-style: italic;
+      line-height: 1.6;
+      letter-spacing: 0.8px;
+    ">
+   Beautify your space with 
+   <span style="color:#6AA84F; font-weight:700;">Yah Nursery</span>, 
+   where every plant tells a story of 
+   <span style="color:#2F5233; font-weight:700;">growth</span>, 
+   <span style="color:#2F5233; font-weight:700;">care</span>, and 
+   <span style="color:#2F5233; font-weight:700;">life</span>.
+</p>
+
+  <BR>
+<a href="{{ route('customer.login') }}" 
+       class="flash-btn px-6 py-3 rounded-full text-[#3D4127] bg-[#BAC095] hover:bg-[#636B2F] transition-all duration-300 font-semibold">
+       Explore more
+    </a>
+  </div>
+
+  <!-- 🌾 Image Section -->
+  <div class="md:w-1/2 flex justify-center relative">
+    <div class="absolute w-[400px] h-[400px] bg-green-200/30 blur-3xl rounded-full top-10 right-10 animate-pulse"></div>
+    <img 
+      src="{{ asset('storage/image/logoYah.png') }}" 
+      alt="Yah Nursery 3D Plant"
+      class="w-[750px] md:w-[800px] drop-shadow-2xl transform hover:scale-105 transition-transform duration-700 animate-float"
+    />
   </div>
 </section>
+
+<!-- 🌿 FLASH SALE SECTION -->
+<section id="flash-sale" class="relative h-[500px] md:h-[600px] overflow-hidden">
+  
+  <!-- 🎥 Background Video -->
+  <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
+        <source src="{{ asset('storage/video/b7.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- 🌿 Overlay for text readability -->
+  <div class="flash-overlay absolute inset-0 bg-[#3D4127]/70 flex flex-col justify-center items-center text-center px-6 md:px-12">
+    <h2 class="text-4xl md:text-5xl font-extrabold text-[#BAC095] mb-4"
+        style="font-family: 'Playfair Display', serif;">
+      Flash Sale: Up to 50% Off On Select Items!
+    </h2>
+    <p class="text-lg md:text-xl text-[#BAC095] mb-6 max-w-2xl">
+      Don’t miss out on our flash sale event! For a limited time, enjoy up to 50% off on a selection of our best-selling products.
+    </p>
+    <a href="{{ route('customer.login') }}" 
+       class="flash-btn px-6 py-3 rounded-full text-[#3D4127] bg-[#BAC095] hover:bg-[#636B2F] transition-all duration-300 font-semibold">
+       Go get yours !
+    </a>
+  </div>
+
+</section>
+
+
+<!-- 💬 CUSTOMER REVIEWS SECTION -->
+<section id="customer-says">
+  <h2 class="section-title">WHAT OUR CUSTOMERS SAY</h2>
+  <div class="divider"></div>
+  <p class="section-subtitle">
+    Hear from real customers who love shopping with Yah Nursery & Landscape 🌱
+  </p>
+
+  <div class="reviews-container">
+    <!-- Review 1 -->
+    <div class="review-card">
+      <div class="review-header">
+        <img src="https://reklr.com/wp-content/uploads/2024/07/y2.jpg" alt="Customer 1" class="review-avatar">
+        <div>
+          <h4 class="review-name">Nur Rina</h4>
+          <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        </div>
+      </div>
+      <p class="review-text">
+        “The plants I bought here are healthy and beautiful! Great service and fast delivery. I’ll definitely buy again.”
+      </p>
+      <span class="review-date">2 weeks ago</span>
+    </div>
+
+    <!-- Review 2 -->
+    <div class="review-card">
+      <div class="review-header">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYxFeZ5DLhZvrU--pSyUF8TeAO3e1JVSuKxA&s" alt="Customer 2" class="review-avatar">
+        <div>
+          <h4 class="review-name">Muhd Khairul</h4>
+          <div class="review-stars">⭐⭐⭐⭐</div>
+        </div>
+      </div>
+      <p class="review-text">
+        “Very happy with the landscaping advice I got! My garden looks amazing now. Highly recommended for beginners!”
+      </p>
+      <span class="review-date">1 month ago</span>
+    </div>
+
+    <!-- Review 3 -->
+    <div class="review-card">
+      <div class="review-header">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjmrtlf53mxuCJOo7jXqJzmaKMnle-uDUvZg&s" alt="Customer 3" class="review-avatar">
+        <div>
+          <h4 class="review-name">Siti Aisyah</h4>
+          <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        </div>
+      </div>
+      <p class="review-text">
+        “I love the variety of indoor plants. Staff are friendly and knowledgeable — made my home feel alive!”
+      </p>
+      <span class="review-date">3 weeks ago</span>
+    </div>
+
+    <!-- Review 4 -->
+    <div class="review-card">
+      <div class="review-header">
+        <img src="https://reklr.com/wp-content/uploads/2024/07/y1.jpg" alt="Customer 4" class="review-avatar">
+        <div>
+          <h4 class="review-name">Nora Danish</h4>
+          <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        </div>
+      </div>
+      <p class="review-text">
+        “Excellent quality and affordable prices. My outdoor garden never looked better. Truly love Yah Nursery!”
+      </p>
+      <span class="review-date">5 days ago</span>
+    </div>
+  </div>
+</section>
+
+
 <!-- ===== Visit Our Nursery Section ===== -->
 <section id="visit" class="visit-nursery">
   <div class="visit-container">
     <!-- Left: Contact Info -->
     <div class="contact-card">
-      <h2>Visit Our Nursery</h2>
+      <h2>VISIT OUR NURSERY</h2>
       <p class="subtitle">Come and see our plants in person and get expert advice</p>
 
       <div class="info-card">
@@ -833,7 +1633,7 @@
           <i class="fas fa-phone icon"></i>
           <div>
             <strong>Phone</strong><br>
-            (555) 123-4567
+            018-3824046
           </div>
         </div>
 
@@ -841,7 +1641,7 @@
           <i class="fas fa-envelope icon"></i>
           <div>
             <strong>Email</strong><br>
-            info@yahnursery.com
+            yahNursery@gmail.com
           </div>
         </div>
 
@@ -870,138 +1670,25 @@
   </div>
 </section>
 
- 
-<section aria-labelledby="service-guarantees" class="bg-white py-16">
-    <div class="w-full px-6 sm:px-8 lg:px-12">
-
-        <!-- Features Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-
-            <!-- Feature 1: Secure Payment -->
-            <div class="flex flex-col items-center p-6 rounded-xl hover:shadow-lg transition duration-300 bg-white">
-                <div class="flex items-center justify-center w-16 h-16 rounded-full bg-lime-100 mb-4 transition-transform duration-300 hover:scale-110">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-green-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <rect width="20" height="14" x="2" y="5" rx="2"/>
-                        <line x1="2" x2="22" y1="10" y2="10"/>
-                    </svg>
-                </div>
-                <h3 class="text-lg font-semibold text-green-900 mb-2">Secure Payment</h3>
-                <p class="text-sm text-green-700 max-w-xs">Elementum feugiat diam</p>
-            </div>
-
-            <!-- Feature 2: Free Shipping -->
-            <div class="flex flex-col items-center p-6 rounded-xl hover:shadow-lg transition duration-300 bg-white">
-                <div class="flex items-center justify-center w-16 h-16 rounded-full bg-lime-100 mb-4 transition-transform duration-300 hover:scale-110">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-green-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path d="M5 18H3c-1.1 0-2-.9-2-2V9c0-.6.4-1 1-1h15c.6 0 1 .4 1 1v7c0 1.1-.9 2-2 2h-2c0 1.1-.9 2-2 2s-2-.9-2-2h-4c0 1.1-.9 2-2 2s-2-.9-2-2z"/>
-                        <path d="M17 8V5c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v3"/>
-                    </svg>
-                </div>
-                <h3 class="text-lg font-semibold text-green-900 mb-2">Free Shipping</h3>
-                <p class="text-sm text-green-700 max-w-xs">For $50 order</p>
-            </div>
-
-            <!-- Feature 3: Delivered with Care -->
-            <div class="flex flex-col items-center p-6 rounded-xl hover:shadow-lg transition duration-300 bg-white">
-                <div class="flex items-center justify-center w-16 h-16 rounded-full bg-lime-100 mb-4 transition-transform duration-300 hover:scale-110">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-green-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path d="M21 8a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2z"/>
-                        <path d="M7 6h10"/>
-                        <path d="m12 6-5 6h10l-5-6z"/>
-                    </svg>
-                </div>
-                <h3 class="text-lg font-semibold text-green-900 mb-2">Delivered with Care</h3>
-                <p class="text-sm text-green-700 max-w-xs">Lacinia pellentesque leo</p>
-            </div>
-
-            <!-- Feature 4: Excellent Service -->
-            <div class="flex flex-col items-center p-6 rounded-xl hover:shadow-lg transition duration-300 bg-white">
-                <div class="flex items-center justify-center w-16 h-16 rounded-full bg-lime-100 mb-4 transition-transform duration-300 hover:scale-110">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-green-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path d="M19 14c1.49-1.46 3-3.23 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.27 1.51 4.04 3 5.5l7 7Z"/>
-                    </svg>
-                </div>
-                <h3 class="text-lg font-semibold text-green-900 mb-2">Excellent Service</h3>
-                <p class="text-sm text-green-700 max-w-xs">Blandit gravida viverra</p>
-            </div>
-
-        </div>
-
-       
-    </div>
-</section>
-
-  <!-- What Customer Says Section -->
-  <section id="customer-says">
-    <h2>💬 WHAT CUSTOMER SAYS ?</h2>
-    <div style="width:250px;height:3px;background:#27ae60;margin:0 auto 30px;border-radius:2px;"></div>
-    <div class="testimonials">
-      <div class="testimonial">
-        <p>"Beautiful plants and very helpful staff! My garden has never looked better."</p>
-        <h4>- Aisyah</h4>
-      </div>
-      <div class="testimonial">
-        <p>"I love their unique flowers from Cameron Highlands. Worth every visit!"</p>
-        <h4>- Farid</h4>
-      </div>
-      <div class="testimonial">
-        <p>"Great customer service and excellent quality. Highly recommended!"</p>
-        <h4>- Mei Ling</h4>
-      </div>
-      <div class="testimonial">
-        <p>"Affordable prices, healthy plants, and friendly advice every time I shop here."</p>
-        <h4>- Kumar</h4>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer id="footer">
-    <div class="footer-container">
-      <div>
-        <h3><i class="fa-solid fa-headset"></i> Contact Us</h3>
-        <p><i class="fa-solid fa-user"></i> Mrs Nur Nabilah</p>
-        <p><i class="fa-solid fa-phone"></i> 018-3824046</p>
-        <p><i class="fa-solid fa-envelope"></i> yahNursery@gmail.com</p>
-        <p><i class="fa-solid fa-clock"></i> Hours: 9.30am - 6.30pm</p>
-      </div>
-      <div>
-        <h3><i class="fa-solid fa-map-location-dot"></i> Address</h3>
-        <p>Kebun Bunga, Jalan Pangsun Tiga 27/12c,<br>
-        Seksyen 27, Taman Bunga Negara,<br>
-        40000 Shah Alam, Selangor</p>
-      </div>
-      <div>
-        <h3><i class="fa-solid fa-user-shield"></i> Administrator</h3>
-        <ul>
-          <li><a href="{{ route('admin.login') }}"><i class="fa-solid fa-right-to-bracket"></i> Admin Login</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h3><i class="fa-solid fa-share-nodes"></i> Follow Us</h3>
-        <div class="social-links">
-          <ul>
-            <li><a href="https://m.facebook.com/profile.php?id=128819877773025" target="_blank"><i class="fab fa-facebook"></i> Facebook</a></li>
-            <li><a href="https://www.instagram.com/yahnursery_official/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="bottom-bar">🌱 Powered by Yah Nursery © 2025</div>
-  </footer>
+<x-footer />
 
 <div id="popupOverlay">
   <div class="popup-box">
     <button class="close-btn" onclick="closePopup()">×</button>
-    <h2>Welcome to Yah Nursery!</h2>
-    <p>Please <strong>log in</strong> or <strong>sign up</strong> to start shopping.</p>
+
+    <h2>Welcome to Yah Nursery</h2>
+    <p>
+      Discover premium plants and greenery.<br>
+      Please <strong>log in</strong> or <strong>sign up</strong> to continue.
+    </p>
+
     <div class="popup-buttons">
-      <a href="{{ route('customer.login') }}" class="login-btn">Log In</a>
-      <a href="{{ route('customer.register') }}" class="signup-btn">Sign Up</a>
+      <a href="{{ route('customer.login') }}" class="btn login-btn">Log In</a>
+      <a href="{{ route('customer.register') }}" class="btn signup-btn">Sign Up</a>
     </div>
   </div>
 </div>
+
 
   <script>
   function openPopup(event) {
@@ -1078,6 +1765,29 @@ function closePopup() {
 
   animate(); // start animation
 })();
+</script>
+<script>
+  const sections = document.querySelectorAll("section");
+  const navLinks = document.querySelectorAll("nav ul li a");
+
+  window.addEventListener("scroll", () => {
+    let current = "";
+
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 80; // adjust if your navbar has height
+      const sectionHeight = section.clientHeight;
+      if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
+        current = section.getAttribute("id");
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove("active");
+      if (link.getAttribute("href") === `#${current}`) {
+        link.classList.add("active");
+      }
+    });
+  });
 </script>
 
 </body>

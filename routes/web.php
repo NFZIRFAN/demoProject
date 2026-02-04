@@ -12,9 +12,155 @@ use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\FAQController;
+use App\Http\Controllers\AdminFAQController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AdminOrderHistoryController;
+use App\Http\Controllers\TopDealsController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\ToyyibpayController;
+use App\Http\Controllers\ReorderHistoryController;
+use App\Http\Controllers\LowStockController;
+use App\Http\Controllers\ChatbotController;
+
+Route::post('/faq/chat', [ChatbotController::class, 'chat']);
+
+
+Route::get('/admin/low-stock-check', [LowStockController::class, 'checkAll']);
+Route::get('/admin/low-stock-check/{plant}', [LowStockController::class, 'checkSingle']);
+
+
+
+Route::get('/admin/reorder-history',
+    [ReorderHistoryController::class, 'index']
+)->name('admin.reorder-history.index');
+
+Route::delete('/admin/reorder-history/{id}',
+    [ReorderHistoryController::class, 'destroy']
+)->name('admin.reorder-history.destroy');
+
+
+
+// Fetch plant reorder data dynamically
+Route::get('/admin/reorder-data/{id}', [AdminPlantController::class, 'getReorderData'])
+    ->name('admin.reorder.data');
+
+// Submit reorder
+Route::post('/admin/reorder/{id}', [AdminPlantController::class, 'submitReorder'])
+    ->name('admin.reorder.submit');
+
+
+Route::get('/admin/reorder-history',
+    [ReorderHistoryController::class, 'index']
+)->name('admin.reorder.history');
+
+// Fetch latest orders (for live dashboard)
+Route::get('/admin/orders/live', [AdminController::class, 'liveOrders'])->name('admin.orders.live');
+
+Route::get('/admin/order-counts', [AdminController::class, 'orderCounts'])
+    ->name('admin.order.counts');
+
+/* Route::get('/admin/check-low-stock', [App\Http\Controllers\AdminPlantController::class, 'checkLowStock']); */
+
+    
+/*Route::post('/admin/reorder/{id}', [AdminPlantController::class, 'confirmReorder'])
+    ->name('admin.reorder')
+    ->middleware('web'); */
+
+// Checkout page
+Route::get('/checkout', [CheckoutController::class, 'showCheckout'])
+    ->name('checkout.show');
+
+Route::post('/checkout', [CheckoutController::class, 'store'])
+    ->name('checkout.store');
+
+Route::get('/payment/toyyibpay/{order}', [ToyyibpayController::class, 'createBill'])
+    ->name('payment.toyyibpay');
+
+Route::get('/payment/status', [ToyyibpayController::class, 'paymentStatus'])
+    ->name('payment.status');
+
+Route::post('/payment/callback', [ToyyibpayController::class, 'callback'])
+    ->name('payment.callback');
+
+
+// Success page
+Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
+
+
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('suppliers', [SupplierController::class, 'index'])->name('suppliers.index');
+    Route::get('suppliers/create', [SupplierController::class, 'create'])->name('suppliers.create');
+    Route::post('suppliers', [SupplierController::class, 'store'])->name('suppliers.store');
+    Route::get('suppliers/{id}/edit', [SupplierController::class, 'edit'])->name('suppliers.edit');
+    Route::put('suppliers/{id}', [SupplierController::class, 'update'])->name('suppliers.update');
+    Route::delete('suppliers/{id}', [SupplierController::class, 'destroy'])->name('suppliers.destroy');
+});
+
+Route::get('/top-deals', [TopDealsController::class, 'index'])->name('top-deals');
+
+Route::get('/admin/orders/counts', [App\Http\Controllers\AdminController::class, 'orderCounts'])->name('admin.orders.counts');
+
+
+Route::get('/order/{id}/invoice/download', [OrderController::class, 'downloadPdf'])->name('order.downloadPdf');
+
+
+// Admin routes
+Route::get('/admin/orders', [AdminOrderHistoryController::class, 'index'])->name('admin.orders.index');
+Route::put('/admin/orders/update-delivery/{id}', [AdminOrderHistoryController::class, 'updateDeliveryStatus'])->name('admin.orders.updateDelivery');
+
+// Customer routes
+Route::get('/my-orders', [OrderController::class, 'history'])->name('orders.history');
+Route::get('/orders/delivery-statuses', [OrderController::class, 'deliveryStatuses'])->name('orders.deliveryStatuses');
+
+
+// DISPLAY FROM TABLE PRODUCTS
+Route::get('/plant-details/{id}', [ProductController::class, 'show'])->name('plantDetails.show');
+
+    Route::get('/orders', [OrderController::class, 'history'])->name('orders.history');
+    Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+
+
+Route::get('/order/{id}/download', [OrderController::class, 'downloadPdf'])->name('order.download');
+
+
+// General shop page
+Route::get('/shop', [PlantController::class, 'index'])->name('shop.index');
+
+// Category-specific pages
+Route::get('/shop/category/{category}', [PlantController::class, 'showCategory'])->name('shop.category');
+
+Route::middleware(['web'])->group(function () {
+    Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
+    Route::get('/order/invoice/{id}', [OrderController::class, 'invoice'])->name('order.invoice');
+});
+
+
+
+Route::prefix('admin')->group(function () {
+    Route::get('/faqs', [AdminFAQController::class, 'index'])->name('admin.faq.index');
+    Route::get('/faqs/add', [AdminFAQController::class, 'create'])->name('admin.faq.create'); // 👈 new route
+    Route::post('/faqs/store', [AdminFAQController::class, 'store'])->name('admin.faq.store');
+    Route::get('/faqs/edit/{id}', [AdminFAQController::class, 'edit'])->name('admin.faq.edit');
+    Route::put('/faqs/update/{id}', [AdminFAQController::class, 'update'])->name('admin.faq.update');
+    Route::delete('/faqs/delete/{id}', [AdminFAQController::class, 'destroy'])->name('admin.faq.delete');
+});
+
+
+Route::get('/faq', function () {
+    return view('faq'); // The Blade file that shows the chatbot
+})->name('faq.page'); // ✅ New route name for the chatbot page
+
+Route::post('/faq/chat', [FAQController::class, 'chat'])->name('faq.chat');
+
+
+
 
 // ---------------- PLANT DETAIL ---------------- //
 Route::get('/plants/{id}', [PlantController::class, 'show'])->name('plants.show');
+
 
 // ---------------- HOMEPAGE ---------------- //
 Route::get('/', function () {
@@ -64,16 +210,9 @@ Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 Route::get('/about', [App\Http\Controllers\AboutController::class, 'index'])->name('about');
 
 
-//checkout route 
-Route::post('/checkout', [CheckoutController::class, 'showCheckout'])->name('checkout.show');
-Route::post('/checkout/process', [CheckoutController::class, 'processPayment'])->name('payment.process');
-Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
-
 //contact route
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
-
-
 
 
 Route::get('/cart/count', function() {

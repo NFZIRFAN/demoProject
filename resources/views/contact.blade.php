@@ -80,7 +80,7 @@ body::-webkit-scrollbar {
       Let's Connect
     </h1>
 
-    <p class="mt-6 text-2xl md:text-3xl text-emerald-200"
+    <p class="mt-6 text-2xl md:text-3xl text-[#D4DE95]"
        style="font-family: 'Playfair Display', serif; font-style: italic;">
       Contact us if you have any curiosities
     </p>

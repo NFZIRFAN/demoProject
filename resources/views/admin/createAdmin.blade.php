@@ -1,147 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Admin</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
-            margin: 0;
-            padding: 20px;
-            color: #2c3e50;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create New Admin</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
 
-        .container {
-            max-width: 500px;
-            margin: 60px auto;
-            background: #fff;
-            padding: 40px 50px; /* balanced space on left & right */
-            border-radius: 18px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-        }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap');
 
-        h2 {
-            text-align: center;
-            font-size: 26px;
-            font-weight: 600;
-            color: #16a085;
-            margin-bottom: 35px;
-        }
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f4f6f9;
+  color: #2c3e50;
+}
 
-        .form-group {
-            position: relative;
-            margin-bottom: 28px;
-        }
+input:focus, button:focus, a:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(47, 143, 47, 0.4);
+}
 
-        .form-group input {
-            width: 100%;
-            padding: 16px 14px;
-            border: 1.5px solid #ccc;
-            border-radius: 10px;
-            font-size: 15px;
-            background: transparent;
-            transition: all 0.3s ease;
-            box-sizing: border-box; /* ensures consistent width */
-        }
+#mainContent {
+  transition: margin 0.4s ease, max-width 0.4s ease;
+  max-width: calc(100% - 16rem);
+  margin-left: 16rem;
+}
 
-        .form-group input:focus {
-            border-color: #16a085;
-            box-shadow: 0 0 6px rgba(22,160,133,0.2);
-            outline: none;
-        }
+#mainContent.centered {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+}
+</style>
 
-        .form-group label {
-            position: absolute;
-            top: 50%;
-            left: 16px;
-            transform: translateY(-50%);
-            background: #fff;
-            padding: 0 6px;
-            font-size: 14px;
-            color: #7f8c8d;
-            pointer-events: none;
-            transition: 0.3s ease all;
-        }
-
-        .form-group input:focus + label,
-        .form-group input:not(:placeholder-shown) + label {
-            top: -8px;
-            left: 12px;
-            font-size: 12px;
-            color: #16a085;
-        }
-
-        button {
-            width: 100%;
-            padding: 15px;
-            background: #16a085;
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            font-size: 17px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-
-        button:hover {
-            background: #138d75;
-            transform: translateY(-2px);
-        }
-
-        .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 25px;
-            font-size: 15px;
-            color: #3498db;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .back-link:hover {
-            color: #21618c;
-        }
-    </style>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Montserrat', 'sans-serif'],
+        serif: ['Playfair Display', 'serif'],
+      },
+      colors: {
+        leaf: '#2F8F2F',
+        terracotta: '#D47551',
+        earth: '#543310',
+      },
+    }
+  }
+}
+</script>
 </head>
-<body>
-<div class="container">
-    <h2>Create New Admin</h2>
+<body class="min-h-screen flex flex-col">
+
+<!-- Sidebar -->
+<x-sidebarAdmin id="sidebar" />
+
+<!-- Main Content -->
+<main id="mainContent" class="flex-1 flex justify-center items-start pt-12 pb-12 px-4 md:px-8">
+
+  <!-- Form Card -->
+  <div class="bg-white w-full max-w-lg rounded-xl shadow-2xl p-8 md:p-10 border-t-4 border-leaf">
+      
+    <h1 class="text-3xl font-bold text-earth text-center border-b-2 border-terracotta pb-4 mb-8">
+      <i class="fa-solid fa-user-plus mr-2 text-leaf"></i> Create New Admin
+    </h1>
+
+    <!-- Alerts -->
+    @if(session('success') || session('error'))
+      <div class="mb-4">
+        @if(session('success'))
+          <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+            <span class="block sm:inline">{{ session('success') }}</span>
+          </div>
+        @endif
+        @if(session('error'))
+          <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <span class="block sm:inline">{{ session('error') }}</span>
+          </div>
+        @endif
+      </div>
+    @endif
 
     <form action="{{ route('admin.admins.store') }}" method="POST">
-        @csrf
-        <div class="form-group">
-            <input type="text" id="name" name="name" placeholder=" " required>
-            <label for="name">Full Name</label>
-        </div>
+      @csrf
 
-        <div class="form-group">
-            <input type="email" id="email" name="email" placeholder=" " required>
-            <label for="email">Email</label>
-        </div>
+      <!-- Full Name -->
+      <div class="mb-5">
+        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="e.g., John Doe" required
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-leaf focus:border-leaf transition duration-150 text-sm">
+      </div>
 
-        <div class="form-group">
-            <input type="password" id="password" name="password" placeholder=" " required>
-            <label for="password">Password</label>
-        </div>
+      <!-- Email -->
+      <div class="mb-5">
+        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="name@example.com" required
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-leaf focus:border-leaf transition duration-150 text-sm">
+      </div>
 
-        <div class="form-group">
-            <input type="text" id="ic_number" name="ic_number" placeholder=" " required>
-            <label for="ic_number">IC Number</label>
-        </div>
+      <!-- Password -->
+      <div class="mb-5">
+        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+        <input type="password" id="password" name="password" placeholder="Secure password" required
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-leaf focus:border-leaf transition duration-150 text-sm">
+      </div>
 
-        <div class="form-group">
-            <input type="text" id="address" name="address" placeholder=" " required>
-            <label for="address">Address</label>
-        </div>
+      <!-- IC Number -->
+      <div class="mb-5">
+        <label for="ic_number" class="block text-sm font-medium text-gray-700 mb-1">IC Number</label>
+        <input type="text" id="ic_number" name="ic_number" placeholder="e.g., 901231-14-5678" required
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-leaf focus:border-leaf transition duration-150 text-sm">
+      </div>
 
-        <button type="submit">Create Admin</button>
+      <!-- Address -->
+      <div class="mb-8">
+        <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+        <input type="text" id="address" name="address" placeholder="Street, City, Postcode" required
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-leaf focus:border-leaf transition duration-150 text-sm">
+      </div>
+
+      <button type="submit" class="w-full flex items-center justify-center bg-leaf text-white font-semibold py-3 rounded-lg shadow-md hover:bg-earth transition duration-300 transform hover:scale-[1.01]">
+        <i class="fa-solid fa-user-check mr-2"></i> Register Admin
+      </button>
     </form>
 
-    <a href="{{ route('admin.admins.index') }}" class="back-link">⬅ Back to Manage Admins</a>
+    <a href="{{ route('admin.admins.index') }}" class="mt-6 inline-flex items-center justify-center w-full text-sm text-gray-600 hover:text-leaf transition duration-300">
+      <i class="fa-solid fa-arrow-left mr-2"></i> Back to Admin List
+    </a>
+    
 </div>
+</main>
+
+<footer class="py-4 text-center text-xs text-gray-400 mt-auto">
+  &copy; 2024 Customer Management System. All rights reserved.
+</footer>
+
+<script>
+  // Sidebar toggle
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const main = document.getElementById('mainContent');
+    sidebar.classList.toggle('hidden');
+    main.classList.toggle('centered');
+  }
+</script>
+
 </body>
 </html>

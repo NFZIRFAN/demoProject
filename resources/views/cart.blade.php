@@ -9,7 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <style>
-body { background: #f4f6f9; font-family: 'Inter', sans-serif; }
+body { background: #ffffffff; font-family: 'Inter', sans-serif; }
 .summary-box {
   height: fit-content;
   position: sticky;
@@ -101,21 +101,7 @@ table td, table th { color:black; }
       to { width: 100%; }
     }
 
-/* === FOOTER === */
-footer { 
-  background: #fff; 
-  color: #333; 
-  margin-top: auto; 
-  box-shadow: 0 -2px 6px rgba(0,0,0,0.05); 
-}
-footer .bottom-bar { 
-  background: linear-gradient(90deg,rgb(67, 50, 42),rgb(37, 65, 38)); /* Green gradient */
-  color: white; 
-  text-align: center; 
-  padding: 8px; 
-  font-size: 14px; 
-  width: 100%; 
-}
+
 </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -127,66 +113,62 @@ footer .bottom-bar {
    <!-- Cart Items -->
 <div class="cart-box flex-2 w-full lg:w-2/3 bg-white p-6 md:p-8 rounded-xl shadow-2xl">
     <a href="{{ route('cart.view') }}" class="cart-icon">
-        <i class="fa fa-shopping-cart"></i>
+        <i class="fa fa-shopping-cart" style="color: #636B2F;"></i>
         <span id="cart-count" class="cart-badge">{{ session('cart_count',0) }}</span>
     </a>
     <h2 class="text-3xl font-bold mb-2 border-b pb-3 flex items-center gap-2">
-        <i class="fa fa-shopping-bag text-green-600"></i> Your Shopping Bag
+<i class="fa fa-shopping-bag" style="color: #636B2F;"></i> Your Shopping Bag
     </h2>
 
     <!-- ✅ Show total number of items -->
     <p class="text-gray-600 mb-6">
-        You have <span class="font-semibold text-emerald-600">{{ $cart->count() }}</span> item(s) in your cart.
+        You have <span class="font-semibold text-[#636B2F]">{{ $cart->count() }}</span> item(s) in your cart.
     </p>
 
     @if($cart->count()>0)
-    <div class="overflow-x-auto">
-        <table id="cart-table" class="min-w-full divide-y divide-gray-200">
-            <thead>
-                <tr class="bg-gray-100 text-gray-700">
-                    <th class="px-3 py-3 text-left">No</th> <!-- ✅ Item Number Column -->
-                    <th class="px-3 py-3 text-left">Image</th>
-                    <th class="px-3 py-3 text-left">Name</th>
-                    <th class="px-3 py-3 text-center">Price</th>
-                    <th class="px-3 py-3 text-center">Quantity</th>
-                    <th class="px-3 py-3 text-right">Subtotal</th>
-                    <th class="px-3 py-3 text-center">Action</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-100">
-                @foreach($cart as $index => $item) <!-- ✅ Fix: include $index -->
-                <tr data-id="{{ $item->id }}" class="hover:bg-green-50 transition duration-150">
-                  <!-- ✅ Serial Number -->
-                    <td class="p-3 text-center font-semibold text-gray-700">
-                        {{ $index + 1 }}
-                    </td>
-                    <td class="p-3 text-center">
-                        <img src="{{ asset('storage/'.$item->plant->image) }}" class="w-14 h-14 rounded-lg mx-auto shadow-md">
-                    </td>
-                    <td class="p-3 text-left font-medium text-gray-800">{{ $item->plant->name }}</td>
-                    <td class="price p-3 text-center text-gray-700" data-price="{{ $item->plant->price }}">
-                        RM {{ number_format($item->plant->price,2) }}
-                    </td>
-                    <td class="p-3 text-center">
-                        <div class="flex justify-center items-center gap-2">
-                            <button class="btn-decrement bg-gray-200 hover:bg-gray-300 px-2 rounded">-</button>
-                            <input type="number" class="quantity w-16 text-center border border-gray-300 rounded-lg" value="{{ $item->quantity }}" min="1">
-                            <button class="btn-increment bg-gray-200 hover:bg-gray-300 px-2 rounded">+</button>
-                        </div>
-                    </td>
-                    <td class="subtotal p-3 text-right font-bold text-emerald-600">
-                        RM {{ number_format($item->plant->price * $item->quantity,2) }}
-                    </td>
-                    <td class="p-3 text-center">
-                        <button class="btn-remove bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg shadow-md">
-                            <i class="fa fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+   <div class="overflow-x-auto">
+  <table id="cart-table" class="min-w-full divide-y divide-gray-200 shadow-md rounded-lg">
+    <thead class="bg-gray-100 text-gray-700 uppercase text-sm">
+      <tr>
+        <th class="px-4 py-3 text-center">No</th>
+        <th class="px-4 py-3 text-center">Image</th>
+        <th class="px-4 py-3 text-left">Name</th>
+        <th class="px-4 py-3 text-center">Price</th>
+        <th class="px-4 py-3 text-center">Quantity</th>
+        <th class="px-4 py-3 text-center">Subtotal</th>
+        <th class="px-4 py-3 text-center">Action</th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-100">
+      @foreach($cart as $index => $item)
+      <tr data-id="{{ $item->id }}" data-stock="{{ $item->plant->stock_quantity }}" data-reorder="{{ $item->plant->reorder_level }}" class="hover:bg-green-50 transition duration-150">
+        <td class="p-3 text-center font-semibold text-gray-700">{{ $index + 1 }}</td>
+        <td class="p-3 text-center">
+          <img src="{{ asset('storage/'.$item->plant->image) }}" class="w-16 h-16 rounded-lg mx-auto shadow-sm object-cover">
+        </td>
+        <td class="p-3 text-left font-medium text-gray-800">{{ $item->plant->name }}</td>
+        <td class="p-3 text-center text-gray-700" data-price="{{ $item->plant->price }}">RM {{ number_format($item->plant->price,2) }}</td>
+        <td class="p-3 text-center">
+          <div class="flex justify-center items-center gap-2">
+            <button class="btn-decrement bg-gray-200 hover:bg-gray-300 px-2 rounded transition">-</button>
+            <input type="number" class="quantity w-16 text-center border border-gray-300 rounded-lg" value="{{ $item->quantity }}" min="1">
+            <button class="btn-increment bg-gray-200 hover:bg-gray-300 px-2 rounded transition">+</button>
+          </div>
+        </td>
+        <td class="p-3 text-center font-bold text-emerald-600 subtotal">
+          RM {{ number_format($item->plant->price * $item->quantity,2) }}
+        </td>
+        <td class="p-3 text-center">
+          <button class="btn-remove bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg shadow-sm transition">
+            <i class="fa fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+      @endforeach
+    </tbody>
+  </table>
+</div>
+
     @else
     <!-- ✅ Modern Empty Cart Layout -->
     <div class="flex flex-col items-center justify-center py-16 px-6 border-2 border-dashed border-gray-300 rounded-xl bg-gray-50 shadow-inner">
@@ -207,7 +189,7 @@ footer .bottom-bar {
 @if($cart->count()>0)
 <div class="summary-box w-full lg:w-1/3 bg-white p-6 md:p-8 rounded-xl shadow-2xl border border-gray-200">
     <h3 class="text-2xl font-bold mb-6 border-b pb-3 flex items-center gap-2">
-        <i class="fa fa-receipt text-indigo-500"></i> Order Summary
+        <i class="fa fa-receipt text-[#69884c]"></i> Order Summary
     </h3>
 
     <!-- Cart Items Summary -->
@@ -227,10 +209,9 @@ footer .bottom-bar {
     </div>
 
     <!-- ✅ Checkout Button -->
-<form action="{{ route('checkout.show') }}" method="POST" class="mt-6">
-    @csrf
+<form action="{{ route('checkout.show') }}" method="GET">
     <button type="submit"
-        class="w-full bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold py-3 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105">
+        class="w-full bg-[#3D4127] hover:bg-[#636B2F] text-white text-sm font-semibold py-3 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105">
         <i class="fa fa-credit-card mr-2"></i> Pay & Checkout
     </button>
 </form>
@@ -241,7 +222,7 @@ footer .bottom-bar {
     <div class="flex flex-col sm:flex-row gap-3 mt-4">
         <!-- Update Cart -->
         <button id="btn-update-cart" 
-            class="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium py-3 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105">
+            class="flex-1 bg-[#636B2F] hover:bg-[#556e3e} text-white text-sm font-medium py-3 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105">
             <i class="fa fa-sync-alt mr-1"></i> Update Cart
         </button>
 
@@ -256,123 +237,231 @@ footer .bottom-bar {
 
 </div>
 
-<!-- FOOTER -->
-<footer>
-  <div class="bottom-bar">
-    © 2025 Yah Nursery & Landscape. All Rights Reserved.
-  </div>
-</footer>
+<x-footer />
+
 
 <script>
-const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-// === Sync cart count with localStorage before leaving page ===
-  document.querySelectorAll('a[href="{{ route('customer.dashboard') }}"]').forEach(link => {
-    link.addEventListener('click', (e) => {
-      const count = document.getElementById('cart-count')?.innerText || '0';
-      localStorage.setItem('cart_count', count);
+const csrfToken = document
+  .querySelector('meta[name="csrf-token"]')
+  .getAttribute('content');
+// ===============================
+// INCREMENT / DECREMENT WITH POPUP ONLY
+// ===============================
+document.querySelectorAll(".btn-increment, .btn-decrement").forEach(btn => {
+  btn.addEventListener("click", e => {
+    const row = e.target.closest("tr");
+    const input = row.querySelector(".quantity");
+    const stock = parseInt(row.dataset.stock);
+    const reorder = parseInt(row.dataset.reorder);
 
-      // Dispatch event so navbar updates instantly (before redirect)
-      window.dispatchEvent(new CustomEvent('cartUpdated', { detail: { count: count } }));
-    });
-  });
+    let qty = parseInt(input.value);
 
-  // === On page load, make sure navbar reflects the correct count ===
-  window.addEventListener('DOMContentLoaded', () => {
-    const navbarBadge = document.getElementById('navbar-cart-count');
-    const savedCount = localStorage.getItem('cart_count');
-    if (navbarBadge && savedCount) navbarBadge.innerText = savedCount;
-  });
-// Increment / Decrement Buttons
-document.querySelectorAll(".btn-increment").forEach(btn=>{
-    btn.addEventListener("click", e=>{
-        let input = e.target.closest("td").querySelector(".quantity");
-        input.value = parseInt(input.value)+1;
-    });
-});
-document.querySelectorAll(".btn-decrement").forEach(btn=>{
-    btn.addEventListener("click", e=>{
-        let input = e.target.closest("td").querySelector(".quantity");
-        input.value = Math.max(1, parseInt(input.value)-1);
-    });
-});
+    if (btn.classList.contains("btn-increment")) qty += 1;
+    else qty = Math.max(1, qty - 1);
 
-// Remove Item
-document.querySelectorAll(".btn-remove").forEach(btn=>{
-    btn.addEventListener("click", e=>{
-        let row = e.target.closest("tr");
-        let id = row.dataset.id;
-        Swal.fire({
-            title:"Remove item?", text:"This plant will be removed from your cart.", icon:"warning",
-            showCancelButton:true, confirmButtonColor:"#d33", cancelButtonText:"Cancel", confirmButtonText:"Yes, remove it!"
-        }).then(result=>{
-            if(result.isConfirmed){
-                fetch(`/cart/remove/${id}`,{
-                    method:"POST",
-                    headers:{"Content-Type":"application/json","X-CSRF-TOKEN":csrfToken}
-                }).then(res=>res.json()).then(data=>{
-                    if (data.success) {
-    row.remove();
+    input.value = qty;
 
-    // ✅ Update both the cart view count & navbar cart count
-    const cartBadge = document.getElementById("cart-count");
-    const navbarBadge = document.getElementById("navbar-cart-count");
+    // Update badge dynamically
+    const badge = row.querySelector(".quantity-left");
+    badge.innerText = `${stock - qty} left`;
 
-    if (cartBadge) cartBadge.innerText = data.cartCount;
-    if (navbarBadge) navbarBadge.innerText = data.cartCount;
-
-    // ✅ Update total dynamically
-    const totalEl = document.getElementById("cart-total");
-    if (totalEl) totalEl.innerText = "RM " + data.total.toFixed(2);
-
-    Swal.fire("Removed!", "Item has been removed.", "success");
-
-    // ✅ If no more items, reload to show empty cart state
-    if (document.querySelectorAll("#cart-table tbody tr").length === 0) {
-        location.reload();
+    // Change badge color if low stock
+    if (stock - qty <= reorder) {
+      badge.style.backgroundColor = "#e74c3c";
+    } else {
+      badge.style.backgroundColor = "#636B2F";
     }
-}
 
-                });
-            }
+    // Stock exceeded popup
+    if (qty > stock) {
+      row.scrollIntoView({ behavior: "smooth", block: "center" });
+      row.classList.add("bg-red-50");
+      setTimeout(() => row.classList.remove("bg-red-50"), 1200);
+
+      Swal.fire({
+        icon: "error",
+        title: "Stock Exceeded",
+        text: `You cannot add more than available stock for "${row.querySelector("td:nth-child(4)").innerText}".`,
+        confirmButtonColor: "#636B2F"
+      });
+
+      input.value = stock; // revert to max
+      badge.innerText = `0 left`;
+      badge.style.backgroundColor = "#e74c3c";
+      return;
+    }
+  });
+});
+
+
+document.querySelectorAll(".btn-decrement").forEach(btn => {
+  btn.addEventListener("click", e => {
+    const input = e.target.closest("td").querySelector(".quantity");
+    input.value = Math.max(1, parseInt(input.value) - 1);
+  });
+});
+
+/* ===============================
+   UPDATE CART (SERVER + JIT SAFE)
+================================ */
+document.getElementById("btn-update-cart")?.addEventListener("click", () => {
+  const quantities = {};
+  let stockError = false;
+
+  document.querySelectorAll("#cart-table tbody tr").forEach(row => {
+    const id = row.dataset.id;
+    const qty = parseInt(row.querySelector(".quantity").value);
+    const stock = parseInt(row.dataset.stock);
+    const reorder = parseInt(row.dataset.reorder);
+
+    // ❌ Exceed stock
+    if (qty > stock) {
+      stockError = true;
+      Swal.fire({
+        icon: "error",
+        title: "Stock Exceeded",
+        text: "One or more items exceed available stock.",
+        confirmButtonColor: "#636B2F"
+      });
+    }
+
+    // ⚠️ Low stock warning
+    if (stock <= reorder && qty > 0) {
+      Swal.fire({
+        icon: "warning",
+        title: "Low Stock Warning",
+        text: "Some items are at low stock level.",
+        confirmButtonColor: "#e74c3c"
+      });
+    }
+
+    quantities[id] = qty;
+  });
+
+  if (stockError) return;
+
+  fetch("{{ route('cart.updateAll') }}", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-TOKEN": csrfToken
+    },
+    body: JSON.stringify({ quantities })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (!data.success) {
+      Swal.fire("Error", data.message, "error");
+      return;
+    }
+
+    
+
+    // Update summary
+    const list = document.getElementById("cart-items-list");
+    list.innerHTML = "";
+    document.querySelectorAll("#cart-table tbody tr").forEach(row => {
+      const name = row.querySelector("td:nth-child(3)").innerText;
+      const qty = row.querySelector(".quantity").value;
+      list.innerHTML += `
+        <div class="flex justify-between">
+          <span>${name} (x${qty})</span>
+        </div>`;
+    });
+
+    document.getElementById("cart-total").innerText =
+      "RM " + data.total.toFixed(2);
+
+    document.getElementById("cart-count").innerText = data.cartCount;
+    const navbarCount = document.getElementById("navbar-cart-count");
+    if (navbarCount) navbarCount.innerText = data.cartCount;
+
+    Swal.fire("Updated!", "Cart updated successfully.", "success");
+  });
+});
+
+/* ===============================
+   REMOVE ITEM
+================================ */
+document.querySelectorAll(".btn-remove").forEach(btn => {
+    btn.addEventListener("click", e => {
+        const row = e.target.closest("tr");
+        const id = row.dataset.id;
+
+        Swal.fire({
+            title: "Remove item?",
+            text: "This plant will be removed from your cart.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonText: "Cancel",
+            confirmButtonText: "Yes, remove it!"
+        }).then(result => {
+            if (!result.isConfirmed) return;
+
+            fetch(`/cart/remove/${id}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": csrfToken
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (!data.success) return;
+
+                row.remove();
+
+                // Update counts
+                const cartBadge = document.getElementById("cart-count");
+                const navbarBadge = document.getElementById("navbar-cart-count");
+                if (cartBadge) cartBadge.innerText = data.cartCount;
+                if (navbarBadge) navbarBadge.innerText = data.cartCount;
+
+                // Update total
+                const totalEl = document.getElementById("cart-total");
+                if (totalEl) totalEl.innerText = "RM " + data.total.toFixed(2);
+
+                Swal.fire("Removed!", "Item has been removed.", "success");
+
+                if (document.querySelectorAll("#cart-table tbody tr").length === 0) {
+                    location.reload();
+                }
+            });
         });
     });
 });
 
-// Update Cart
-document.getElementById("btn-update-cart")?.addEventListener("click",()=>{
-    const quantities = {};
-    document.querySelectorAll("#cart-table tbody tr").forEach(row=>{
-        const id = row.dataset.id;
-        const qty = parseInt(row.querySelector(".quantity").value);
-        quantities[id]=qty;
-    });
-    fetch("{{ route('cart.updateAll') }}",{
-        method:"POST",
-        headers:{"Content-Type":"application/json","X-CSRF-TOKEN":csrfToken},
-        body:JSON.stringify({quantities})
-    }).then(res=>res.json()).then(data=>{
-        if(data.success){
-            document.querySelectorAll("#cart-table tbody tr").forEach(row=>{
-                const price = parseFloat(row.querySelector("td[data-price]").dataset.price);
-                const qty = parseInt(row.querySelector(".quantity").value);
-                row.querySelector(".subtotal").innerText = "RM "+(price*qty).toFixed(2);
-            });
-            let list = document.getElementById("cart-items-list");
-            list.innerHTML="";
-            document.querySelectorAll("#cart-table tbody tr").forEach(row=>{
-                const name = row.querySelector("td:nth-child(2)").innerText;
-                const qty = row.querySelector(".quantity").value;
-                const subtotal = row.querySelector(".subtotal").innerText;
-                list.innerHTML+=`<div class="flex justify-between"><span>${name} (x${qty})</span><span>${subtotal}</span></div>`;
-            });
-            document.getElementById("cart-total").innerText="RM "+data.total.toFixed(2);
-document.getElementById("cart-count").innerText = data.cartCount;
-const navbarCount = document.getElementById("navbar-cart-count");
-if (navbarCount) navbarCount.innerText = data.cartCount;
-            Swal.fire("Updated!","Cart updated successfully.","success");
-        }
-    });
-});
+ // ===============================
+  // CHECK STOCK BEFORE PAY & CHECKOUT
+  // ===============================
+  document.querySelector("form[action='{{ route('checkout.show') }}']")?.addEventListener("submit", function(e) {
+      e.preventDefault(); // prevent immediate form submission
+
+      let stockError = false;
+
+      document.querySelectorAll("#cart-table tbody tr").forEach(row => {
+          const qty = parseInt(row.querySelector(".quantity").value);
+          const stock = parseInt(row.dataset.stock);
+
+          if (qty > stock) {
+              stockError = true;
+
+              Swal.fire({
+                  icon: "error",
+                  title: "Stock Exceeded",
+                  text: `You cannot buy more than available stock for "${row.querySelector("td:nth-child(3)").innerText}".`,
+                  confirmButtonColor: "#636B2F"
+              });
+          }
+      });
+
+      if (!stockError) {
+          // If all quantities are valid, submit the form
+          this.submit();
+      }
+  });
 </script>
+
 </body>
 </html>

@@ -12,7 +12,7 @@
 <style>
  body {
       font-family: 'Poppins', sans-serif;
-      background: #f4f6f9;
+      background: #ffffffff;
       margin: 0;
       padding: 0;
       overflow-x: hidden; /* ✅ stop left-right scrolling */
@@ -85,7 +85,7 @@ h2 {
   transition: 0.3s;
 }
 .btn-save {
-  background: linear-gradient(135deg,rgb(35, 90, 26),rgb(55, 188, 51));
+  background: linear-gradient(135deg,rgba(54, 83, 25, 1),rgba(82, 111, 44, 1));
   color: #fff;
 }
 .btn-save:hover {
@@ -138,14 +138,14 @@ h2 {
 .upload-btn {
   padding: 8px 16px;
   border-radius: 18px;
-  background: linear-gradient(135deg,rgb(35, 90, 26),rgb(55, 188, 51));
+  background: linear-gradient(135deg,rgba(63, 90, 26, 1),rgba(161, 184, 49, 1));
   color: #fff;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
 }
 .upload-btn:hover {
-  background: linear-gradient(135deg,rgb(102, 188, 49),rgb(62, 178, 72));
+  background: linear-gradient(135deg,rgba(188, 255, 95, 1),rgb(62, 178, 72));
 }
 .btn-crop {
   padding: 5px 20px;
@@ -153,13 +153,13 @@ h2 {
   font-size: 13px;
   border: none;
   cursor: pointer;
-  background: linear-gradient(135deg, #ff9800, #f57c00);
+  background: linear-gradient(135deg, #323c20ff, #404f30ff);
   color: #fff;
   font-weight: 600;
   margin-top: 6px;
 }
 .btn-crop:hover {
-  background: linear-gradient(135deg, #ef6c00, #e65100);
+  background: linear-gradient(135deg, #bffb56ff, #6ba531ff);
   transform: translateY(-2px);
 }
 
@@ -309,8 +309,7 @@ h2 {
 
 </style>
 </head>
-<body>
-
+<body class="bg-gray-100">
 <!-- ===== Navbar ===== -->
 <x-navbar />
 
@@ -365,7 +364,7 @@ h2 {
   </div>
 </div>
 
-<x-footer />
+<x-footer/>
 
 <!-- ===== Crop Modal ===== -->
 <div id="cropModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="cropTitle">

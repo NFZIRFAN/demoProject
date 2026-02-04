@@ -14,7 +14,7 @@ class Wishlist extends Model
 
     public function plant()
     {
-        return $this->belongsTo(Plant::class);
+        return $this->belongsTo(related: Plant::class);
     }
 
     public function customer()

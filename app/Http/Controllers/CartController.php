@@ -46,21 +46,58 @@ public function add(Request $request, $id)
     $plant = Plant::findOrFail($id);
     $quantity = (int) $request->input('quantity', 1);
 
+    // 🔒 Stop if out of stock
+if ($plant->stock_quantity <= 0) {
+    return $request->ajax()
+        ? response()->json([
+            'success' => false,
+            'message' => 'This product is out of stock.'
+        ])
+        : redirect()->back()->with('error', 'This product is out of stock.');
+}
+
+
     // Check if item already exists in cart
     $cartItem = Cart::where('customer_id', $customerId)
         ->where('plant_id', $plant->id)
         ->first();
 
     if ($cartItem) {
-        $cartItem->quantity += $quantity;
-        $cartItem->save();
-    } else {
-        Cart::create([
-            'customer_id' => $customerId,
-            'plant_id'    => $plant->id,
-            'quantity'    => $quantity,
-        ]);
+
+    $newQuantity = $cartItem->quantity + $quantity;
+
+    // 🔒 Prevent exceeding stock
+    if ($newQuantity > $plant->stock_quantity) {
+        return $request->ajax()
+            ? response()->json([
+                'success' => false,
+                'message' => 'Quantity exceeds available stock.'
+            ])
+            : redirect()->back()->with('error', 'Quantity exceeds available stock.');
     }
+
+    $cartItem->quantity = $newQuantity;
+    $cartItem->save();
+}
+
+    else {
+
+    if ($quantity > $plant->stock_quantity) {
+        return $request->ajax()
+            ? response()->json([
+                'success' => false,
+                'message' => 'Quantity exceeds available stock.'
+            ])
+            : redirect()->back()->with('error', 'Quantity exceeds available stock.');
+    }
+
+    Cart::create([
+        'customer_id' => $customerId,
+        'plant_id'    => $plant->id,
+        'quantity'    => $quantity,
+    ]);
+}
+
 
     // Get updated total quantity of all items in cart
     $cartCount = Cart::where('customer_id', $customerId)->sum('quantity');

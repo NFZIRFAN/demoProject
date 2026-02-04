@@ -12,7 +12,7 @@
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #fafdf9;
+      background-color: #ffffffff;
       overflow-x: hidden;
     }
 
@@ -128,12 +128,12 @@
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
       font-size: 1.4rem;
-      color: #2b6b3e;
+      color: #636B2F;
       margin: 0;
     }
 
     .team-nav {
-      background-color: #2b6b3e;
+      background-color: #636B2F;
       color: white;
       border: none;
       font-size: 2rem;
@@ -146,7 +146,7 @@
     }
 
     .team-nav:hover {
-      background-color: #1d472a;
+      background-color: #5b5e3dff;
     }
 
     .prev { margin-right: 15px; }
@@ -162,15 +162,23 @@
     body::-webkit-scrollbar {
   display: none; /* hides scrollbar in Chrome, Edge, Safari */
 }
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
   </style>
 </head>
 
 <body class="text-gray-800">
   <x-navbar />
 
-  <!-- 🌿 BANNER SECTION - Refined Elegant Style -->
+ <!-- 🌿 BANNER SECTION - Refined Elegant Style -->
 <section class="relative pt-48 pb-32 lg:pt-64 lg:pb-48 shadow-2xl bg-cover bg-center"
-  style="background-image: url('https://plus.unsplash.com/premium_photo-1683134285765-87d4d565efa1?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bGl2aW5nJTIwcm9vbSUyMHBsYW50c3xlbnwwfHwwfHx8MA%3D%3D&fm=jpg&q=60&w=3000');">
+  style="background-image: url('{{ asset('storage/image/aboutBanner.jpeg') }}');">
 
   <!-- Dark Overlay for Text Readability -->
   <div class="absolute inset-0 bg-black/50"></div>
@@ -179,15 +187,16 @@
   <div class="relative z-10 max-w-6xl mx-auto px-6 text-center">
     <h1 class="text-6xl md:text-8xl lg:text-9xl font-bold text-white tracking-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]"
         style="font-family: 'Cormorant Garamond', serif; font-style: italic;">
-      Yah Nursery & Landscape Sdn Bhd
+      ABOUT US
     </h1>
 
-    <p class="mt-6 text-2xl md:text-3xl text-emerald-200"
+    <p class="mt-6 text-2xl md:text-3xl text-[#BAC095]"
        style="font-family: 'Playfair Display', serif; font-style: italic;">
       Nurturing Nature with Passion and Purpose
     </p>
   </div>
 </section>
+
 
 <!-- Include Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600;1,700&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
@@ -200,200 +209,235 @@
 
     <!-- Text Content -->
     <div class="space-y-6">
-      <h2 class="text-5xl font-extrabold text-green-800 section-title leading-tight">
-        We design and nurture green spaces with love and precision.
-      </h2>
-      <p class="text-lg text-gray-600 leading-relaxed">
-        For more than two decades, Yah Nursery & Landscape has been the cornerstone of nature-inspired living in Malaysia. 
-        From vibrant indoor greenery to breathtaking outdoor creations, we cultivate beauty, harmony, and sustainability 
-        with every leaf and bloom.
-      </p>
-      <p class="text-lg text-gray-600 leading-relaxed">
-        Our purpose is simple to bring the serenity of nature closer to your home, while supporting local plant growers 
-        and promoting sustainable landscape practices that nurture the earth for generations to come.
-      </p>
+      <!-- Elegant Text Section -->
+<div class="max-w-4xl mx-auto text-center md:text-left space-y-6 px-4 md:px-0">
 
-      <button class="mt-6 relative inline-flex items-center px-8 py-4 text-lg font-semibold border-2 border-green-700 text-green-700 rounded-full overflow-hidden group transition-all duration-300">
-        <span class="absolute inset-0 bg-green-700 transition-transform duration-300 scale-x-0 group-hover:scale-x-100 origin-left"></span>
-        <span class="relative z-10 group-hover:text-white">Discover Our Story</span>
-      </button>
-    </div>
+  <!-- Title -->
+  <h2 class="text-5xl md:text-6xl font-extrabold leading-tight tracking-tight text-gradient"
+      style="font-family: 'Playfair Display', serif; background: linear-gradient(90deg, #2F5233, #6AA84F); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+    We design and nurture green spaces with love and precision.
+  </h2>
 
-    <!-- Floating Image (Right Side) -->
-    <div class="md:w-1/2 flex justify-center mt-10 md:mt-0 relative">
-      <div class="absolute w-[250px] h-[250px] bg-green-200/30 blur-3xl rounded-full top-10 right-10 animate-pulse"></div>
-      <img 
-        src="{{ asset('storage/image/PLANTPEOPLE.png') }}" 
-        alt="Yah Nursery 3D Plant"
-        class="w-[460px] md:w-[550px] drop-shadow-2xl transform hover:scale-110 transition-transform duration-700 animate-float"
-      />
-    </div>
+  <!-- Paragraph 1 -->
+  <p class="text-lg md:text-xl text-gray-700 leading-relaxed font-medium"
+     style="font-family: 'Lora', serif;">
+    For more than two decades, <span class="font-semibold text-green-700">Yah Nursery & Landscape</span> has been the cornerstone of nature-inspired living in Malaysia. 
+    From vibrant indoor greenery to breathtaking outdoor creations, we cultivate <span class="italic text-green-600">beauty, harmony, and sustainability</span> with every leaf and bloom.
+  </p>
 
-  </div>
-</section>
+  <!-- Paragraph 2 -->
+  <p class="text-lg md:text-xl text-gray-700 leading-relaxed font-medium"
+     style="font-family: 'Lora', serif;">
+    Our purpose is simple: to bring the serenity of nature closer to your home, while supporting local plant growers 
+    and promoting <span class="italic text-green-600">sustainable landscape practices</span> that nurture the earth for generations to come.
+  </p>
+</div>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
 
-<!-- 🌳 WHY CHOOSE US SECTION -->
-<section class="py-24 bg-green-50">
-  <div class="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 items-center">
+      <!-- Fancy Professional Button -->
+<button class="mt-6 relative inline-flex items-center px-12 py-4 text-xl font-bold text-white rounded-full overflow-hidden group shadow-lg transition-all duration-500 transform hover:scale-105 hover:shadow-2xl"
+        style="background: linear-gradient(90deg, #2F5233, #6AA84F); letter-spacing: 1px; font-family: 'Quicksand', sans-serif;">
 
-    <!-- Floating Logo (Left Side) -->
-    <div class="md:w-1/2 flex justify-center mt-10 md:mt-0 relative order-1 lg:order-none">
-      <div class="absolute w-[280px] h-[280px] bg-green-300/40 blur-3xl rounded-full top-10 left-10 animate-pulse"></div>
-      <img 
-        src="{{ asset('storage/image/logo.png') }}" 
-        alt="Yah Nursery Logo"
-        class="w-[500px] md:w-[600px] drop-shadow-2xl transform hover:scale-110 transition-transform duration-700 animate-float"
-      />
-    </div>
+  <!-- Hover shine effect -->
+  <span class="absolute inset-0 bg-gradient-to-r from-white/30 via-white/50 to-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-slide"></span>
 
-    <!-- Text Content -->
-    <div class="space-y-8">
-      <h2 class="text-4xl font-bold text-green-800 section-title">Why Choose Yah Nursery?</h2>
-      <p class="text-lg text-gray-600">We offer nature-inspired solutions built on experience, innovation, and genuine care.</p>
+  <!-- Button text -->
+  <span class="relative z-10 flex items-center justify-center gap-2">
+    Discover Our Story
+  </span>
+</button>
 
-      <ul class="space-y-6">
-        <li class="flex items-start">
-          <span class="bg-green-700 text-white p-3 rounded-full mr-4 text-lg">✅</span>
-          <div>
-            <h3 class="text-xl font-semibold text-gray-800">Experienced Team</h3>
-            <p class="text-gray-500">Over two decades of hands-on expertise in horticulture, design, and sustainable landscaping.</p>
-          </div>
-        </li>
-
-        <li class="flex items-start">
-          <span class="bg-green-700 text-white p-3 rounded-full mr-4 text-lg">🌱</span>
-          <div>
-            <h3 class="text-xl font-semibold text-gray-800">Eco-Friendly Practices</h3>
-            <p class="text-gray-500">Committed to sustainability through organic materials, smart irrigation, and low-waste methods.</p>
-          </div>
-        </li>
-
-        <li class="flex items-start">
-          <span class="bg-green-700 text-white p-3 rounded-full mr-4 text-lg">🌼</span>
-          <div>
-            <h3 class="text-xl font-semibold text-gray-800">Customized Designs</h3>
-            <p class="text-gray-500">Every garden and outdoor space is uniquely tailored to reflect your lifestyle and environment.</p>
-          </div>
-        </li>
-      </ul>
-    </div>
-
-  </div>
-</section>
-
-<!-- Add subtle float animation -->
+<!-- Optional keyframes for shine animation -->
 <style>
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-  }
-  .animate-float {
-    animation: float 5s ease-in-out infinite;
-  }
+@keyframes slide {
+  0% { transform: translateX(-100%) }
+  100% { transform: translateX(100%) }
+}
+.animate-slide {
+  animation: slide 1s infinite;
+}
 </style>
 
-  <!-- Our Team -->
-  <section id="team">
-    <h2>MEET OUR TEAM</h2>
-    <div class="heading-dots"><span></span><span></span><span></span></div>
-    <p class="lead">Our team combines passion, skill, and creativity to nurture nature with precision and care.</p>
-
-    <div class="team-wrap">
-      <button class="team-nav prev" id="teamPrev">‹</button>
-      <div class="team-slider">
-        <div class="team-track" id="teamTrack">
-          <div class="team-member">
-            <img src="https://i.pinimg.com/736x/a2/89/67/a289672bf61fe0d5dfbe2a3b4fc3fbbc.jpg" alt="Sunflower">
-            <div class="team-info"><h3>SITI HAZARINA</h3></div>
-          </div>
-          <div class="team-member">
-            <img src="https://i.pinimg.com/736x/75/0e/ac/750eac3f997ac76002cbff3e8688d99f.jpg" alt="Spiral Aloe">
-            <div class="team-info"><h3>SITI AISYAH</h3></div>
-          </div>
-          <div class="team-member">
-            <img src="https://i.pinimg.com/736x/24/fc/00/24fc000fd37ee9cef0efb4ebdc123a1d.jpg" alt="Lillies Flower">
-            <div class="team-info"><h3>NUR KHADIJAH</h3></div>
-          </div>
-          <div class="team-member">
-            <img src="https://i.pinimg.com/1200x/3d/35/37/3d35373636d6cc0b013b70a6126aeb91.jpg" alt="Snake Plant">
-            <div class="team-info"><h3>QHAIREEN QISTINA</h3></div>
-          </div>
-          <div class="team-member">
-            <img src="https://i.pinimg.com/736x/c2/8a/93/c28a93611a907931ceec2b8bd4969894.jpg" alt="Pothos">
-            <div class="team-info"><h3>FAROUQ AHMAD</h3></div>
-          </div>
-        </div>
-      </div>
-      <button class="team-nav next" id="teamNext">›</button>
     </div>
-  </section>
 
-  <!-- Featured Projects (5 items total) -->
-  <section class="py-24 bg-green-50 text-center">
-    <h2 class="text-4xl font-bold text-green-800 section-title">FEATURED PROJECTS</h2>
-    <p class="mt-4 text-gray-600 max-w-2xl mx-auto">
+  <!-- Floating Image (Right Side) -->
+<div class="md:w-full flex justify-center mt-10 md:mt-0 relative">
+  <!-- Glowing background -->
+  <div class="absolute w-[350px] h-[350px] bg-green-200/30 blur-3xl rounded-full top-10 right-10 animate-pulse"></div>
+
+  <!-- Plant Image -->
+  <img 
+    src="{{ asset('storage/image/PLANTABOUT.png') }}" 
+    alt="Yah Nursery 3D Plant"
+    class="w-[600px] md:w-[700px] drop-shadow-2xl transform transition-transform duration-700 hover:scale-110 animate-float"
+  />
+</div>
+</div>
+</section>
+
+<!-- Featured Projects (5 items total) -->
+ <section class="bg-white py-12">
+  
+  <!-- Section Heading -->
+  <div class="text-center mb-14">
+    <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight"
+        style="font-family: 'Playfair Display', serif; color:#2F5233;">
+      The Decoration Place of Yah Nursery & Landscape
+    </h2>
+
+    <p class="mt-4 text-gray-600 text-lg max-w-2xl mx-auto"
+       style="font-family: 'Lora', serif;">
       Discover our most inspiring landscaping transformations.
     </p>
 
-    <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto px-6">
-      <div class="group relative rounded-3xl overflow-hidden shadow-lg">
-        <img src="https://i.pinimg.com/1200x/40/21/43/402143fcf7b3e2a3019d65d007dbcf85.jpg" class="object-cover w-full h-[400px] group-hover:scale-110 transition-transform duration-700" />
-        <div class="absolute inset-0 bg-gradient-to-t from-green-900/80 via-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
-        <div class="absolute bottom-6 left-6 text-white opacity-0 group-hover:opacity-100 transition duration-500">
-          <h3 class="text-2xl font-semibold">Urban Garden Makeover</h3>
-          <p class="text-green-200 text-sm">Kuala Lumpur</p>
-        </div>
-      </div>
+    <!-- Soft Divider Line -->
+    <div class="mt-6 w-24 h-1 bg-gradient-to-r from-green-700 to-green-400 mx-auto rounded-full"></div>
+  </div>
 
-      <div class="group relative rounded-3xl overflow-hidden shadow-lg">
-        <img src="https://i.pinimg.com/736x/69/53/f9/6953f99347a1e66918d86b69d8fb4e19.jpg" class="object-cover w-full h-[400px] group-hover:scale-110 transition-transform duration-700" />
-        <div class="absolute inset-0 bg-gradient-to-t from-green-900/80 via-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
-        <div class="absolute bottom-6 left-6 text-white opacity-0 group-hover:opacity-100 transition duration-500">
-          <h3 class="text-2xl font-semibold">Eco Resort Landscape</h3>
-          <p class="text-green-200 text-sm">Langkawi Island</p>
-        </div>
-      </div>
+  <!-- Image Grid -->
+  <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-10 max-w-7xl mx-auto px-6">
 
-      <div class="group relative rounded-3xl overflow-hidden shadow-lg">
-        <img src="https://i.pinimg.com/736x/ed/14/db/ed14db14c9ae13b92ef44bed99bdf1aa.jpg" class="object-cover w-full h-[400px] group-hover:scale-110 transition-transform duration-700" />
-        <div class="absolute inset-0 bg-gradient-to-t from-green-900/80 via-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
-        <div class="absolute bottom-6 left-6 text-white opacity-0 group-hover:opacity-100 transition duration-500">
-          <h3 class="text-2xl font-semibold">Botanical Park Project</h3>
-          <p class="text-green-200 text-sm">Cameron Highlands</p>
-        </div>
-      </div>
+    <!-- Single Card -->
+    @foreach([
+      ['Outdoor Garden Makeover', 'land1.jpeg'],
+      ['Pot Garden Landscape', 'land2.jpeg'],
+      ['Botanical Park Project', 'land3.jpeg'],
+      ['Tropical Courtyard', 'land4.jpeg'],
+      ['Indoor Courtyard', 'land5.jpeg'],
+      ['Zen Garden Retreat', 'https://i.pinimg.com/1200x/0b/42/7b/0b427b1566944eac5c03a8a567d099f0.jpg']
+    ] as $proj)
 
-      <!-- Extra Projects -->
-      <div class="group relative rounded-3xl overflow-hidden shadow-lg">
-        <img src="https://i.pinimg.com/736x/b5/91/a8/b591a8278f194cc691b34000a6e04c40.jpg" class="object-cover w-full h-[400px] group-hover:scale-110 transition-transform duration-700" />
-        <div class="absolute inset-0 bg-gradient-to-t from-green-900/80 via-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
-        <div class="absolute bottom-6 left-6 text-white opacity-0 group-hover:opacity-100 transition duration-500">
-          <h3 class="text-2xl font-semibold">Tropical Courtyard</h3>
-          <p class="text-green-200 text-sm">Penang</p>
-        </div>
-      </div>
-    
-      <div class="group relative rounded-3xl overflow-hidden shadow-lg">
-        <img src="https://i.pinimg.com/736x/89/c8/ed/89c8ed372bb04d43759c02832c1d05a9.jpg" class="object-cover w-full h-[400px] group-hover:scale-110 transition-transform duration-700" />
-        <div class="absolute inset-0 bg-gradient-to-t from-green-900/80 via-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
-        <div class="absolute bottom-6 left-6 text-white opacity-0 group-hover:opacity-100 transition duration-500">
-          <h3 class="text-2xl font-semibold">Tropical Courtyard</h3>
-          <p class="text-green-200 text-sm">Penang</p>
-        </div>
-      </div>
-      
-      <div class="group relative rounded-3xl overflow-hidden shadow-lg">
-        <img src="https://i.pinimg.com/1200x/0b/42/7b/0b427b1566944eac5c03a8a567d099f0.jpg" class="object-cover w-full h-[400px] group-hover:scale-110 transition-transform duration-700" />
-        <div class="absolute inset-0 bg-gradient-to-t from-green-900/80 via-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
-        <div class="absolute bottom-6 left-6 text-white opacity-0 group-hover:opacity-100 transition duration-500">
-          <h3 class="text-2xl font-semibold">Zen Garden Retreat</h3>
-          <p class="text-green-200 text-sm">Ipoh</p>
-        </div>
+    <div class="group relative rounded-3xl overflow-hidden shadow-xl bg-white 
+                hover:shadow-2xl hover:-translate-y-1 transition-all duration-700">
+
+      <!-- Image -->
+      <img src="{{ Str::startsWith($proj[1], 'http') ? $proj[1] : asset('storage/image/'.$proj[1]) }}"
+           class="object-cover w-full h-[420px] group-hover:scale-110 transition-transform duration-[900ms] ease-out" />
+
+      <!-- Overlay Gradient -->
+      <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent 
+                  opacity-0 group-hover:opacity-100 transition duration-500"></div>
+
+      <!-- Title + Location (Centered) -->
+      <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-center 
+                  text-white opacity-0 group-hover:opacity-100 transition duration-700">
+        <h3 class="text-2xl font-semibold drop-shadow-md tracking-wide"
+            style="font-family: 'Playfair Display', serif;">
+          {{ $proj[0] }}
+        </h3>
+        <p class="text-green-200 text-sm tracking-widest">SHAH ALAM</p>
       </div>
     </div>
-  </section>
 
+    @endforeach
+
+  </div>
+
+</section>
+
+  <!-- OUR TEAM -->
+<section id="team" class="bg-white py-16">
+  <div class="max-w-7xl mx-auto px-6 text-center">
+
+     <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight"
+        style="font-family: 'Playfair Display', serif; color:#2F5233;">
+      The staff of Yah Nursery & Landscape
+    </h2>
+
+    <!-- Dots -->
+    <div class="flex justify-center gap-2 my-4">
+      <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+      <span class="w-3 h-3 bg-green-300 rounded-full"></span>
+      <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+    </div>
+
+    <!-- Subtitle -->
+    <p class="text-gray-600 max-w-xl mx-auto mb-12">
+      Our team combines passion, skill, and creativity to nurture nature with precision and care.
+    </p>
+
+    <!-- Slider -->
+    <div class="relative flex items-center">
+
+      <!-- Prev Button -->
+      <button id="teamPrev" 
+              class="team-nav prev absolute left-0 z-10 bg-white shadow-lg w-10 h-10 rounded-full flex items-center justify-center text-xl text-gray-600 hover:bg-green-500 hover:text-white transition">
+        ‹
+      </button>
+
+      <!-- Slider Container -->
+      <div class="team-slider overflow-hidden mx-12">
+        <div id="teamTrack" class="team-track flex gap-8 transition-transform duration-500">
+
+          <!-- Member -->
+          <div class="team-member group bg-white rounded-xl shadow-md hover:shadow-xl transition p-4">
+            <div class="overflow-hidden rounded-xl">
+              <img src="https://i.pinimg.com/736x/a2/89/67/a289672bf61fe0d5dfbe2a3b4fc3fbbc.jpg" 
+                   class="w-64 h-72 object-cover rounded-xl group-hover:scale-105 transition duration-500">
+            </div>
+            <div class="team-info mt-4">
+              <h3 class="text-lg font-semibold text-gray-800">SITI HAZARINA</h3>
+            </div>
+          </div>
+
+          <div class="team-member group bg-white rounded-xl shadow-md hover:shadow-xl transition p-4">
+            <div class="overflow-hidden rounded-xl">
+              <img src="https://i.pinimg.com/736x/75/0e/ac/750eac3f997ac76002cbff3e8688d99f.jpg" 
+                   class="w-64 h-72 object-cover rounded-xl group-hover:scale-105 transition duration-500">
+            </div>
+            <div class="team-info mt-4">
+              <h3 class="text-lg font-semibold text-gray-800">SITI AISYAH</h3>
+            </div>
+          </div>
+
+          <div class="team-member group bg-white rounded-xl shadow-md hover:shadow-xl transition p-4">
+            <div class="overflow-hidden rounded-xl">
+              <img src="https://i.pinimg.com/736x/24/fc/00/24fc000fd37ee9cef0efb4ebdc123a1d.jpg"
+                   class="w-64 h-72 object-cover rounded-xl group-hover:scale-105 transition duration-500">
+            </div>
+            <div class="team-info mt-4">
+              <h3 class="text-lg font-semibold text-gray-800">NUR KHADIJAH</h3>
+            </div>
+          </div>
+
+          <div class="team-member group bg-white rounded-xl shadow-md hover:shadow-xl transition p-4">
+            <div class="overflow-hidden rounded-xl">
+              <img src="https://i.pinimg.com/1200x/3d/35/37/3d35373636d6cc0b013b70a6126aeb91.jpg"
+                   class="w-64 h-72 object-cover rounded-xl group-hover:scale-105 transition duration-500">
+            </div>
+            <div class="team-info mt-4">
+              <h3 class="text-lg font-semibold text-gray-800">QHAIREEN QISTINA</h3>
+            </div>
+          </div>
+
+          <div class="team-member group bg-white rounded-xl shadow-md hover:shadow-xl transition p-4">
+            <div class="overflow-hidden rounded-xl">
+              <img src="https://i.pinimg.com/736x/c2/8a/93/c28a93611a907931ceec2b8bd4969894.jpg"
+                   class="w-64 h-72 object-cover rounded-xl group-hover:scale-105 transition duration-500">
+            </div>
+            <div class="team-info mt-4">
+              <h3 class="text-lg font-semibold text-gray-800">FAROUQ AHMAD</h3>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Next Button -->
+      <button id="teamNext" 
+              class="team-nav next absolute right-0 z-10 bg-white shadow-lg w-10 h-10 rounded-full flex items-center justify-center text-xl text-gray-600 hover:bg-green-500 hover:text-white transition">
+        ›
+      </button>
+
+    </div>
+  </div>
+</section>
+
+
+  
   <x-footer />
 
   <script>

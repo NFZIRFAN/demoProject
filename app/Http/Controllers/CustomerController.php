@@ -6,6 +6,8 @@ use App\Models\Customer;
 use App\Models\Plant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash; // ✅ Correct place!
+use Illuminate\Support\Facades\Storage; // ✅ Add this at top if not yet
+
 
 class CustomerController extends Controller
 {
@@ -153,6 +155,7 @@ class CustomerController extends Controller
 
         return redirect()->route('customer.profile')->with('success', 'Profile updated successfully!');
     }
+    
     public function showLoginForm()
     {
         return view('login');
@@ -160,7 +163,7 @@ class CustomerController extends Controller
    // ---------------- SHOW REGISTER FORM ---------------- //
 public function showRegisterForm()
 {
-    return view('Register');
+    return view('register');
 }
 }
 

@@ -4,61 +4,107 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cart;
-use App\Models\Plant;
+use App\Models\Order;
 
 class CheckoutController extends Controller
 {
-    // ✅ Show checkout page
+    /**
+     * Show checkout page
+     */
     public function showCheckout()
     {
         $customerId = session('customer_id');
 
         if (!$customerId) {
-            return redirect()->route('login')->with('error', 'Please log in first to continue checkout.');
+            return redirect()->route('customer.login')
+                ->with('error', 'Please log in first.');
         }
 
-        // Get cart items
-        $cartItems = Cart::where('customer_id', $customerId)
-            ->with('plant')
+        $cartItems = Cart::with('plant')
+            ->where('customer_id', $customerId)
             ->get();
 
-        // Calculate subtotal
+        if ($cartItems->isEmpty()) {
+            return redirect()->route('cart.view')
+                ->with('error', 'Your cart is empty.');
+        }
+
         $subtotal = $cartItems->sum(function ($item) {
             return $item->quantity * $item->plant->price;
         });
 
-        // Fetch shipping info (if stored in session)
         $customer = session('customer');
 
         return view('checkout', compact('cartItems', 'subtotal', 'customer'));
     }
 
-    // ✅ Process payment
-    public function processPayment(Request $request)
+    /**
+     * Create order and redirect to ToyyibPay sandbox
+     */
+    public function store(Request $request)
     {
         $customerId = session('customer_id');
 
         if (!$customerId) {
-            return redirect()->route('login')->with('error', 'Please log in first.');
+            return redirect()->route('customer.login');
         }
 
-        $cartItems = Cart::where('customer_id', $customerId)->get();
+        $validated = $request->validate([
+            'first_name' => 'required|string',
+            'last_name'  => 'required|string',
+            'email'      => 'required|email',
+            'phone'      => 'required|string',
+            'address_1'  => 'required|string',
+            'address_2'  => 'nullable|string',
+            'city'       => 'required|string',
+            'state'      => 'required|string',
+            'zip'        => 'required|string',
+            'total'      => 'required|numeric|min:0',
+            'shipping_fee' => 'required|numeric|min:0',
+            'additional_info' => 'nullable|string',
+        ]);
+
+        $cartItems = Cart::with('plant')
+            ->where('customer_id', $customerId)
+            ->get();
 
         if ($cartItems->isEmpty()) {
-            return redirect()->back()->with('error', 'Your cart is empty.');
+            return redirect()->route('cart.view')
+                ->with('error', 'Cart is empty.');
         }
 
-        // (Optional) Payment validation can go here
+        // ✅ Create PENDING order
+        $order = Order::create([
+            'customer_id' => $customerId,
+            'order_number' => 'ORD-' . now()->timestamp,
+            'payment_method' => 'ToyyibPay',
+            'total' => $validated['total'],
+            'shipping_fee' => $validated['shipping_fee'],
+            'status' => 'Pending',
+            'additional_info' => $validated['additional_info'] ?? null,
+            'address_1' => $validated['address_1'],
+            'address_2' => $validated['address_2'] ?? null,
+            'city' => $validated['city'],
+            'state' => $validated['state'],
+            'zip' => $validated['zip'],
+            'first_name' => $validated['first_name'],
+            'last_name' => $validated['last_name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+        ]);
 
-        // Clear cart after successful "payment"
-        Cart::where('customer_id', $customerId)->delete();
+        foreach ($cartItems as $item) {
+            $order->items()->create([
+                'plant_id' => $item->plant_id,
+                'plant_name' => $item->plant->name,
+                'quantity' => $item->quantity,
+                'price' => $item->plant->price,
+                'total' => $item->quantity * $item->plant->price,
+            ]);
+        }
 
-        return redirect()->route('checkout.success')->with('success', 'Payment successful! Thank you for your purchase.');
-    }
+        // ❗ DO NOT clear cart here
 
-    // ✅ Success page
-    public function success()
-    {
-        return view('checkout-success')->with('success', 'Payment successful! Thank you for your purchase.');
+        return redirect()->route('payment.toyyibpay', $order->id);
     }
 }
