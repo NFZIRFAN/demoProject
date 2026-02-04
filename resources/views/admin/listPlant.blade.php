@@ -224,7 +224,6 @@ tr.table-row-hover:hover {
           </div>
 
           <!-- 🔽 Sort -->
-          <!-- 🔽 Sort -->
 <div class="relative w-full sm:w-48">
   <select id="sortBy" class="w-full border border-gray-300 rounded-full px-4 py-2 text-sm shadow-sm focus:ring-0">
     <option value="">Sort by...</option>
@@ -253,115 +252,117 @@ tr.table-row-hover:hover {
         </div>
       </div>
 
-      <!-- Table -->
-<div class="w-full shadow-lg rounded-xl overflow-visible">
-        <table class="min-w-full divide-y divide-gray-200 bg-white" id="plantTable">
-          <thead>
-            <tr class="bg-leaf text-white font-bold text-sm uppercase tracking-wider">
-              <th class="px-6 py-3 text-center rounded-tl-xl">No</th>
-              <th class="px-6 py-3 text-left">Product</th>
-              <th class="px-6 py-3 text-center">Category</th>
-              <th class="px-6 py-3 text-center">Description</th>
-              <th class="px-6 py-3 text-center">Care Instructions</th>
-              <th class="px-6 py-3 text-center">Price</th>
-              <th class="px-6 py-3 text-center">Stock</th>
-              <th class="px-6 py-3 text-center">Supplier</th>
-              <th class="px-6 py-3 text-center rounded-tr-xl">Actions</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-100" id="plantBody">
-  @foreach ($plants as $index => $plant)
-   <tr class="table-row-hover transition-all duration-200 hover:bg-green-50"
-    data-name="{{ strtolower($plant->name) }}"
-    data-category="{{ strtolower($plant->category) }}"
-    data-price="{{ $plant->price }}"
-    data-stock="{{ $plant->stock_quantity }}">
+    <!-- Plants Table -->
+<div class="w-full shadow-lg rounded-xl overflow-hidden">
+  <table class="table-auto w-full divide-y divide-gray-200 bg-white" id="plantTable">
+    <thead>
+      <tr class="bg-leaf text-white font-bold text-sm uppercase tracking-wider">
+        <th class="px-2 py-2 text-center rounded-tl-xl w-8">No</th>
+        <th class="px-4 py-2 text-center w-48">Product</th>
+        <th class="px-4 py-2 text-center w-32">Category</th>
+        <th class="px-4 py-2 text-center w-64">Description</th>
+        <th class="px-4 py-2 text-center w-64">Care Instructions</th>
+        <th class="px-4 py-2 text-center w-20">Price</th>
+        <th class="px-4 py-2 text-center w-20">Stock</th>
+        <th class="px-4 py-2 text-center w-32">Supplier</th>
+        <th class="px-4 py-2 text-center w-44 rounded-tr-xl">Actions</th>
+      </tr>
+    </thead>
 
-  <!-- No -->
-  <td class="no-col px-4 py-3 text-sm text-gray-500 text-center">{{ $loop->iteration }}</td>
+    <tbody class="divide-y divide-gray-100" id="plantBody">
+      @foreach ($plants as $index => $plant)
+      <tr class="table-row-hover transition-all duration-200 hover:bg-green-50"
+          data-name="{{ strtolower($plant->name) }}"
+          data-category="{{ strtolower($plant->category) }}"
+          data-price="{{ $plant->price }}"
+          data-stock="{{ $plant->stock_quantity }}">
 
-  <!-- Product Image & Name -->
-  <td class="product-col px-4 py-3">
-    <div class="flex items-center space-x-3">
-      <div class="h-12 w-12 flex-shrink-0 rounded-lg overflow-hidden border shadow-sm bg-gray-50">
-        @if($plant->image)
-          <img class="h-full w-full object-cover" src="{{ asset('storage/' . $plant->image) }}" alt="{{ $plant->name }}">
-        @else
-          <div class="flex items-center justify-center h-full w-full text-gray-300 text-xs font-medium">N/A</div>
-        @endif
-      </div>
-      <div class="text-sm font-semibold text-earth">{{ $plant->name }}</div>
-    </div>
-  </td>
+        <!-- No -->
+        <td class="px-2 py-2 text-sm text-gray-500 text-center">{{ $loop->iteration }}</td>
 
-  <!-- Category -->
-  <td class="category-col px-4 py-3 text-sm text-center">
-    <span class="px-2 py-1 inline-flex text-xs font-semibold rounded-full bg-terracotta/10 text-terracotta">
-      {{ $plant->category }}
-    </span>
-  </td>
+        <!-- Product -->
+        <td class="px-4 py-2 text-sm text-earth text-center">
+          <div class="flex flex-col items-center justify-center space-y-1">
+            <div class="h-10 w-10 rounded-lg overflow-hidden border bg-gray-50">
+              @if($plant->image)
+                <img class="h-full w-full object-cover" src="{{ asset('storage/' . $plant->image) }}" alt="{{ $plant->name }}">
+              @else
+                <div class="flex items-center justify-center h-full w-full text-gray-300 text-xs font-medium">N/A</div>
+              @endif
+            </div>
+            <span class="text-center break-words">{{ $plant->name }}</span>
+          </div>
+        </td>
 
-  <!-- Description -->
-  <td class="description-col px-4 py-3 text-sm text-gray-600 text-left">
-    @if($plant->description)
-      <div class="tooltip">
-        {{ Str::limit($plant->description, 60, '...') }}
-        <span class="tooltip-text">{{ $plant->description }}</span>
-      </div>
-    @else
-      <span class="italic text-gray-400">No description</span>
-    @endif
-  </td>
+        <!-- Category -->
+        <td class="px-4 py-2 text-sm text-center">
+          <span class="px-2 py-1 inline-flex text-xs font-semibold rounded-full bg-terracotta/10 text-terracotta">
+            {{ $plant->category }}
+          </span>
+        </td>
 
-  <!-- Plant Care -->
-  <td class="plant-care-col px-4 py-3 text-sm text-gray-600 text-left">
-    @if($plant->plant_care)
-      <div class="tooltip">
-        {{ Str::limit($plant->plant_care, 60, '...') }}
-        <span class="tooltip-text">{{ $plant->plant_care }}</span>
-      </div>
-    @else
-      <span class="italic text-gray-400">No care info</span>
-    @endif 
-  </td>
+        <!-- Description -->
+        <td class="px-4 py-2 text-sm text-gray-600 text-center">
+          @if($plant->description)
+            <div class="tooltip break-words">
+              {{ Str::limit($plant->description, 50, '...') }}
+              <span class="tooltip-text">{{ $plant->description }}</span>
+            </div>
+          @else
+            <span class="italic text-gray-400">No description</span>
+          @endif
+        </td>
 
-  <!-- Price -->
-  <td class="price-col px-4 py-3 text-sm font-medium text-leaf text-center">
-    RM {{ number_format($plant->price, 2) }}
-  </td>
+        <!-- Care Instructions -->
+        <td class="px-4 py-2 text-sm text-gray-600 text-center">
+          @if($plant->plant_care)
+            <div class="tooltip break-words">
+              {{ Str::limit($plant->plant_care, 50, '...') }}
+              <span class="tooltip-text">{{ $plant->plant_care }}</span>
+            </div>
+          @else
+            <span class="italic text-gray-400">No care info</span>
+          @endif
+        </td>
 
-  <!-- Stock -->
-  <td class="stock-col px-4 py-3 text-sm text-center">
-    <span class="px-3 py-1 inline-flex text-xs font-semibold rounded-full {{ $plant->stock_quantity <= $plant->reorder_level ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
-      {{ $plant->stock_quantity }}
-    </span>
-  </td>
+        <!-- Price -->
+        <td class="px-4 py-2 text-sm font-medium text-leaf text-center">RM {{ number_format($plant->price, 2) }}</td>
+
+        <!-- Stock -->
+        <td class="px-4 py-2 text-sm text-center">
+          <span class="px-2 py-1 inline-flex text-xs font-semibold rounded-full
+            {{ $plant->stock_quantity <= $plant->reorder_level
+              ? 'bg-red-100 text-red-800'
+              : 'bg-green-100 text-green-800' }}">
+            {{ $plant->stock_quantity }}
+          </span>
+        </td>
+
+        <!-- Supplier -->
+        <td class="px-4 py-2 text-sm text-center">{{ $plant->supplier ? $plant->supplier->supplier_name : 'N/A' }}</td>
+
+        <!-- Actions -->
+        <td class="actions-col px-2 py-2 text-center text-sm space-x-2 w-44 min-w-[160px]">
+          <a href="{{ route('admin.plants.edit', $plant->id) }}" class="text-leaf hover:text-earth transition">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </a>
+          <form action="{{ route('admin.plants.destroy', $plant->id) }}" method="POST" class="inline-block">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="text-terracotta hover:text-red-700 transition"
+                    onclick="return confirm('Delete {{ $plant->name }} permanently?')">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </form>
+        </td>
+
+      </tr>
+      @endforeach
+    </tbody>
+  </table>
+</div>
 
 
-  <td class="px-6 py-3 text-center">
-    {{ $plant->supplier ? $plant->supplier->supplier_name : 'N/A' }}
-  </td>
-
-
-  <!-- Actions -->
-  <td class="actions-col px-4 py-3 text-center text-sm space-x-2">
-    <a href="{{ route('admin.plants.edit', $plant->id) }}" class="text-leaf hover:text-earth transition">
-      <i class="fa-solid fa-pen-to-square"></i>
-    </a>
-    <form action="{{ route('admin.plants.destroy', $plant->id) }}" method="POST" class="inline-block">
-      @csrf @method('DELETE')
-      <button type="submit" class="text-terracotta hover:text-red-700 transition" onclick="return confirm('Delete {{ $plant->name }} permanently?')">
-        <i class="fa-solid fa-trash"></i>
-      </button>
-    </form>
-  </td>
-
-</tr>
-
-  @endforeach
-</tbody>
-        </table>
-      </div>
       <!-- Pagination Controls (Right aligned) -->
 <div class="flex justify-end mt-4 mb-6 pr-4 select-none" id="paginationControls">
   <div class="flex items-center gap-4 bg-white shadow-md rounded-full px-3 py-2">

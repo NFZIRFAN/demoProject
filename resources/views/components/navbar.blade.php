@@ -41,7 +41,7 @@
 
       <!-- 🌸 Centered Logo -->
       <div class="w-1/3 flex justify-center mx-8"> <!-- Added spacing -->
-        <span class="text-2xl font-bold bg-gradient-to-r from-[#3D4127] via-[#636B2F] to-[#3D4127]
+        <span class="text-2xl font-extrabold bg-gradient-to-r from-[#3D4127] via-[#636B2F] to-[#3D4127]
                      bg-clip-text text-transparent drop-shadow-sm text-center transition-all duration-500"
               style="font-family: 'Playfair Display', serif;">
           YAH NURSERY & LANDSCAPE

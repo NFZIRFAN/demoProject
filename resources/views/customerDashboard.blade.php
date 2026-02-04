@@ -358,9 +358,11 @@ button:hover {
       <div class="absolute inset-0 flex flex-col justify-center items-end pr-16 text-right text-white z-20 space-y-4">
         <h2 class="text-5xl md:text-7xl font-['Playfair_Display'] font-semibold drop-shadow-lg leading-tight">Summer Sale!</h2>
         <p class="text-lg md:text-2xl font-['Poppins'] italic">Up to <span class="font-semibold text-lime-200">50% off</span> selected plants.</p>
-        <a href="{{ route('customer.dashboard') }}" class="inline-block bg-[#636B2F] hover:bg-[#4e5326] text-white font-['Poppins'] font-semibold px-8 py-3 rounded-full shadow-md transition-all duration-300 hover:scale-105">
-          Shop Now
-        </a>
+        <span 
+    onclick="window.location='#shop'" 
+    class="cursor-pointer text-xl md:text-2xl font-['Playfair_Display'] font-semibold tracking-wide underline decoration-lime-200 hover:decoration-lime-400 transition-all duration-300">
+    Shop Now →
+</span>
       </div>
     </div>
 
@@ -382,10 +384,11 @@ button:hover {
     <p class="text-lg md:text-2xl font-['Poppins'] italic">
       Sign up today and enjoy free shipping.
     </p>
-    <a href="#shop"
-       class="inline-block bg-[#636B2F] hover:bg-[#4e5326] text-white font-['Poppins'] font-semibold px-8 py-3 rounded-full shadow-md transition-all duration-300 hover:scale-105">
-      Shop Now
-    </a>
+    <span 
+    onclick="window.location='#shop'" 
+    class="cursor-pointer text-xl md:text-2xl font-['Playfair_Display'] font-semibold tracking-wide underline decoration-lime-200 hover:decoration-lime-400 transition-all duration-300">
+    Shop Now →
+</span>
   </div>
 </div>
 
@@ -399,9 +402,12 @@ button:hover {
       <div class="absolute inset-0 flex flex-col justify-center items-center text-center text-white px-6 z-20 space-y-4">
         <h2 class="text-5xl md:text-7xl font-['Playfair_Display'] font-semibold drop-shadow-lg leading-tight">Limited Time Offer!</h2>
         <p class="text-lg md:text-2xl font-['Poppins'] italic">Get your favorite plants delivered to your door.</p>
-        <a href="#shop" class="inline-block bg-[#636B2F] hover:bg-[#4e5326] text-white font-['Poppins'] font-semibold px-8 py-3 rounded-full shadow-md transition-all duration-300 hover:scale-105">
-          Shop Now
-        </a>
+        <span 
+    onclick="window.location='#shop'" 
+    class="cursor-pointer text-xl md:text-2xl font-['Playfair_Display'] font-semibold tracking-wide underline decoration-lime-200 hover:decoration-lime-400 transition-all duration-300">
+    Shop Now →
+</span>
+
       </div>
     </div>
   </div>

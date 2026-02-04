@@ -299,7 +299,7 @@ border-radius:30px; transition: background .3s, transform .2s; cursor:pointer;
     background-color: #3D4127;
     color: #ffffff;
     font-size: 0.85rem;
-    font-weight: 600;
+    font-weight: 800;
     text-transform: uppercase;
     border-radius: 8px;
     box-shadow: 0 6px 12px rgba(0,0,0,0.15);
@@ -1112,112 +1112,137 @@ window.addEventListener('scroll', () => {
   <div class="hero-overlay"></div>
 
 <!-- Hero Content -->
-<div class="hero-content">
-  <h1 class="text-center leading-tight tracking-wide mb-6">
+<div class="hero-content text-center flex flex-col justify-center items-center h-screen px-6">
+  
+  <!-- Welcome Text -->
+  <span class="hero-welcome">
+    Welcome to
+  </span>
 
-    <!-- Welcome Text -->
-    <span class="hero-welcome">
-      Welcome to
-    </span>
-    <br>
-
-    <!-- Brand Name -->
-    <span class="brand-title">
-      YAH NURSERY & LANDSCAPE SDN BHD
-    </span>
-
+  <!-- Brand Name with Metallic Shimmer -->
+  <h1 class="brand-title">
+    YAH NURSERY & LANDSCAPE SDN BHD
   </h1>
 
+  <!-- Location -->
   <h3 class="hero-location">
     Shah Alam
   </h3>
 
-  <h4 class="location-sub">
-  Seksyen 27
-</h4>
-
-
-  <br>
-<a href="#" 
-   class="btn font-bold tracking-widest"
-   style="font-family: 'Montserrat', sans-serif;"
-   onclick="openPopup(event)">
-  SHOP NOW
-</a>
-
-<!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+  <!-- Premium CTA Button -->
+  <a href="#" 
+     class="btn-luxe" 
+     onclick="openPopup(event)">
+    SHOP NOW
+  </a>
 
 </div>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@400;500&display=swap');
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
 
-/* Welcome text */
-.hero-welcome {
-  display: block;
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  line-height: 1.1;         /* ⬅️ tighter vertical spacing */
-  margin-bottom: -25px;      /* ⬅️ pulls it closer to brand */
-  color: white;
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.15);
-  letter-spacing: 1px;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: smoothReveal 1.2s ease-out forwards;
+<style>
+body {
+  margin: 0;
+  background-color: #ffffff; /* Dark luxury base */
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
 }
 
-/* Brand title */
-.brand-title {
+/* Welcome Text */
+.hero-welcome {
   display: block;
-  font-family: 'Playfair Display', serif;
-  font-size: 3rem;
-  color: white;
-  text-shadow: 2px 2px 8px rgba(20, 21, 19, 0.9);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  color: rgba(255,255,255,0.85);
+  font-style: italic;
   letter-spacing: 2px;
+  margin-bottom: -15px;
+  text-shadow: 1px 1px 5px rgba(255,255,255,0.2);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 1.2s ease-out forwards;
+}
+
+/* Brand Title with Metallic Shimmer */
+.brand-title {
+  font-family: 'Cinzel', serif;
+  font-size: 4.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: linear-gradient(120deg, #ffffff 20%, #d4af37 40%, #f9e29b 50%, #d4af37 60%, #ffffff 80%);
+  background-size: 200% auto;
+  color: #fff;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 8px rgba(212,175,55,0.5), 0 0 20px rgba(255,255,255,0.1);
+  margin: 1rem 0;
   opacity: 0;
   transform: translateY(30px);
-  animation: smoothReveal 1.4s ease-out forwards;
-  animation-delay: 0.3s;
+  animation: fadeUp 1.5s ease-out forwards 0.3s, shimmer 4s linear infinite;
 }
 
 /* Location */
 .hero-location {
-  font-family: 'Poppins', sans-serif;
-  color: #f5f5f5;
-  letter-spacing: 8px;
+  font-family: 'Montserrat', sans-serif;
+    color: #ffffff; 
+  font-weight: 700;
+  letter-spacing: 12px;
   text-transform: uppercase;
+  margin-bottom: 2rem;
   opacity: 0;
-  animation: fadeIn 1.2s ease-out forwards;
-  animation-delay: 0.8s;
+  animation: fadeUp 1.3s ease-out forwards 0.8s;
 }
 
-.location-sub {
-  font-family: 'Montserrat', sans-serif;   /* ⬅️ different from Playfair & Poppins */
-  font-size: 0.95rem;                       /* small & classy */
+/* Premium CTA Button */
+.btn-luxe {
+  display: inline-block;
+  padding: 1rem 3rem;
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  font-weight: 700;
   letter-spacing: 3px;
-  text-transform: lowercase;
-  color: rgba(255, 255, 255, 0.85);
-  margin-top: 4px;                          /* close to Shah Alam */
+  color: white;
+  border: 2px solid #d4af37;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  text-transform: uppercase;
+  text-shadow: 0 0 5px rgba(212,175,55,0.4);
   opacity: 0;
-  transform: translateY(10px);
-  animation: fadeUp 1s ease-out forwards;
-  animation-delay: 0.6s;                    /* appears after title */
-}
-/* Animations */
-@keyframes smoothReveal {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  animation: fadeUp 1.5s ease-out forwards 1.2s, shimmer 4s linear infinite;
+  transition: all 0.5s ease;
+  border-radius: 50px;
 }
 
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
+.btn-luxe:hover {
+  color: #0a0c0a;
+  background: #d4af37;
+  box-shadow: 0 0 25px rgba(212,175,55,0.5), 0 0 50px rgba(255,255,255,0.1);
 }
+
+.btn-luxe::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+      120deg,
+      transparent,
+      rgba(255,255,255,0.3),
+      transparent
+  );
+  transition: 0.6s;
+}
+
+.btn-luxe:hover::before {
+  left: 100%;
+}
+
+/* Animations */
 @keyframes fadeUp {
   to {
     opacity: 1;
@@ -1225,7 +1250,21 @@ window.addEventListener('scroll', () => {
   }
 }
 
+@keyframes shimmer {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .brand-title { font-size: 2.5rem; }
+  .hero-welcome { font-size: 1.5rem; }
+  .hero-location { letter-spacing: 6px; font-size: 0.8rem; }
+  .btn-luxe { font-size: 0.9rem; padding: 0.8rem 2rem; }
+}
 </style>
+
 
 </div>
 <!-- ===== SPLIT-SCREEN SHOWCASE SECTION ===== -->
@@ -1246,11 +1285,12 @@ window.addEventListener('scroll', () => {
       </h1>
       <BR>
 
-      <!-- CTA Button -->
 <a href="{{ route('customer.login') }}" 
-       class="flash-btn px-6 py-3 rounded-full text-[#3D4127] bg-[#BAC095] hover:bg-[#636B2F] transition-all duration-300 font-bold">
-Shop our products    
-</a>    
+   class="flash-btn px-6 py-3 rounded-full font-bold bg-[#BAC095] hover:bg-[#636B2F] transition-all duration-300"
+   style="color: #ffffff !important;">
+  Shop our products    
+</a>
+ 
 </div>
     <BR>
  <!-- Image Grid: A & B -->
@@ -1419,16 +1459,18 @@ setInterval(nextSlidePortrait, 5000);
         <h1 class="hero-title">BRING LIFE TO SPACE</h1>
         <p class="hero-subtitle">Designer pots, timeless appeal</p>
 <a href="{{ route('customer.login') }}" 
-       class="flash-btn px-6 py-3 rounded-full text-[#3D4127] bg-[#BAC095] hover:bg-[#636B2F] transition-all duration-300 font-semibold">
-       Browse designer pots
-    </a>    </div>
+   class="flash-btn px-6 py-3 rounded-full font-bold bg-[#BAC095] hover:bg-[#636B2F] transition-all duration-300"
+   style="color: #ffffff !important;">
+  Browse designer pots  
+</a>    
+  </div>
 </section>
 <!-- Add Font Awesome for icons -->
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 
 <!-- 🌿 Yah Nursery & Landscape Section -->
-<section id="blog" class="relative bg-gradient-to-br from-[#f8fff8] via-[#ffffff] to-[#f1faf1] py-20 px-8 md:px-16 flex flex-col md:flex-row items-center justify-center gap-16 rounded-3xl shadow-lg overflow-hidden">
+<section id="blog" class="relative bg-white py-20 px-8 md:px-16 flex flex-col md:flex-row items-center justify-center gap-16 rounded-3xl shadow-lg overflow-visible">
 
   <!-- Decorative background glow -->
   <div class="absolute top-0 left-0 w-80 h-80 bg-green-200/20 blur-3xl rounded-full -z-10"></div>

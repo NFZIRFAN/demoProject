@@ -166,6 +166,6 @@
 
 
 <x-footer />
-
+@include('components.chatbot')
 </body>
 </html>

@@ -51,7 +51,7 @@ body::-webkit-scrollbar {
 
         <!-- Main Title -->
         <h1 class="text-6xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#3D4127] to-[#636B2F] mb-4 title-font">
-            {{ $category }} Plants
+            {{ $category }} Products
         </h1>
 
         <!-- Decorative Underline -->
@@ -87,9 +87,20 @@ body::-webkit-scrollbar {
       
        <!-- 🌿 Product Section Header -->
         <div class="mb-12 md:mb-16 text-left">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#3D4127] to-[#636B2F] tracking-wide title-font">
-            {{ strtoupper($category->name ?? 'Category') }} PLANTS
-            </h1>
+            <div class="mb-8">
+  <!-- Main Title -->
+  <h1 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#3D4127] to-[#636B2F] tracking-wide title-font
+             relative inline-block transition-transform duration-500 hover:scale-105">
+    {{ strtoupper($category->name ?? ' COLLECTION') }}
+    <!-- subtle shine effect -->
+    <span class="absolute inset-0 bg-gradient-to-r from-white/30 via-white/10 to-white/30 opacity-0 hover:opacity-50 transition-opacity rounded-lg mix-blend-overlay"></span>
+  </h1>
+
+  <!-- Subtitle aligned left -->
+  <p class="mt-2 text-lg md:text-xl text-gray-700 font-medium text-left max-w-3xl">
+    Discover our premium selection of plants carefully chosen to make your home and garden vibrant and healthy.
+  </p>
+</div>
 
          <!-- Decorative Underline -->
         <div class="w-20 h-1 bg-gradient-to-r from-[#3D4127] to-[#636B2F] rounded-full mt-4 mb-4"></div>
@@ -126,12 +137,24 @@ body::-webkit-scrollbar {
 
                         <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-                        <!-- Wishlist Button -->
-                        <button class="absolute top-3 right-3 bg-white/80 backdrop-blur-sm rounded-full p-2.5 hover:text-red-600 hover:bg-white transition duration-300 shadow-md z-10 wishlist-btn"
-                                data-plant-id="{{ $plant->id }}"
-                                data-in-wishlist="{{ $inWishlist ? 'true' : 'false' }}">
-                            <i class="{{ $inWishlist ? 'fa-solid text-red-500' : 'fa-regular text-gray-500' }} fa-heart text-lg"></i>
-                        </button>
+              @php
+    $inWishlist = false;
+    $customerId = session('customer_id') ?? null;
+    if($customerId) {
+        $inWishlist = \App\Models\Wishlist::where('customer_id', $customerId)
+            ->where('plant_id', $plant->id)
+            ->exists();
+    }
+@endphp
+
+<button class="wishlist-btn absolute top-3 right-3 bg-white/80 backdrop-blur-sm rounded-full p-2.5 
+               hover:text-red-600 hover:bg-white transition duration-300 shadow-md z-10"
+        data-plant-id="{{ $plant->id }}"
+        data-in-wishlist="{{ $inWishlist ? 'true' : 'false' }}"
+        title="Add to Wishlist">
+    <i class="{{ $inWishlist ? 'fa-solid text-red-500' : 'fa-regular text-gray-500' }} fa-heart text-lg"></i>
+</button>
+
                     </div>
 
                     <div class="p-4 flex flex-col justify-between">
@@ -187,6 +210,8 @@ body::-webkit-scrollbar {
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+
+    // Price filter logic
     const productList = document.getElementById("productList");
     const productCards = Array.from(productList.querySelectorAll("[data-price]"));
     const productCountEl = document.getElementById("productCount");
@@ -205,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 default: return true;
             }
         });
-        // Sort by price ascending
+
         filtered.sort((a,b)=> parseFloat(a.dataset.price)-parseFloat(b.dataset.price));
 
         productCards.forEach(card => card.style.display = 'none');
@@ -221,76 +246,67 @@ document.addEventListener("DOMContentLoaded", () => {
         updateProductDisplay();
     };
 
-    // Wishlist initialization
-    document.querySelectorAll(".wishlist-btn").forEach(btn => {
+    // Wishlist button logic
+    document.addEventListener("click", async (e) => {
+        const btn = e.target.closest(".wishlist-btn");
+        if(!btn) return;
+
         const icon = btn.querySelector("i");
-        if (btn.dataset.inWishlist === "true") {
-            icon.classList.remove("fa-regular");
-            icon.classList.add("fa-solid", "text-red-500");
-        } else {
-            icon.classList.remove("fa-solid", "text-red-500");
-            icon.classList.add("fa-regular");
-        }
+        const plantId = btn.dataset.plantId;
+        if(!plantId) return;
+        if(btn.classList.contains("loading")) return;
 
-        btn.addEventListener("click", async function(){
-            const plantId = btn.dataset.plantId;
-            if(!plantId) return;
-            if(btn.classList.contains("loading")) return;
-            btn.classList.add("loading");
+        btn.classList.add("loading");
 
-            try{
-                const res = await fetch("{{ route('wishlist.store') }}", {
-                    method:'POST',
-                    headers:{'Content-Type':'application/json','X-CSRF-TOKEN':'{{ csrf_token() }}'},
-                    body:JSON.stringify({plant_id: plantId})
+        try {
+            const res = await fetch("{{ route('wishlist.store') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({ plant_id: plantId })
+            });
+
+            const data = await res.json();
+
+            if(res.ok && data.success) {
+                icon.classList.replace(btn.dataset.inWishlist === "true" ? 'fa-solid':'fa-regular', btn.dataset.inWishlist === "true" ? 'fa-regular':'fa-solid');
+                icon.classList.toggle('text-red-500');
+                btn.dataset.inWishlist = btn.dataset.inWishlist === "true" ? "false":"true";
+
+                Swal.fire({
+                    icon: btn.dataset.inWishlist === "true" ? 'success':'info',
+                    title: btn.dataset.inWishlist === "true" ? 'Added to wishlist ❤️':'Removed from wishlist 💔',
+                    timer:1500,
+                    toast:true,
+                    position:'top-end',
+                    showConfirmButton:false
                 });
-                const data = await res.json();
 
-                if (btn.dataset.inWishlist === 'true') {
-    icon.classList.replace('fa-solid', 'fa-regular');
-    icon.classList.remove('text-red-500');
-    btn.dataset.inWishlist = 'false';
+                // Update navbar wishlist count
+                window.dispatchEvent(new CustomEvent('wishlistUpdated', { detail:{ count: data.count } }));
 
-    // 🔥 DISPATCH LIVE UPDATE FOR NAVBAR
-    window.dispatchEvent(new CustomEvent('wishlistUpdated', {
-        detail: { count: data.count }
-    }));
-
-    Swal.fire({
-        icon: 'info',
-        title: 'Removed from Wishlist 💔',
-        timer: 1500,
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false
+            } else {
+                Swal.fire({
+                    icon:'error',
+                    title: data.message || 'Failed',
+                    timer:1500,
+                    toast:true,
+                    position:'top-end',
+                    showConfirmButton:false
+                });
+            }
+        } catch(err){
+            console.error(err);
+        } finally{
+            btn.classList.remove('loading');
+        }
     });
 
-} else {
-    icon.classList.replace('fa-regular', 'fa-solid');
-    icon.classList.add('text-red-500');
-    btn.dataset.inWishlist = 'true';
-
-    // 🔥 DISPATCH LIVE UPDATE FOR NAVBAR
-    window.dispatchEvent(new CustomEvent('wishlistUpdated', {
-        detail: { count: data.count }
-    }));
-
-    Swal.fire({
-        icon: 'success',
-        title: 'Added to Wishlist ❤️',
-        timer: 1500,
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false
-    });
-}
-
-            } 
-            catch(err){ console.error(err); }
-            finally{ btn.classList.remove('loading'); }
-        });
-    });
 });
 </script>
+@include('components.chatbot')
 </body>
 </html>

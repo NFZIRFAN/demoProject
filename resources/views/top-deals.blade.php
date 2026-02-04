@@ -248,6 +248,6 @@
 
 <!-- FOOTER (DO NOT TOUCH) -->
 <x-footer />
-
+@include('components.chatbot')
 </body>
 </html>

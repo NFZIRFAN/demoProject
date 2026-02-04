@@ -285,6 +285,6 @@ setInterval(() => {
 <div class="full-width-bar bg-white mt-12 shadow-inner">
     <x-footer />
 </div>
-
+@include('components.chatbot')
 </body>
 </html>
