@@ -317,7 +317,7 @@
                 <!-- 3. Payment Method -->
                 <h2 class="section-heading">
                     <i class="fas fa-credit-card text-black-600 mr-2"></i>
-                    PAYMENT 
+                    PAYMENT (Click payment method below)
                 </h2>
                 <br>
 
@@ -383,7 +383,7 @@
 class="w-full bg-gradient-to-r from-[#636B2F] to-[#BAC095] text-white py-4 rounded-2xl font-[Playfair_Display] font-extrabold text-lg shadow-[0_4px_15px_rgba(99,107,47,0.4)] hover:shadow-[0_6px_20px_rgba(99,107,47,0.5)] hover:from-[#BAC095] hover:to-[#636B2F] transition-all duration-500 transform hover:scale-105 flex items-center justify-center space-x-2"
 style="letter-spacing:0.5px;">
   <i class="fas fa-lock text-white"></i>
-  <span>CONFIRM PAYMENT <span id="checkout_total">{{ number_format($subtotal ?? 0, 2) }}</span></span>
+  <span>CONFIRM YOUR PAYMENT </span>
 </button>
 <div class="alert alert-info mt-3">
     🔹 After completing the payment on ToyyibPay, please click the 

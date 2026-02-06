@@ -98,7 +98,7 @@ body::-webkit-scrollbar {
 
   <!-- Subtitle aligned left -->
   <p class="mt-2 text-lg md:text-xl text-gray-700 font-medium text-left max-w-3xl">
-    Discover our premium selection of plants carefully chosen to make your home and garden vibrant and healthy.
+    Discover our premium selection of product carefully chosen to make your home and garden vibrant and healthy.
   </p>
 </div>
 

@@ -530,7 +530,7 @@ hr {
                 <!-- Plant Care (Glassmorphism) -->
                 <div class="glass-badge-luxury p-8 rounded-[2.5rem] border border-[#C9A227]/10">
                     <h3 class="text-[#3D4127] font-bold text-lg mb-4 tracking-wide" style="font-family: 'Playfair Display', serif;">
-                        Plant Care Instruction
+                        Care Instruction
                     </h3>
                     <p class="text-[#636B2F] text-sm leading-relaxed opacity-90">
                         {!! nl2br(e($plant->plant_care ?? 'Preserve the botanical integrity through gentle hydration and indirect celestial lighting.')) !!}

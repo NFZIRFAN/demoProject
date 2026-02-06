@@ -99,7 +99,7 @@
       <!-- Search & Sort -->
       <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
         <div class="flex flex-wrap gap-3 items-center w-full md:w-auto">
-          
+
           <!-- Search Input -->
           <div class="relative w-full sm:w-64">
             <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
