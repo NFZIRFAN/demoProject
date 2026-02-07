@@ -20,15 +20,19 @@
     }
 /* === MAIN WRAPPER === */
 .edit-wrapper {
+display: flex;
+  flex-wrap: wrap; /* allows stacking */
+  gap: 40px;
   max-width: 1100px;
   margin: 40px auto;
+  padding: 40px;
   background: #fff;
   border-radius: 16px;
-  padding: 40px;
-  display: flex;
-  gap: 40px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
+  width: 100%; /* ensure it never overflows */
 }
+
 
 /* === HEADINGS === */
 h2 {
@@ -40,12 +44,126 @@ h2 {
 }
 
 /* === FORM SECTION === */
-.form-section { flex: 1.2; }
+.form-section 
+{ 
+  flex: 1 1 100%; /* full width on small screens */
+  min-width: 280px;
+}
 .form-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 18px;
+  width: 100%;
+  box-sizing: border-box;
 }
+
+/* === MOBILE-FRIENDLY LAYOUT FIX === */
+@media (max-width: 768px) {
+
+  /* Wrapper stacks vertically */
+  .edit-wrapper {
+    flex-direction: column;
+    gap: 30px;
+    padding: 20px;
+  }
+
+  /* Form section full width */
+  .form-section {
+    flex: 1 1 100%; /* full width on small screens */
+   min-width: 0;
+  }
+
+  /* Single-column form grid */
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  /* Make inputs full width */
+  .form-group input {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 15px;
+    padding: 12px 14px;
+  }
+
+  /* Buttons stacked & full width */
+  .btn-container {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  /* Previews responsive and centered */
+  .preview-section {
+   flex: 1 1 100%;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  align-items: center;
+  background: rgb(233, 227, 227);
+  padding: 25px;
+  border-radius: 16px;
+  }
+
+  .preview-box {
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto;
+  }
+
+  .profile-preview, .header-preview {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    margin-bottom: 10px;
+  }
+
+  .upload-btn, .btn-crop {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+/* Extra small screens (phones) */
+@media (max-width: 480px) {
+
+  h2 {
+    font-size: 20px;
+  }
+
+  .form-group label {
+    font-size: 14px;
+  }
+
+  .form-group input {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .btn, .upload-btn, .btn-crop {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .preview-section {
+    gap: 18px;
+  }
+
+  .preview-box {
+    padding: 15px;
+  }
+}
+
 .form-group { display: flex; flex-direction: column; }
 .form-group label {
   font-weight: 600;
@@ -106,7 +224,8 @@ h2 {
 
 /* === PREVIEW SECTION === */
 .preview-section {
-  flex: 0.8;
+  flex: 1 1 100%;
+  min-width: 280px;
   display: flex;
   flex-direction: column;
   gap: 35px;

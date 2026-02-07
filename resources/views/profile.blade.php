@@ -176,6 +176,112 @@
   opacity: 1;
   transform: translateY(0px);
 }
+/* ===== Responsive Styles ===== */
+@media (max-width: 1024px) {
+  .profile-pic {
+    width: 140px;
+    height: 140px;
+    margin: -70px 0 0 20px;
+  }
+
+  .profile-details h2 {
+    font-size: 24px;
+  }
+
+  .profile-details p {
+    font-size: 14px;
+  }
+
+  .profile-info {
+    padding: 30px;
+  }
+
+  .info-title {
+    font-size: 18px;
+  }
+
+  .info-item {
+    padding: 14px 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-header {
+    height: 220px;
+  }
+
+  .profile-pic {
+    width: 120px;
+    height: 120px;
+    margin: -60px 0 0 15px;
+  }
+
+  .profile-details {
+    padding: 0 15px;
+  }
+
+  .profile-details h2 {
+    font-size: 20px;
+  }
+
+  .profile-details p {
+    font-size: 13px;
+  }
+
+  .info-list {
+    grid-template-columns: 1fr; /* stack info items vertically */
+    gap: 15px 0;
+  }
+
+  .profile-info {
+    padding: 20px;
+    margin-bottom: 40px;
+  }
+
+  .btn-group {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-header {
+    height: 180px;
+  }
+
+  .profile-pic {
+    width: 100px;
+    height: 100px;
+    margin: -50px 0 0 15px;
+  }
+
+  .profile-details h2 {
+    font-size: 18px;
+  }
+
+  .profile-details p {
+    font-size: 12px;
+  }
+
+  .info-title {
+    font-size: 16px;
+  }
+
+  .info-item {
+    padding: 12px 14px;
+  }
+
+  .social-icons {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
 
   </style>
 </head>

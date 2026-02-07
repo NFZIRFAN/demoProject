@@ -118,7 +118,8 @@
 
 
 <!-- Top Buttons BELOW Banner -->
-<div class="max-w-6xl mx-auto mt-8 mb-6 flex flex-col md:flex-row justify-between items-center px-4">
+<div class="max-w-6xl mx-auto mt-6 mb-6 flex flex-col md:flex-row gap-4 md:gap-0
+            justify-start md:justify-between items-start md:items-center px-4">
     <a href="{{ route('customer.dashboard') }}" 
        class="px-5 py-2.5 bg-gradient-to-r from-[#636B2F] via-[#BAC095] to-[#3D4127] text-white rounded-xl shadow-lg hover:opacity-90 transition flex items-center gap-2 font-semibold">
        <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
@@ -153,7 +154,8 @@
         </a>
     </div>
 @else
-<div class="overflow-x-auto">
+{{-- 🖥️ DESKTOP TABLE --}}
+<div class="hidden md:block overflow-x-auto">
     <table class="w-full border-collapse">
         <thead>
             <tr class="bg-[#BAC095] text-left text-[#3D4127] font-bold uppercase text-xs tracking-wider">
@@ -166,12 +168,18 @@
         </thead>
         <tbody>
             @foreach($orders as $order)
-            <tr class="table-row-hover transition" id="order-{{ $order->id }}">
-                <td class="py-4 px-4 border-b border-[#BAC095] font-semibold text-[#3D4127]">{{ $order->order_number }}</td>
-                <td class="py-4 px-4 border-b border-[#BAC095] text-[#636B2F]">{{ $order->created_at->format('d M Y') }}</td>
-                <td class="py-4 px-4 border-b border-[#BAC095] text-[#3D4127] font-bold">RM {{ number_format($order->total, 2) }}</td>
-                <td class="py-4 px-4 border-b border-[#BAC095]">
-                    <span id="delivery-badge-{{ $order->id }}" class="px-3 py-1 rounded-full text-sm font-semibold whitespace-nowrap
+            <tr class="table-row-hover transition">
+                <td class="py-4 px-4 font-semibold text-[#3D4127]">
+                    {{ $order->order_number }}
+                </td>
+                <td class="py-4 px-4 text-[#636B2F]">
+                    {{ $order->created_at->format('d M Y') }}
+                </td>
+                <td class="py-4 px-4 font-bold text-[#3D4127]">
+                    RM {{ number_format($order->total, 2) }}
+                </td>
+                <td class="py-4 px-4">
+                    <span class="px-3 py-1 rounded-full text-sm font-semibold
                         @if($order->delivery_status=='Completed') bg-green-100 text-green-700
                         @elseif($order->delivery_status=='Out for Delivery') bg-blue-100 text-blue-700
                         @elseif($order->delivery_status=='Pending Delivery') bg-yellow-100 text-yellow-700
@@ -179,16 +187,55 @@
                         {{ $order->delivery_status ?? 'Not Updated' }}
                     </span>
                 </td>
-                <td class="py-4 px-4 border-b border-[#BAC095] text-center">
-                    <a href="{{ route('order.invoice', $order->id) }}" class="text-[#3D4127] font-medium hover:text-[#636B2F] transition flex items-center justify-center space-x-1">
-                        <i class="fa-solid fa-file-invoice-dollar text-lg"></i> 
-                        <span class="hidden sm:inline">View Receipt</span>
+                <td class="py-4 px-4 text-center">
+                    <a href="{{ route('order.invoice', $order->id) }}"
+                       class="inline-flex items-center gap-2 text-[#3D4127] hover:text-[#636B2F] font-medium">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                        View Receipt
                     </a>
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
+</div>
+
+{{-- 📱 MOBILE CARDS --}}
+<div class="md:hidden space-y-4">
+    @foreach($orders as $order)
+    <div class="bg-white rounded-2xl shadow border border-gray-100 p-4">
+
+        <div class="flex justify-between items-start">
+            <div>
+                <p class="text-xs text-gray-500">Order #</p>
+                <p class="font-semibold text-[#3D4127]">
+                    {{ $order->order_number }}
+                </p>
+            </div>
+
+            <span class="px-3 py-1 rounded-full text-xs font-semibold
+                @if($order->delivery_status=='Completed') bg-green-100 text-green-700
+                @elseif($order->delivery_status=='Out for Delivery') bg-blue-100 text-blue-700
+                @elseif($order->delivery_status=='Pending Delivery') bg-yellow-100 text-yellow-700
+                @else bg-gray-100 text-gray-700 @endif">
+                {{ $order->delivery_status ?? 'Not Updated' }}
+            </span>
+        </div>
+
+        <div class="mt-3 text-sm text-gray-600 space-y-1">
+            <p><span class="font-medium">Date:</span> {{ $order->created_at->format('d M Y') }}</p>
+            <p><span class="font-medium">Total:</span> RM {{ number_format($order->total, 2) }}</p>
+        </div>
+
+        <a href="{{ route('order.invoice', $order->id) }}"
+           class="mt-4 inline-flex items-center justify-center gap-2 w-full
+                  px-4 py-2 rounded-xl bg-[#636B2F] text-white font-semibold">
+            <i class="fa-solid fa-file-invoice-dollar"></i>
+            View Receipt
+        </a>
+
+    </div>
+    @endforeach
 </div>
 
 

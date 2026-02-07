@@ -131,13 +131,11 @@
             <i class="fa-solid fa-plus mr-2"></i> Add FAQ
           </button>
         </div>
-
       </form>
     </div>
   </main>
-
   <footer class="py-4 text-center text-xs text-gray-400 mt-10">
-    &copy; 2024 Yah Nursery FAQ Management. All right
+    &copy; 2024 Yah Nursery FAQ Management. All right reserved
   </footer>
 
 </body>

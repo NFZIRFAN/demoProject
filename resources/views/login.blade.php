@@ -146,6 +146,58 @@ h2 {
     from { opacity:0; transform: translateY(20px);}
     to { opacity:1; transform: translateY(0);}
 }
+/* ===== Mobile Responsive ===== */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+    align-items: center; /* allow scrolling if needed */
+  }
+
+  .login-container {
+    width: 95%;         /* almost full width on mobile */
+    padding: 30px 20px; /* smaller padding */
+    border-radius: 16px;
+    backdrop-filter: blur(18px); /* maintain blur */
+    margin: 0 auto;            /* horizontal center */
+
+  }
+
+  h2 {
+    font-size: 24px;   /* slightly smaller heading */
+    margin-bottom: 20px;
+  }
+
+  .form-group input {
+    font-size: 14px;   /* smaller input text */
+    padding: 10px 12px 10px 38px; /* adjust for icons */
+  }
+
+  .form-group input.has-right-icon {
+    padding-right: 40px; /* adjust for password toggle */
+  }
+
+  .password-toggle {
+    font-size: 16px; /* smaller eye icon */
+    right: 12px;
+  }
+
+  .button-group {
+    flex-direction: column; /* stack buttons on mobile */
+    gap: 12px;
+  }
+
+  .btn, .btn-back {
+    font-size: 14px;
+    padding: 10px 0;
+    width: 100%;
+  }
+
+  .extra-links {
+    font-size: 13px;
+    margin-top: 12px;
+  }
+}
+
 </style>
 </head>
 <body>

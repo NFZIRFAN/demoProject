@@ -1025,7 +1025,50 @@ header.scrolled .dropdown-menu a:hover {
   background: #f5f5f5;
   color: #000;
 }
+@media (max-width: 768px) {
 
+  /* Hide nav by default on mobile */
+  .header-nav {
+    display: none;       /* hides it, but still exists in HTML */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.95);
+    border-radius: 16px;
+    padding: 20px 0;
+  }
+
+  /* Show nav when active */
+  .header-nav.active {
+    display: block;
+    z-index: 1100; /* make sure it appears above other elements */
+  }
+
+  /* Stack menu items vertically */
+  .header-nav ul {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+
+  /* Hamburger button visible only on mobile */
+  .mobile-menu-btn {
+    display: block;
+    background: none;
+    border: none;
+    font-size: 26px;
+    color: #fff;
+    cursor: pointer;
+  }
+}
+
+/* Desktop stays unchanged */
+@media (min-width: 769px) {
+  .mobile-menu-btn {
+    display: none;
+  }
+}
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
@@ -1033,7 +1076,9 @@ header.scrolled .dropdown-menu a:hover {
 </head>
 <body>
 <header class="header">
-  
+  <button class="mobile-menu-btn" id="mobileMenuBtn">
+  <i class="fa-solid fa-bars"></i>
+</button>
   <!-- LEFT: Logo -->
   <div class="header-left">
     <img 
@@ -1084,6 +1129,32 @@ header.scrolled .dropdown-menu a:hover {
   document.addEventListener('click', () => {
     menu.style.display = 'none';
   });
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const mobileBtn = document.getElementById('mobileMenuBtn');
+  const nav = document.querySelector('.header-nav');
+  const navLinks = nav.querySelectorAll('a.nav-link'); // all nav links
+
+  // Toggle nav on hamburger click
+  mobileBtn.addEventListener('click', () => {
+    nav.classList.toggle('active');
+  });
+
+  // Close nav if clicked outside
+  document.addEventListener('click', (e) => {
+    if (!nav.contains(e.target) && !mobileBtn.contains(e.target)) {
+      nav.classList.remove('active');
+    }
+  });
+
+  // Close nav when any link is clicked
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('active');
+    });
+  });
+});
 </script>
 
 
@@ -1335,6 +1406,50 @@ body {
 </div>
 
 <style>
+  /* ===== Mobile responsive for Image Grid (no stacking) ===== */
+@media (max-width: 768px) {
+  .mt-12.flex {
+    flex-direction: row;        /* keep images in one row */
+    justify-content: center;    /* center the grid */
+    gap: 12px;                  /* keep gap between images */
+    max-width: 95%;             /* small padding from left/right edges */
+    margin: 16px auto 0 auto;   /* auto horizontal margin to center */
+  }
+
+  .mt-12.flex > div {
+    width: 48%;                 /* keep two images side by side */
+    aspect-ratio: 4 / 3;        /* maintain original aspect ratio */
+  }
+
+  .mt-12.flex img {
+    object-fit: cover;          /* ensure image fills container nicely */
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;        /* keep rounded corners */
+  }
+}
+
+  /* Mobile responsive for the video slider */
+@media (max-width: 768px) {
+  .banner-slider-portrait {
+    width: 100%;        /* full width on mobile */
+    height: 40vh;       /* shrink height for phones */
+    max-height: 400px;  /* optional maximum height */
+    margin-top: 20px;   /* spacing if needed */
+  }
+
+  .banner-track-portrait {
+    flex-direction: column; /* keep videos stacked for slider */
+  }
+
+  .banner-slide-portrait {
+    height: 100%;       /* fill the new height */
+    width: 100%;
+    object-fit: cover;  /* keep aspect ratio, crop if needed */
+    object-position: center;
+  }
+}
+
 .banner-slider-portrait {
   position: relative;
   width: 100%;
